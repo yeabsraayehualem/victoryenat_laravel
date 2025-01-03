@@ -279,7 +279,57 @@
             </div>
         </div>
 
-        <div class="container mt-5">
+        
+       
+        
+    </footer>
+
+    <script src="/js/vendor/jquery-2.2.4.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/jquery.slicknav.min.js"></script>
+    <script src="/js/plugins.js"></script>
+    <script src="/js/scripts.js"></script>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var input = document.querySelector('#phone')
+            window.intlTelInput(input, {
+                initialCountry: 'et',
+                onlyCountries: ['et'],
+                utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js'
+            })
+        })
+    </script>
+
+    <script>
+        function selectBox(box) {
+            var selectElement = box.querySelector('select')
+            selectElement.click()
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('studentSignUp').addEventListener('click', function() {
+            const studForm = document.getElementById('studentForm').outerHTML;
+            Swal.fire({
+                title: 'Student Sign-Up',
+                html: `<div class="container mt-5">
             <h2 class="text-center">Student Sign-Up</h2>
 
             <form id="studentForm" method="POST" action="/newstud">
@@ -346,8 +396,40 @@
                     <button type="reset" id="studentSignUp" class="btn btn-danger">clear</button>
                 </div>
             </form>
-        </div>
-        <div class="container mt-5">
+        </div>`,
+                showConfirmButton: false,
+                focusConfirm: false,
+                customClass: {
+                    popup: 'wide-swal-popup',
+                },
+                preConfirm: () => {
+                    const form = Swal.getPopup().querySelector('form');
+                    return fetch(form.action, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                    .getAttribute('content'),
+                            },
+                            body: new FormData(form),
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Submission failed');
+                            }
+                            return response.json();
+                        })
+                        .catch(error => {
+                            Swal.showValidationMessage(error.message);
+                        });
+                },
+            });
+        });
+
+        document.getElementById('teacherSignUp').addEventListener('click', function() {
+            const studForm = document.getElementById('teacherForm').outerHTML;
+            Swal.fire({
+                title: 'Teacher Sign-Up',
+                html: ` <div class="container mt-5">
             <h2 class="text-center">Student Sign-Up</h2>
 
             <form id="teacherForm" method="POST" action="/newteacher">
@@ -411,117 +493,7 @@
                     <button type="reset" id="studentSignUp" class="btn btn-danger">clear</button>
                 </div>
             </form>
-        </div>
-        <div class="container mt-5">
-            <h2 class="text-center">Login</h2>
-
-            <form id="loginForm" method="POST" action="/login">
-                @csrf
-
-                <div class="row">
-
-                    <div class="mb-3 col-12">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email" name="email" class="form-control"
-                            placeholder="Enter your email" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="mb-3 col-12">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" id="password" name="password" class="form-control"
-                            placeholder="Enter password" required>
-                    </div>
-                </div>
-
-
-                <div class="d-flex justify-content-between">
-                    <button class="btn btn-success" type="submit">Submit</button>
-                    <button type="reset" id="studentSignUp" class="btn btn-danger">clear</button>
-                </div>
-            </form>
-        </div>
-    </footer>
-
-    <script src="/js/vendor/jquery-2.2.4.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="/js/owl.carousel.min.js"></script>
-    <script src="/js/jquery.magnific-popup.min.js"></script>
-    <script src="/js/jquery.slicknav.min.js"></script>
-    <script src="/js/plugins.js"></script>
-    <script src="/js/scripts.js"></script>
-
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var input = document.querySelector('#phone')
-            window.intlTelInput(input, {
-                initialCountry: 'et',
-                onlyCountries: ['et'],
-                utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js'
-            })
-        })
-    </script>
-
-    <script>
-        function selectBox(box) {
-            var selectElement = box.querySelector('select')
-            selectElement.click()
-        }
-    </script>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.getElementById('studentSignUp').addEventListener('click', function() {
-            const studForm = document.getElementById('studentForm').outerHTML;
-            Swal.fire({
-                title: 'Student Sign-Up',
-                html: studForm,
-                showConfirmButton: false,
-                focusConfirm: false,
-                customClass: {
-                    popup: 'wide-swal-popup',
-                },
-                preConfirm: () => {
-                    const form = Swal.getPopup().querySelector('form');
-                    return fetch(form.action, {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                    .getAttribute('content'),
-                            },
-                            body: new FormData(form),
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Submission failed');
-                            }
-                            return response.json();
-                        })
-                        .catch(error => {
-                            Swal.showValidationMessage(error.message);
-                        });
-                },
-            });
-        });
-
-        document.getElementById('teacherSignUp').addEventListener('click', function() {
-            const studForm = document.getElementById('teacherForm').outerHTML;
-            Swal.fire({
-                title: 'Teacher Sign-Up',
-                html: studForm,
+        </div>`,
                 showConfirmButton: false,
                 focusConfirm: false,
                 customClass: {
@@ -553,7 +525,35 @@
             const loginForm = document.getElementById('loginForm').outerHTML;
             Swal.fire({
                 title: 'Login',
-                html: loginForm,
+                html: `<div class="container mt-5">
+            <h2 class="text-center">Login</h2>
+
+            <form id="loginForm" method="POST" action="/login">
+                @csrf
+
+                <div class="row">
+
+                    <div class="mb-3 col-12">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-control"
+                            placeholder="Enter your email" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-12">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" name="password" class="form-control"
+                            placeholder="Enter password" required>
+                    </div>
+                </div>
+
+
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-success" type="submit">Submit</button>
+                    <button type="reset" id="studentSignUp" class="btn btn-danger">clear</button>
+                </div>
+            </form>
+        </div>`,
                 showConfirmButton: false,
                 focusConfirm: false,
                 customClass: {
