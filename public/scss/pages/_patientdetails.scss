@@ -1,0 +1,18 @@
+.fw-600 {
+  font-weight: $fw-600;
+}
+.profileimg {
+  width: 42px;
+  height: 42px;
+  margin-right: 12px;
+}
+.weight-icon {
+  @extend .width-24;
+  @extend .height-24;
+  margin: 8px 12px 0px 0px;
+}
+.height-icon {
+  @extend .width-12;
+  @extend .height-24;
+  margin: 8px 12px 0px 0px;
+}

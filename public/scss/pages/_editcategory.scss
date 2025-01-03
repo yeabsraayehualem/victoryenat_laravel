@@ -1,0 +1,121 @@
+.input-style {
+	color: var(--textPrimaryColor) !important;
+	background-color: transparent !important;
+	border: 1px solid var(--tableBorder) !important;
+}
+.ordder-number {
+	width: 40px !important;
+}
+.input-group-text {
+	background-color: var(--bg-lightgrey) !important;
+	border: 1px solid var(--inputBorder) !important;
+	color: var(--textPrimaryColor);
+	border-radius: 0px 4px 4px 0px !important;
+	@extend .rounded-4
+}
+// tr {
+// 	border: none !important;
+// }
+// th {
+// 	border: none !important;
+// }
+
+.note-editor.note-frame {
+	min-height: 250px;
+	border: 1px solid var(--tableBorder) !important;
+	.note-statusbar {
+		border: none !important;
+	}
+	.note-editing-area {
+		.note-editable {
+			color: var(--textPrimaryColor);
+		}
+	}
+}
+.note-editor.note-airframe {
+	border: 1px solid var(--tableBorder) !important;
+}
+.note-toolbar {
+	border-bottom: 1px solid var(--tableBorder) !important;
+	background-color: transparent !important;
+}
+.note-resizebar {
+	display: none;
+}
+.note-btn {
+	background-color: transparent !important;
+	border: 1px solid var(--tableBorder) !important;
+	color: var(--textPrimaryColor) !important;
+	border-radius: 3px !important;
+	margin-right: 4px;
+}
+.note-icon-magic {
+	color: var(--textPrimaryColor);
+	margin-right: 2px;
+}
+// i {
+// 	color: var(--textPrimaryColor);
+// 	margin-right: 2px;
+// }
+.dropdown-toggle {
+	&::after {
+		margin-left: 2px;
+	}
+}
+.note-icon-caret {
+	&:before {
+		display: none !important;
+	}
+}
+.fullscreen {
+	background: var(--tableBorder) !important;
+}
+.input-style-to {
+	border-color: transparent !important;
+	background-color: transparent !important;
+	color: var(--textPrimaryColor);
+	outline: transparent !important;
+}
+.tagify {
+	width: 100%;
+	border-radius: 8px;
+	border: 1px solid var(--tableBorder) !important;
+    .tags-look {
+    	.tagify__dropdown__item {
+    		display: inline-block;
+    		border-radius: 10px !important;
+    		padding: 0.5em 0.5em !important;
+    		border: 1px solid var(--tableBorder) !important;
+    		margin: 0.2em;
+    		font-size: 0.85em;
+    		color: black;
+    		transition: 0s;
+    		&:hover {
+    			background: lightyellow;
+    			border-color: gold;
+    			color: rgb(66, 66, 66);
+    		}
+    	}
+    	.tagify__dropdown__item--active {
+    		color: var(--textPrimaryColor);
+    	}
+    }
+    .tagify__tag {
+    	border-radius: 12px !important;
+    	margin: 5px;
+    	background-color: var(--textPrimaryColor) !important;
+    	color: var(--textPrimaryColor);
+    }
+    .tagify--noAnim {
+    	border-radius: 12px !important;
+    }
+    .tagify__input {
+    	color: var(--textPrimaryColor) !important;
+    }
+}
+
+
+.form-check-input:checked {
+    background-color: #212529;
+    border-color: #ffffff;
+}

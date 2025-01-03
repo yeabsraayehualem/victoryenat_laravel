@@ -1,0 +1,71 @@
+/* inbox mail css start */
+.mail-sidebar {
+	border-right: 1px solid var(--tableBorder) !important;
+    
+}
+.table-border {
+    border: 1px solid var(--tableBorder) !important;
+    border-radius: 8px;
+}
+.table-border-bottom {
+    border-bottom: 1px solid var(--tableBorder) !important;
+   
+}
+
+// .strips {
+// 	background-color: var(--bg-header) !important;
+// }
+
+.accordion {
+	background-color: transparent !important;
+	border: none !important;
+}
+.accordion-item {
+	background-color: transparent !important;
+	border: none !important;
+}
+.accordion-header {
+	background-color: transparent !important;
+	border: none !important;
+}
+.accordion-button {
+	background-color: transparent !important;
+	border: none !important;
+	border-bottom: 1px solid var(--tableBorder) !important;
+	color: var(--text-primary-color);
+	&::after {
+		background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='rgba(193, 195, 205, 1)' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' d='M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z' clip-rule='evenodd'/%3e%3c/svg%3e");
+        transform: scale(.7) !important;
+		background-color: transparent !important;
+	}
+	&:not(.collapsed) {
+		&::after {
+			background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='rgba(193, 195, 205, 1)' xmlns='http://www.w3.org/2000/svg'%3e%3cpath fill-rule='evenodd' d='M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z' clip-rule='evenodd'/%3e%3c/svg%3e");
+            background-color: transparent !important;
+		}
+		color: var(--text-primary-color);
+		box-shadow: none !important;
+	}
+	:focus {
+		outline: none;
+		border-radius: 4px;
+		box-shadow: none;
+	}
+}
+
+.mail-icon {
+	width: 26px;
+	height: 26px;
+	border: 1px solid var(--tableBorder) !important;
+	border-radius: 3px;
+}
+.icon-color {
+	stroke: #c1c6d1;
+	color: var(--text-dark);
+}
+.icon-color-fill {
+	fill: var(--textPrimaryColor) !important;
+}
+
+
+/*Inbox mail css end*/ 

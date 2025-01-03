@@ -1,0 +1,179 @@
+@import "../../scss/variables/variables";
+$widget-back: "../img/widget-back.png";
+
+.dashboard {
+  .menu-btn {
+    color: #afb9bf;
+    background-color: rgba(175, 185, 191, 0.15);
+    width: 2rem;
+    height: 2rem;
+  }
+  .bg-blue-light {
+    background-color: var(--headerSearchBg);
+  }
+  .demo-mobile-month-view {
+    height: 100%;
+  }
+  .demo-mobile-month-view {
+    height: 100px;
+  }
+  .mbsc-ios.mbsc-calendar-button.mbsc-button {
+    color: var(--textPrimaryColor);
+    font-size: var(--fs-18);
+    font-weight: bold;
+  }
+  .mbsc-ios.mbsc-selected .mbsc-calendar-cell-text {
+    background-color: $text-primary-color-light;
+    border-color: $text-primary-color-light;
+  }
+  .mbsc-calendar-cell:first-child {
+    display: none;
+  }
+  .table {
+    thead {
+      th {
+        border: none !important;
+        background-color: var(--tableheadBg);
+        padding: 0.75rem 1rem;
+      }
+    }
+    tbody {
+      border-color: var(--inputBorder);
+      border-style: solid;
+      border-width: 0px 1px 1px 1px;
+      td,
+      th {
+        padding: 1rem;
+        border-bottom: 1px solid var(--inputBorder);
+      }
+    }
+    > {
+      :not(caption) {
+        > * {
+          > * {
+            vertical-align: middle !important;
+          }
+        }
+      }
+    }
+  }
+  .mbsc-event-list-scroll {
+    &::-webkit-scrollbar {
+      width: 5px !important;
+    }
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: var(--acCardBg);
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: var(--main-color-dark);
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: var(--topHeaderBg);
+    }
+  }
+
+  .mbsc-ios.mbsc-eventcalendar .mbsc-calendar-header,
+  .mbsc-ios.mbsc-eventcalendar .mbsc-calendar-week-days {
+    background-color: var(--acCardBg);
+  }
+  .appointment {
+    .card-header {
+      border-bottom: 1px solid var(--inputBorder);
+    }
+  }
+  .mbsc-ios.mbsc-calendar {
+    color: var(--secondaryText);
+  }
+  .mbsc-ios.mbsc-calendar-cell,
+  .mbsc-ios.mbsc-event-day.mbsc-list-header {
+    background-color: var(--acCardBg);
+    border-color: var(--inputBorder);
+    color: var(--secondaryText);
+  }
+  .mbsc-ios.mbsc-event.mbsc-list-item {
+    background-color: var(--acCardBg);
+    color: var(--secondaryText);
+  }
+  .mbsc-ios.mbsc-event.mbsc-list-item:after,
+  .mbsc-ios.mbsc-calendar-wrapper {
+    border-color: var(--inputBorder);
+  }
+}
+.widget-labels {
+  p {
+    span {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      display: block;
+    }
+    &.badge-1 {
+      span {
+        background-color: #eff6fa;
+      }
+    }
+    &.badge-2 {
+      span {
+        background-color: #122358;
+      }
+    }
+    &.badge-3 {
+      span {
+        background-color: #eca81d;
+      }
+    }
+    &.badge-4 {
+      span {
+        background-color: #2095d8;
+      }
+    }
+  }
+}
+
+.canvasjs-chart-credit {
+  display: none !important;
+}
+
+.report-list-bg {
+  background-color: var(--headerSearchBg);
+}
+
+.rounded-top-left {
+  border-top-left-radius: 8px;
+}
+.rounded-top-right {
+  border-top-right-radius: 8px;
+}
+.progress {
+  height: 8px;
+}
+.trend-table {
+  height: 41.95rem;
+  overflow-y: auto;
+}
+.datatable {
+  .ac-simple-tbl {
+    th {
+      color: none !important;
+      background-color: none !important;
+    }
+    .table-head-bg {
+      color: var(--textPrimaryColor);
+      background-color: #edeff2 !important;
+    }
+  }
+}
+
+thead {
+  .table-header{
+  border-bottom: 1px solid var(--tableBorder) !important;
+}
+}
+
+
+

@@ -1,0 +1,68 @@
+.doctors-details{
+.patientlist{
+margin-bottom: 16px;
+padding: 12px;
+background-color: var(--bg-lightgrey);
+border-radius: $radius-8;
+}
+.profile-img{
+    height: 46px;
+    width: 46px;
+}
+  .mbsc-ios.mbsc-calendar-button.mbsc-button {
+    color: var(--textPrimaryColor);
+    font-size: var(--fs-18);
+    font-weight: bold;
+  }
+  .mbsc-ios.mbsc-selected .mbsc-calendar-cell-text {
+    background-color: $text-primary-color-light;
+    border-color: $text-primary-color-light;
+  }
+  .mbsc-calendar-cell:first-child {
+    display: none;
+  }
+.mbsc-event-list-scroll {
+    height: 200px;
+	&::-webkit-scrollbar {
+		width: 5px !important;
+	}
+	/* Track */
+	&::-webkit-scrollbar-track {
+	background: var(--acCardBg);
+	}
+	
+	/* Handle */
+	&::-webkit-scrollbar-thumb {
+	background: var(--main-color-dark); 
+	}
+	
+	/* Handle on hover */
+	&::-webkit-scrollbar-thumb:hover {
+	background: var(--topHeaderBg); 
+	}
+}
+
+.mbsc-ios.mbsc-eventcalendar .mbsc-calendar-header, .mbsc-ios.mbsc-eventcalendar .mbsc-calendar-week-days{
+	background-color: var(--acCardBg);
+  }
+  .appointment{
+	.card-header{
+		border-bottom: 1px solid var(--inputBorder);
+	}
+  }
+  .mbsc-ios.mbsc-calendar{
+	color: var(--secondaryText);
+  }
+  .mbsc-ios.mbsc-calendar-cell, .mbsc-ios.mbsc-event-day.mbsc-list-header{
+	background-color: var(--acCardBg);
+	border-color: var(--inputBorder);
+    color: var(--secondaryText);
+  }
+  .mbsc-ios.mbsc-event.mbsc-list-item {
+	background-color: var(--acCardBg);
+    color: var(--secondaryText);
+  }
+  .mbsc-ios.mbsc-event.mbsc-list-item:after, .mbsc-ios.mbsc-calendar-wrapper {
+	border-color: var(--inputBorder);
+  }
+}

@@ -1,0 +1,18 @@
+
+@import "../utilities/_colors.scss";
+@import "../lightdarkmode/light-dark-theme";
+@import "../variables/variables";
+@import "../elements/form-controls";
+
+.rounded-8{
+	border-radius: $radius-8 !important;
+}
+.range-slider-primary::-webkit-slider-thumb {
+	background-color: var(--btnPrimary); 
+  }
+  .range-slider-danger::-webkit-slider-thumb {
+	background-color: red; 
+  }
+  .range-slider-success::-webkit-slider-thumb {
+	background-color: green; 
+  }

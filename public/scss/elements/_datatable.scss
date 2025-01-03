@@ -1,0 +1,132 @@
+@import "../utilities/colors";
+@import "../variables/variables";
+
+/* simple table */
+.ac-table {
+  .ac-simple-tbl {
+    @include ac-simple-table;
+  }
+
+  /* bordered table */
+  .ac-bordered-tbl {
+    @include ac-bordered-table;
+  }
+
+  /* strip table */
+  .ac-striped-tbl {
+    @include ac-striped-table;
+  }
+
+  /* condensed table */
+  .ac-condensed-tbl {
+    @include ac-condensed-table;
+  }
+
+
+  /* table design */
+
+  .table-title {
+    background-color: var(--tableTitle) !important;
+  }
+
+  /* datatable css */
+
+  .collapsed {
+    .dt-hasChild {
+      .dtr-control {
+        &::before {
+          content: "▼";
+        }
+      }
+    }
+
+    .dtr-control {
+      &::before {
+        margin-right: 0.5em;
+        display: inline-block;
+        color: rgba(0, 0, 0, 0.5);
+        content: "►";
+      }
+    }
+  }
+
+  .dataTables_filter {
+    display: flex;
+    width: 100%;
+    padding: 16px 24px;
+
+    input {
+      @extend .rounded-4;
+      border: 1px solid rgba(208, 213, 221, 0.5) !important;
+      box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+      padding: 6px 12px !important;
+      min-width: 400px;
+      width: 100%;
+      height: 42px;
+      color: var(--textPrimaryColor);
+    }
+  }
+
+  .dt-buttons {
+    @extend .rounded-4;
+    @extend .overflow-hidden-xy;
+    @extend .display-inline-flex;
+    margin-left: auto;
+
+    button {
+      margin: 0 !important;
+      border: 0 !important;
+      background-color: $primary-bg !important;
+      color: $white !important;
+      @extend .rounded-0;
+    }
+  }
+
+  .dataTables_paginate {
+    @extend .pt-16;
+    @extend .pb-16;
+    @extend .px-24;
+    @extend .display-inline-flex;
+    @extend .gap-12;
+
+    span {
+      @extend .display-inline-flex;
+      @extend .gap-12;
+    }
+  }
+
+  .paginate_button {
+    // border: 1px solid var(--paginationBtn) !important;
+    border: 1px solid $disable !important;
+    @extend .rounded-4;
+    background: transparent !important;
+    color: $disable !important;
+    height: $size-42;
+
+
+    &.current {
+      background-color: transparent !important;
+      color: $disable !important;
+    }
+  }
+
+  &.ac-simple-datatable {
+    .dt-buttons {
+      display: none;
+    }
+  }
+ 
+  .dataTables_info {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    min-height: 74px;
+    justify-content: center;
+    padding: $size-16 $size-24;
+    color: var(--primaryText) !important;
+  }
+}
+
+
+
+/* datatable css */

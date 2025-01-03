@@ -1,0 +1,195 @@
+// bg colors
+
+$primary-bg: #6b2d78;
+$dark-bg: #121a1b;
+
+$graylight-bg: #e0e1e3;
+$graydark-bg: #3f4056;
+
+$icon-light: #464555;
+$icon-dark: #f6f7f9;
+
+$secondary-bg: #ae3a76;
+
+$light-bg: #f4ebff;
+
+$success-bg: #01a327;
+$info-bg: #0090a7;
+// top header
+
+$header-bg-light: #f4ebff;
+$header-bg-dark: #3f4056;
+
+$bodybg-light: #f9fafb;
+$bodybg-dark: #1e202f;
+
+$header-search-light: #f3f8fc;
+$header-search-dark: #1c2e4c;
+
+$cardbg-light: #ffffff;
+$cardbg-dark: #292a3e;
+
+$cardshadow-light: 0px 0px 50px 0px #523f6926;
+$cardshadow-dark: 0px 0px 50px 0px #6f687927;
+
+$navbg-light: #f0eaf2;
+$navbg-dark: rgba(44, 20, 49, 0.226);
+
+$main-color-dark: #1e202f;
+
+$sidebar-bg-light: #ffffff;
+$sidebar-bg-dark: #401b48;
+
+// text colors
+
+// text gray
+
+$text-gray: #8a92a6;
+$text-gray-light: #adb5bd;
+$text-primary-color-light: #39213e;
+$text-primary-color-dark: #f6f7f9;
+
+$primary-text-light: #6b2d78;
+$primary-text-dark: #f4ebff;
+
+$secondary-text-light: #6b7280;
+$secondary-text-dark: #e0e1e3;
+
+$tableheader-text-light: #667085;
+$tableheader-text-dark: #dde8ff;
+
+$text-grey-light: #3a3a3a;
+$text-grey-dark: #d6d6d6;
+
+// table colors
+
+$table-border-light: #e0e1e3;
+$table-border-dark: #3f4056;
+
+$tablehead-bg-light: #f9fafb;
+$tablehead-bg-dark: #323447;
+
+$table-stripe-light: #f9fafb;
+$table-stripe-dark: #2d2f43;
+
+$tableBG-light: White;
+$tableBG-dark: #1a2526;
+
+$tabletitle-light: #39213e;
+$tabletitle-dark: #f4ebff;
+
+$tabletheader-light: #f9fafb;
+$tabletheader-dark: #2d2f43;
+
+$tabletbackground-light: white;
+$tabletbackground-dark: #2d2f43;
+
+$tableBoredrColor-light: #e5e5ef;
+$tableBoredrColor-dark: #2a364b;
+
+$tableStripColor-light: #f9fafb;
+$tableStripColor-dark: #232637;
+
+$pagination-btn-light: #e5e5ef;
+$pagination-btn-dark: #1c2e4c;
+
+$table-header-text-light: #464555;
+$table-header-text-dark: #f6f7f9;
+// icon colors
+
+$icon-bg-light: #f0eaf2;
+$icon-bg-dark: #44455f;
+
+$chat-icon-light: rgb(9, 14, 12);
+$chat-icon-dark: rgb(255, 255, 255);
+
+// input colors
+
+$input-border-light: #d1d5db;
+$input-border-dark: #3f4056;
+
+// nav colors
+
+$navtab-border-light: #e5e5ef;
+$navtab-border-dark: #2a364b;
+
+$navtab-bg-light: #fff;
+$navtab-bg-dark: #fff;
+
+$activenavtabs-bg-light: #14276210;
+$activenavtabs-bg-dark: #e9ecef;
+
+$navlink-border-light: #142762;
+$navlink-border-dark: #142762;
+
+// customer colors
+$color_link: #017efa;
+$color_grey: #667085;
+
+$bg-light-header: #f9fafb;
+$bg-dark-header: #2d2f43;
+
+$checkbox-light: #1a2526;
+$checkbox-dark: #666d6e;
+
+$success: #027a48;
+
+$success-badge-text: #5bb943;
+$success-badge-bg: #d9f7e8;
+
+$badge-success-light: #ecfdf3;
+$badge-success-dark: #12493a;
+
+$info: #1186fa;
+$info-light: #d2e3ff;
+
+$card-border-light: #eaecf0;
+$card-border-dark: #1a2526;
+
+$text-border-dark: #1a2526;
+$text-border-light: #eaecf0;
+
+$innercard-bg-dark: #0b1010;
+$innercard-bg-light: #ffffff;
+
+$btn-primary-light: #6b2d78;
+$btn-primary-dark: #6b2d78;
+
+$bg-lightgrey-light: #f9fafb;
+$bg-lightblue-dark: #3f4056;
+
+$border-lightgrey-light: #edeff2;
+$border-lightblue-dark: #3f4056;
+
+$bg-clientchat-light: #f0eaf2;
+$bg-clientchat-dark: #44455f;
+
+$bg-userchat-light: #6b2d78;
+$bg-userchat-dark: #6b2d78;
+
+$bg-scroll-light: #f0eaf2;
+$bg-scroll-dark: #2a0b30;
+
+// button colors
+
+$secondary-btn: #ae3a76;
+$secondary-btn-hover: #9d346a;
+$secondary-btn-focus: #ae3a76;
+$secondary-btn-active: #832c59;
+
+$success: #28a745;
+$success-hover: #218838;
+$info: #17a2b8;
+$info-hover: #1592a6;
+$warning: #ffc107;
+$warning-hover: #e0a800;
+$danger: #dc3545;
+$danger-hover: #c82333;
+$link: #007bff;
+$dark: #282828;
+$disable: #bbc4cd;
+$white: #ffffff;
+$twitter: #1da1f2;
+$facebook: #3b5998;
+$lightgrey: #b9b9b9;
+$lightblue: #b5bcd1;

@@ -1,0 +1,10 @@
+@import "../utilities/_colors.scss";
+
+.bg-header {
+	background-color: var(--bg-header) !important;
+}
+.border-color {
+	border: 1px solid var(--tableBorder);
+}
+
+

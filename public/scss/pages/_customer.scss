@@ -1,0 +1,27 @@
+@import "../utilities/_colors.scss";
+@import "../lightdarkmode/light-dark-theme";
+
+.text-link {
+	color: $color_link;
+}
+.text-grey {
+	color: $color_grey;
+}
+.bg-header{
+background-color: var(--bg-header) !important;
+}
+.border-bottom{
+border-bottom: 1px solid var(--tableBorder) !important; 
+}
+.badge_success{
+background-color: var(--badgeSuccess) !important;
+}
+.primary-text{
+	color: var(--textPrimaryColor);
+}
+.secondary-text{
+color: var(--secondaryText);
+}
+.btn-border{
+	border: 1px solid var(--textPrimaryColor);
+}

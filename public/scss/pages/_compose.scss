@@ -1,0 +1,108 @@
+@import '../lightdarkmode/light-dark-theme';
+@import '../utilities/colors';
+@import '../mixin/mixin';
+
+/* compose mail css start*/
+
+
+
+.accordion {
+	@include accordian;
+	.accordion-header {
+		@include accordian;
+	}
+	.accordion-item {
+		@include accordian;
+	}
+}
+.accordion-button {
+	background-color: transparent !important;
+	border: none !important;
+	border-bottom: 1px solid var(--acCardborder) !important;
+	border-radius: 0px;
+	color: var(--card-heading);
+	&::after {
+		background-color: transparent !important;
+	}
+	&:not(.collapsed) {
+		color: var(--card-heading);
+		box-shadow: none !important;
+	}
+	&:focus {
+		outline: none;
+		box-shadow: none;
+	}
+}
+.mail-icon {
+	width: 26px;
+	height: 26px;
+	@include acborder;
+	border-radius: 3px;
+}
+.icon-color {
+	stroke: #667085;
+	color: var(--text-dark);
+}
+.icon-color-fill {
+	fill: #1a2526 !important;
+}
+.note-editor.note-airframe {
+	border: none !important;
+}
+.note-editor.note-frame {
+	border: none !important;
+	.note-statusbar {
+		border: none !important;
+	}
+	.note-editing-area {
+		.note-editable {
+			color: var(--card-heading);
+		}
+	}
+}
+.note-toolbar {
+	border: none !important;
+	background-color: transparent !important;
+}
+.note-resizebar {
+	display: none;
+}
+.note-btn {
+	background-color: transparent !important;
+	@include acborder;
+	color: var(--acSecondaryText) !important;
+}
+.note-icon-magic {
+	// color: var(--card-heading);
+	margin-right: 2px;
+}
+
+.dropdown-toggle {
+	&::after {
+		margin-left: 2px;
+	}
+}
+.note-editable {
+	color: var(--text-primary);
+}
+.note-icon-caret {
+	&:before {
+		display: none !important;
+	}
+}
+.fullscreen {
+	background: #EAECF0 !important;
+}
+.input-style-to {
+	border: none !important;
+	border-color: transparent !important;
+	background-color: transparent !important;
+	color: var(--card-heading);
+	outline: transparent !important;
+}
+
+.icon-color-fill {
+	fill: var(--textPrimaryColor) !important;
+}
+/* compose mail css end*/
+

@@ -1,0 +1,117 @@
+@import "../../scss/mixin/mixin";
+@import "../../scss/variables/variables";
+@import "../../scss/utilities/colors";
+
+/* Button css*/
+
+  /* Primary buttons */
+  @each $size, $props in $button-sizes {
+    .primary-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2), $primary-bg, $white, 1px solid var(--btnPrimary), var(--btnPrimary), $white,$primary-bg,var(--btnPrimary));
+    }
+  }
+  
+  /* Secondary buttons */
+  @each $size, $props in $button-sizes {
+    .secondary-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2), $secondary-btn, $white,1px solid $secondary-btn,$secondary-btn-hover, $white, $secondary-btn, $secondary-btn);
+    }
+  }
+  
+  /* Success buttons */
+  @each $size, $props in $button-sizes {
+    .success-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2), $success, $white, 1px solid $success, $success-hover, $white, $success, $success);
+    }
+  }
+  
+  /* Warning buttons */
+  @each $size, $props in $button-sizes {
+    .warning-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2), $warning, $text-primary-color-light, 1px solid $warning, $warning-hover, $text-primary-color-light, $warning, $warning);
+    }
+  }
+  
+  /* Info buttons */
+  @each $size, $props in $button-sizes {
+    .info-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2), $info, $text-primary-color-light, 1px solid $info, $info-hover, $text-primary-color-light, $info, $info);
+    }
+  }
+  /* danger buttons */
+  @each $size, $props in $button-sizes {
+    .danger-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2),$danger, $white, 1px solid $danger, $danger-hover, $white, $danger, $danger);
+    //     @include acButton(16px,12px 24px,$danger, $white,0,$danger-hover,$white,$danger)
+    }
+  }
+  /* disabled buttons */
+  @each $size, $props in $button-sizes {
+    .disabled-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2), $disable, $white, 1px solid $disable, $disable, $white, $white, $disable);
+    }
+  }
+
+
+/* ----------outline buttons----------------- */
+
+@each $size, $props in $button-sizes {
+    .outline-primary-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2),transparent, var(--primaryText), 1px solid var(--btnPrimary), var(--btnPrimary), $white, $primary-bg, var(--btnPrimary));
+    }
+  }
+  
+  /* Secondary buttons */
+  @each $size, $props in $button-sizes {
+    .outline-secondary-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2), transparent, $secondary-btn, 1px solid $secondary-btn,$secondary-btn-hover, $white, $secondary-btn, $secondary-btn);
+    }
+  }
+  
+  /* Success buttons */
+  @each $size, $props in $button-sizes {
+    .outline-success-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2), transparent, $success, 1px solid $success, $success-hover, $white, $success, $success);
+    }
+  }
+  
+  /* Warning buttons */
+  @each $size, $props in $button-sizes {
+    .outline-warning-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2), transparent, $warning, 1px solid $warning, $warning-hover, $text-primary-color-light, $warning, $warning);
+    }
+  }
+  
+  /* Info buttons */
+  @each $size, $props in $button-sizes {
+    .outline-info-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2), transparent, $info, 1px solid $info, $info-hover, $text-primary-color-light, $info, $info);
+    }
+  }
+
+  /* danger buttons */
+  @each $size, $props in $button-sizes {
+    .outline-danger-btn-#{$size} {
+      @include acButtonCommon(nth($props, 1), nth($props, 2),transparent, $danger, 1px solid $danger, $danger-hover, $white, $danger, $danger);
+    }
+  }
+
+  /* disabled buttons */
+  @each $size, $props in $button-sizes {
+    .outline-disabled-btn-#{$size} {
+        @include acButtonCommon(nth($props, 1), nth($props, 2), transparent, $disable, 1px solid $disable, transparent, $disable, $white, $disable);
+    }
+   }
+  
+/* outline buttons */
+
+
+@media (min-width: 767.98px) {
+  .my-content {
+    overflow: hidden !important;
+  }
+}
+
+/* button css */
+
+  

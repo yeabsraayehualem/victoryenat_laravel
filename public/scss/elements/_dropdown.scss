@@ -1,0 +1,17 @@
+.topbar-right {
+  .dropdown-toggle::after {
+    display: none;
+  }
+  .dropdownmenu-profile{
+    max-width: 230px;
+    top: calc(100% - 20px) !important;
+      .bxs-chevron-down {
+        &:before {
+          content: "\ea27";
+          color: var(--acPrimaryText);
+        }
+      }
+    }
+}
+
+

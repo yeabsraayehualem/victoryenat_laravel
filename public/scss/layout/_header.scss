@@ -1,0 +1,75 @@
+@import "../variables/variables";
+
+/* header css starts */
+
+.light-mode-i {
+	display: none;
+	path {
+		fill: #fff;
+		stroke: #fff;
+	}
+}
+.dakr-mode-i {
+	display: none;
+}
+.dark-mode {
+	.dark-mode-i {
+		display: none;
+	}
+	.light-mode-i {
+		width: 24px;
+		display: block;
+	}
+}
+nav{
+	.nav-item{
+		gap: 24px!important;
+	}
+}
+.top-navbar {
+	background: linear-gradient(162deg, #5D3362 0%, #833DAA 100%);
+	.notify {
+		background-color: var(--background-color);
+		width: 40px;
+		height: 40px;
+	}
+	.badge {
+		top: 30%;
+		right: 10%;
+	}
+	.topbar-right {
+		.dropdown-toggle {
+			&::after {
+				display: none;
+			}
+		}
+	}
+}
+.search {
+	display: grid;
+	grid-template-columns: 1.5rem 1fr;
+	align-items: center;
+	max-width: 450px;
+	text-align: center;
+	border-radius: 8px;
+	// background-color: var(--headerSearchBg);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+	cursor: pointer;
+	padding: 10px;
+	color: #ffffff;
+	input {
+		height: 100%;
+		border: none;
+		background: none;
+		outline: none;
+		color: #ffffff;
+		caret-color: #ffffff;
+		font-family: inherit;
+		&::placeholder {
+			color: #ffffff;
+		}
+	}
+}
+
+/* header css Ends */

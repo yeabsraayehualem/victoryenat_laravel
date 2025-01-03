@@ -1,0 +1,16 @@
+.table-header th {
+    @extend .secondary-text;
+    font-weight: 500;
+    background-color: var(--bg-header) !important;
+}
+.th-border-end {
+    border: 1px solid var(--tableBorder) !important;
+}
+.ac-table .ac-bordered-tbl td{
+    border: 1px solid var(--tableBorder) !important;
+}
+.table-background{
+tbody td {
+    @extend .secondary-text;
+}
+}

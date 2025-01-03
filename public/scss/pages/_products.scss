@@ -1,0 +1,24 @@
+/* orders page */
+.course-img {
+  width: 32px !important;
+  height: 32px !important;
+}
+#producttable_filter {
+  label {
+    input {
+      color: var(--text-primary-color);
+    }
+  }
+}
+// button {
+// 	color: var(--text-primary-color) !important;
+// 	border-color: #d0d5dd !important;
+// 	border-radius: 8px !important;
+// }
+.btn-outline-primary {
+  &:hover {
+    color: #fff !important;
+    background-color: #8d8d8d !important;
+    border-color: #d0d5dd !important;
+  }
+}

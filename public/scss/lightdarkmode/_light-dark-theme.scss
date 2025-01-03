@@ -1,0 +1,218 @@
+@import "../utilities/colors";
+
+$themes: (
+  bodyBg:(
+    darkTheme: $bodybg-dark,
+    lightTheme: $bodybg-light
+  ),
+  sidebarBg:(
+    darkTheme:$sidebar-bg-dark,
+    lightTheme: $sidebar-bg-light
+  ),
+  headerSearchBg:(
+    darkTheme: $header-search-dark,
+    lightTheme: $header-search-light
+  ),
+  acCardBg:(
+    darkTheme:$cardbg-dark,
+    lightTheme: $cardbg-light
+  ),
+  topHeaderBg:(
+    lightTheme: $header-bg-light,
+    darkTheme: $header-bg-dark
+  ),
+  acPrimaryText:(
+    darkTheme:$primary-text-dark,
+    lightTheme: $primary-text-light
+  ),
+  acSecondaryText:(
+    darkTheme:$secondary-text-dark,
+    lightTheme:  $secondary-text-light
+  ),
+  bg-header:(
+    darkTheme: $bg-dark-header,
+    lightTheme:  $bg-light-header
+  ),
+  acTableHeadBg:(
+    darkTheme:$tablehead-bg-dark,
+    lightTheme: $tablehead-bg-light
+  ),  
+  textPrimaryColor:(
+    lightTheme: $text-primary-color-light,
+    darkTheme: $text-primary-color-dark
+  ),
+  primaryText:(
+    lightTheme: $primary-text-light,
+    darkTheme: $primary-text-dark
+  ),
+  secondaryText:(
+    lightTheme: $secondary-text-light,
+    darkTheme: $secondary-text-dark
+  ),
+  tableheader-text:(
+    lightTheme:  $tableheader-text-light,
+    darkTheme:  $tableheader-text-dark
+  ),
+  text-grey:(
+    lightTheme:  $text-grey-light,
+    darkTheme: $text-grey-dark
+  ),
+  bg-grey:(
+    lightTheme: $graylight-bg,
+    darkTheme: $graydark-bg
+  ),
+  icon-color:(
+    lightTheme: $icon-light,
+    darkTheme: $icon-dark
+  ),
+  tableBorder:(
+    lightTheme:  $table-border-light,
+    darkTheme: $table-border-dark
+  ),
+  acBorderlightgrey:(
+    lightTheme: $border-lightgrey-light,
+    darkTheme: $border-lightblue-dark
+  ),
+  tableheadBg:(
+    lightTheme:  $tablehead-bg-light,
+    darkTheme: $tablehead-bg-dark
+  ),
+  tabelBG:(
+    lightTheme: $tableBG-light,
+    darkTheme:$tableBG-dark
+  ),
+  tableStripe:(
+    lightTheme:  $table-stripe-light,
+    darkTheme:  $table-stripe-dark
+  ),
+  iconBg:(
+    lightTheme: $icon-bg-light,
+    darkTheme: $icon-bg-dark
+  ),
+  chatIcon:(
+    lightTheme: $chat-icon-light,
+    darkTheme: $chat-icon-dark
+  ),
+  inputBorder:(
+    lightTheme: $input-border-light,
+    darkTheme: $input-border-dark
+  ),
+  navtabBorder:(
+    lightTheme:  $navtab-border-light,
+    darkTheme:  $navtab-border-dark
+  ),
+  navtabsBg:(
+    lightTheme: $navtab-bg-light,
+    darkTheme: $navtab-bg-dark
+  ),
+  activenavtabsBg:(
+    lightTheme:  $activenavtabs-bg-light,
+    darkTheme:  $activenavtabs-bg-dark
+  ),
+  navlinkBorder:(
+    lightTheme: $navlink-border-light,
+    darkTheme: $navlink-border-dark
+  ),
+  checkbox:(
+    lightTheme: $checkbox-light,
+    darkTheme:   $checkbox-dark
+  ),
+  submitBtn:(
+    lightTheme: $checkbox-light,
+    darkTheme:   $checkbox-dark
+  ),
+  tableTitle:(
+    lightTheme:  $tabletitle-light,
+    darkTheme:  $tabletitle-dark
+  ),
+  tabelHeader:(
+    lightTheme:  $tabletheader-light,
+    darkTheme:   $tabletheader-dark
+  ),
+  tableBackground:(
+    lightTheme: $tabletbackground-light,
+    darkTheme:  $tabletbackground-dark
+  ),
+  tabelBorder:(
+    lightTheme: $tableBoredrColor-light,
+    darkTheme:   $tableBoredrColor-dark
+  ),
+  tableStripColor:(
+    lightTheme: $tableStripColor-light,
+    darkTheme:   $tableStripColor-dark
+  ),
+  tableHeaderTxtColor:(
+    lightTheme: $table-header-text-light,
+    darkTheme:   $table-header-text-dark
+  ),
+
+  badgeSuccess:(
+  lightTheme: $badge-success-light,
+  darkTheme:  $badge-success-dark
+  ),
+  acCardborder:(
+    lightTheme: $card-border-light,
+    darkTheme: $card-border-dark
+  ),
+  acCardshadow:(
+  lightTheme: $cardshadow-light,
+  darkTheme: $cardshadow-dark
+  ),
+  acNavbg:(
+  lightTheme: $navbg-light,
+  darkTheme: $navbg-dark
+  ),
+  acTextborder:(
+    lightTheme: $text-border-light,
+    darkTheme: $text-border-dark
+  ),
+  innerCardbg:(
+    lightTheme: $innercard-bg-light,
+    darkTheme:$innercard-bg-dark
+  ),
+  headerShadow:(
+    lightTheme: $ac-shadow-light,
+    darkTheme:$ac-shadow-dark
+  ),
+  btnPrimary:(
+    lightTheme: $btn-primary-light,
+    darkTheme: $btn-primary-dark
+  ),
+  paginationBtn:(
+    lightTheme: $pagination-btn-light,
+    darkTheme: $pagination-btn-dark
+  ),
+  bg-lightgrey:(
+    lightTheme: $bg-lightgrey-light,
+    darkTheme: $bg-lightblue-dark
+  ),
+  bg-clientchatbox:(
+    lightTheme: $bg-clientchat-light,
+    darkTheme: $bg-clientchat-dark
+  ),
+  bg-userchatbox:(
+    lightTheme: $bg-userchat-light,
+    darkTheme: $bg-userchat-dark
+  ),
+  bg-scroll:(
+    lightTheme:$bg-scroll-light,
+    darkTheme:$bg-scroll-dark,
+  )
+);
+@mixin styles($mode) {
+  @each $key, $map in $themes {
+    @each $prop, $color in $map {
+      @if $prop == $mode {
+        --#{$key}: #{$color};
+      }
+    }
+  }
+}
+
+.dark-mode {
+  @include styles("darkTheme");
+}
+
+.light-mode {
+  @include styles("lightTheme");
+}

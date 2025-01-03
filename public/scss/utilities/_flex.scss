@@ -1,0 +1,21 @@
+@import "../variables/variables";
+
+/* Flex classes */
+
+.gap-12 {
+	gap: $size-12;
+}
+
+.gap-16 {
+	gap: $size-16;
+}
+
+.gap-24 {
+	gap: $size-24;
+}
+
+.display-inline-flex {
+    display: inline-flex;
+}
+
+/* Flex classes */

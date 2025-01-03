@@ -1,0 +1,322 @@
+@import "../../scss/mixin/mixin";
+@import "../variables/variables";
+@import "../utilities/colors";
+
+/* margin classes */
+
+.mt-32 {
+  margin-top: 32px;
+}
+.w-15 {
+  width: 10%;
+}
+.mb-32 {
+  margin-bottom: 32px;
+}
+
+.mt-nt-16 {
+  margin-top: -16px !important;
+}
+
+/* margin classes */
+
+/* Font-weight*/
+.fw-500{
+  font-weight: 500;
+}
+/* Font-weight*/
+
+
+/* padding classes */
+
+.p-8 {
+  padding: $size-8;
+}
+
+.p-32 {
+  padding: 32px;
+}
+
+.px-20 {
+  padding: 0px 20px;
+}
+
+.px-24 {
+  padding: $size-0 $size-24;
+}
+
+.pb-32 {
+  padding-bottom: 32px;
+}
+
+.pt-16 {
+  padding-top: $size-16 !important;
+}
+
+.pb-16 {
+  padding-bottom: $size-16 !important;
+}
+/* padding classes */
+
+/* Spacing classes */
+
+.gap-12 {
+  gap: 0.75rem;
+}
+/* Spacing classes */
+
+/* status tags */
+
+.table-tags-danger {
+  @include statustags(#dd2724, rgba(221, 39, 36, 0.116));
+}
+
+.table-tags-warning {
+  @include statustags(rgb(211, 155, 0), hsla(44, 100%, 41%, 0.116));
+}
+
+.table-tags-success {
+  @include statustags(#027a48, rgba(2, 122, 72, 0.116));
+}
+.table-tags-primary {
+  @include statustags(#AE3A76, rgba(247, 235, 241, 1));
+}
+
+.table-tags-gray {
+  @include statustags(rgb(128, 128, 128), rgba(128, 128, 128, 0.123));
+}
+
+.table-tags-info {
+  @include statustags(#1186fa, rgba(17, 133, 250, 0.116));
+}
+
+/* status tags */
+
+.rounded-0 {
+  @include border-radius(0);
+}
+
+.rounded-4 {
+  @include border-radius(4);
+}
+
+.rounded-8 {
+  @include border-radius(8);
+}
+
+.rounded-10 {
+  @include border-radius(10);
+}
+
+/* background and border color common classes */
+.primary-bg-border {
+	@include set-bg-border-hover-color(var(--btnPrimary), var(--btnPrimary));
+}
+
+.success-bg-border {
+	@include set-bg-border-hover-color($success, $success-hover);
+}
+
+.warning-bg-border {
+	@include set-bg-border-hover-color($warning, $warning-hover);
+}
+
+.info-bg-border {
+	@include set-bg-border-hover-color($info, $info-hover);
+}
+
+.danger-bg-border {
+	@include set-bg-border-hover-color($danger, $danger-hover);
+}
+
+/* background and border color common classes */
+
+/* predefined text classes */
+
+.primary-text {
+  color: var(--acPrimaryText) !important;
+}
+
+.text-prime-color {
+  color: var(--textPrimaryColor);
+}
+.border-grey{
+  border: 1px solid var(--acBorderlightgrey);
+}
+.secondary-text {
+  color: var(--secondaryText) !important;
+}
+
+.text-secondary-color {
+  color: var($text-grey-light);
+}
+
+.text-grey {
+  color: var(--text-grey);
+}
+.text-dark{
+  color: var(--text-grey)!important;
+}
+
+.text-gray-light {
+  color: $text-gray-light !important;
+}
+
+/* letter spacing classes */
+
+/* predefined text classes */
+
+/* border bottom*/
+.input-border-bottom {
+  border-bottom: 1px solid var(--acTextborder) !important;
+}
+
+/* border bottom*/
+.h-10{
+  height: 10% !important;
+}
+
+.accardinbg {
+  background-color: var(--innerCardbg);
+}
+
+.img-fluid{
+  .read-mail-img{
+    object-fit: cover;
+    height:90px;
+  }
+}
+/* overflow classes */
+
+.overflow-y-auto {
+  overflow-y: auto !important;
+}
+
+.overflow-hidden-xy {
+  overflow-y: hidden !important;
+}
+
+/* overflow classes */
+
+// line height classes
+
+.lh-16 {
+	line-height: $size-16;
+}
+
+.success-badge {
+  color: $success-badge-text;
+  background-color: $success-badge-bg;
+  padding: 6px;
+}
+.primary-bg {
+  background-color: $primary-bg;
+}
+.secondary-bg {
+  background-color: $secondary-bg;
+}
+.light-bg{
+  background-color: $light-bg;
+}
+.success-bg{
+  background-color: $success-bg;
+}
+.info-bg{
+  background-color: $info-bg;
+}
+.form-switch {
+  .form-check-input:checked {
+    background-color: $lightblue !important;
+    border-color: transparent;
+  }
+}
+.twitter-icon-bg {
+  color: $twitter !important;
+}
+.facebook-icon-bg {
+  color: $facebook !important;
+}
+.insta-icon {
+  background-image: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fdf497 5%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.lightgrey {
+  color: $lightgrey;
+}
+.bg-lightgrey {
+  background-color: $lightgrey;
+}
+.bglightgrey {
+  background-color: var(--bg-lightgrey);
+}
+.btnPrimary {
+  background-color: var(--btnPrimary);
+}
+// modals
+.modal-overlay {
+  background-color: #666f76;
+  border-radius: 8px;
+  position: relative;
+  .loader {
+    position: absolute;
+    top: 40%;
+    left: 45%;
+    background: transparent !important;
+    z-index: 9999;
+  }
+}
+.icon-btn-secondary {
+  color: $secondary-btn;
+}
+.icon-btn-info {
+  color: $info;
+}
+.icon-btn-warning {
+  color: $warning;
+}
+.icon-btn-success {
+  color: $success;
+}
+.icon-btn-danger {
+  color: $danger;
+}
+
+/* scroll css */
+
+/* Style the scrollbar track */
+::-webkit-scrollbar {
+  width: 8px; /* width of the scrollbar */
+  height: 8px;
+}
+
+/* Style the scrollbar thumb (the draggable handle) */
+::-webkit-scrollbar-thumb {
+  background-color: var(--bg-scroll); /* color of the thumb */
+  border-radius: 5px; /* rounded corners of the thumb */
+}
+
+/* Style the scrollbar track when the user hovers over it */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #6B2D78; /* color of the thumb on hover */
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: transparent; /* color of the track */
+}
+
+/* Style the scrollbar track when the user hovers over it */
+::-webkit-scrollbar-track:hover {
+  background-color: transparent; /* color of the track on hover */
+}
+
+/* Scroll end */ 

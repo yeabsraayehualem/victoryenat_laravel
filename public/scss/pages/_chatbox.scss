@@ -1,0 +1,56 @@
+.chatbox-search {
+	display: grid;
+	grid-template-columns: 1.5rem 200px;
+	align-items: center;
+	text-align: center;
+	border-radius: 8px;
+	border: 1px solid var(--inputBorder);
+	cursor: pointer;
+	padding: 10px;
+	// color: green;
+	input {
+		max-width: 50%;
+		height: 100%;
+		border: none;
+		background: none;
+		outline: none;
+		color: #8a8a8a;
+		caret-color: #8a8a8a;
+		font-family: inherit;
+		&::placeholder {
+			color: #8a8a8a;
+		}
+	}
+}
+
+.user-status-active{
+	position: absolute;
+	top:34px;
+	left:34px;
+	width: 12px;
+    height: 12px;
+    display: inline-block;
+    border-radius: 50%;
+	border: 1px solid #fff;
+}
+.user-msg{
+	padding: 1px 8px!important;
+}
+
+.chatbox {
+	.client {
+		.client-chat {
+			background: var(--bg-clientchatbox);
+			clip-path: polygon(0 0, 100% 0%, 100% 75%, 5% 76%, 0 100%, 0 76%);
+		}
+	}
+	.user {
+		.user-chat {
+			background: var(--bg-userchatbox);
+			clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 100% 100%, 95% 75%, 0% 75%);
+		}
+	}
+}
+.chat-sidebar {
+	border-right: 1px solid var(--tableBorder) !important;
+  }

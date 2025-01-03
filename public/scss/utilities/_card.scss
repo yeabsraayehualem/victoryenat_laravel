@@ -1,0 +1,36 @@
+
+/* card css starts */
+.ac-card {
+    // box-shadow: 0px 10px 13px 0px rgba(17, 38, 146, 0.05);
+    box-shadow: 0px 4px 20px 0px rgba(172, 172, 172, 0.11);
+    border: 0;
+    border-radius: 0.5rem;
+    background-color: var(--acCardBg);
+    .ac-card-header {
+        background-color: var(--primary-bg);
+        border: 0;
+        border-radius:  0.5rem 0.5rem 0 0 !important;
+        padding: 16px;
+        .ac-card-title {
+            color: var(--acPrimaryText);
+            font-size: var(--fs-18);
+            font-weight: 600;
+            margin: 0;
+        }
+    }
+    .ac-card-heading{
+        font-size: $fs-18;
+        font-weight: $fw-600;
+        padding: $size-16;
+        margin-bottom: 0px;
+        color: var(--acPrimaryText);
+    }
+    .ac-card-body {
+        padding: 16px;
+    }
+}
+/* card css Ends */
+
+
+
+

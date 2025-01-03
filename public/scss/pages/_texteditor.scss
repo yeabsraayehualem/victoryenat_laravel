@@ -1,0 +1,37 @@
+.ac-text-editor {
+  i {
+    color: var(--textPrimaryColor);
+    margin-right: 2px;
+  }
+  .note-editable {
+    min-height: 400px !important;
+    color: var(--text-black);
+  }
+  .note-toolbar {
+    border-bottom: 1px solid var(--tableBorder) !important;
+    background-color: transparent !important;
+    padding: 8px !important;
+  }
+  .note-btn {
+    background-color: transparent !important;
+    border: 1px solid var(--tableBorder) !important;
+    color: var(--textPrimaryColor) !important;
+  }
+  .note-btn-group {
+    margin-top: 0px !important;
+  }
+  .note-icon-caret {
+    &:before {
+      display: none !important;
+    }
+  }
+  .note-editor.note-airframe {
+    border: 1px solid var(--tableBorder) !important;
+  }
+  .note-editor.note-frame {
+    border: 1px solid var(--tableBorder) !important;
+  }
+  .fullscreen {
+    background: var(--bodyBg) !important;
+  }
+}

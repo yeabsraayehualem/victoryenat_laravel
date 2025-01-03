@@ -1,0 +1,271 @@
+/* Widgets css */
+@import "../utilities/colors";
+@import "../variables/variables";
+/* circular-progress bar */
+@keyframes anim {
+	100% {
+		stroke-dashoffset: 96;
+	}
+}
+.widget-card{
+	.progress{
+		height: 10px !important;
+	}
+}
+
+.like {
+	svg {
+		path {
+			fill: var(--textPrimaryColor) !important;
+		}
+	}
+}
+.abilities-card {
+	height: 117px;
+	svg {
+		path {
+			stroke: white!important;
+		}
+	}
+}
+.abilities-card-refresh {
+	height: 117px;
+}
+.abilities-card.expandable {
+	border-left: 2px solid #6B2D78;
+}
+.abilities-card.collapsable {
+	border-left: 2px solid #017EFA;
+}
+.abilities-card.removable {
+	border-left: 2px solid #AE3A76;
+}
+.abilities-card.maximization {
+	border-left: 2px solid #28A745;
+}
+.abilities-card.success {
+	border-left: 2px solid #1a8432;
+}
+.abilities-card.warning {
+	border-left: 2px solid #ffc107;
+}
+.abilities-card.danger {
+	border-left: 2px solid #dc3545;
+}
+.card-overlay-1 {
+	background: rgba(255, 255, 255, 0.5);
+}
+.card-overlay-2 {
+	background: rgba(121, 121, 121, 0.5);
+}
+.circular-progress-bar {
+	.skills {
+		width: 80px;
+		height: 80px;
+		position: relative;
+	}
+	.outer {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		background-color: #EFF6FA ;
+		padding: 5px;
+	}
+	.inner {
+		width: 70px;
+		height: 70px;
+		background-color: var(--acCardBg);
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		svg{
+			position: static;
+		}
+	}
+	circle {
+		fill: none;
+		stroke-width: 6px;
+		stroke-dashoffset: 180;
+		animation: anim 2s linear forwards;
+	}
+	svg {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+}
+.social-widgets{
+	.circular-progress-bar {
+		.skills {
+			width: 50px;
+			height: 50px;
+		}
+		.outer {
+			width: 50px;
+			height: 50px;
+		}
+		.inner {
+			width: 40px;
+			height: 40px;
+		}
+	
+	}
+}
+.insta-bg {	
+	background-color: #6b2d78;
+}
+
+.circular-progress-bar{
+	&.blood-pressure {
+		circle {
+			stroke: #6b2d78;
+			stroke-dasharray: 280;
+		}
+	}
+	&.fever{
+		circle {
+			stroke: #6b2d78;
+			stroke-dasharray: 95;
+		}
+	}
+	&.water-balance{
+		circle {
+			stroke: #6b2d78;
+			stroke-dasharray: 87;
+		}
+	}
+	&.water-balance-2{
+		circle {
+			stroke: #ECA81D;
+			stroke-dasharray: 87;
+		}
+	}
+	.number {
+		color: var(--acPrimaryText);
+	}
+}
+.health-tracking{
+	.circular-progress-bar {
+		.skills {
+			width: 30px;
+			height: 30px;
+			position: relative;
+		}
+		.outer {
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			background-color: #EFF6FA ;
+			padding: 3px;
+		}
+		.inner {
+			width: 23PX;
+			height: 23px;
+			background-color: var(--acCardBg);
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			svg{
+				position: static;
+			}
+		}
+		circle {
+			fill: none;
+			stroke-width: 3px;
+			stroke-dashoffset: 180;
+			animation: anim 2s linear forwards;
+		}
+		svg {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		&.first{
+			circle {
+				stroke: #6b2d78;
+				stroke-dasharray: 65;
+			}
+		}
+		&.second{
+			circle {
+				stroke: #2095D8;
+				stroke-dasharray: 50;
+			}
+		}
+		&.third{
+			circle {
+				stroke: #ECA81D;
+				stroke-dasharray: 45;
+			}
+		}
+	}
+}
+.ui-widgets {
+	position: relative;
+	display: inline-block;
+	width: 6rem;
+	height: 6rem;
+	border-radius: 9rem;
+	border: 0.5rem solid palegreen;
+	border-left-color: #2095D8;
+	border-top-color: #6b2d78;
+	border-right-color: white;
+	border-bottom-color: white;
+	text-align: center;
+	box-sizing: border-box;
+}
+.ui-widgets:nth-child(2) {
+	border-top-color: #6b2d78;
+	border-right-color: white;
+	border-left-color: #2095D8;
+	border-bottom-color: white;
+}
+.ui-widgets .ui-values {
+	top: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.fb-bg {
+	background-color: #6b2d78;
+}
+.dribble-bg {
+	background-color: #1C85C0;
+}
+.primary-gradient {	
+	background: linear-gradient(90deg,rgba(93, 51, 98, 1), rgba(131, 61, 170, 1));
+}
+.secondary-gradient {
+	background: linear-gradient(90deg, rgba(174, 58, 118, 1), rgba(183, 89, 138, 0.69));
+}
+.success-gradient {
+	background: linear-gradient(90deg, rgba(1, 163, 39, 1), rgba(26, 175, 50, 1));
+}
+.info-gradient {
+	background: linear-gradient(90deg, rgba(0, 144, 167, 1), rgba(111, 177, 187, 1));
+}
+.card-img{
+	height: 224px;
+}
+.card-img-overlay{
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.6));
+}
+
+.card-img-social {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.39),rgba(0, 0, 0, 0.6)),
+      url(https://images.pexels.com/photos/1402790/pexels-photo-1402790.jpeg);
+    background-position: 100%;
+    background-size: cover;
+    padding: 24px;
+    background-repeat: no-repeat;
+    border-radius: 10px 10px 0 0;
+  }
+/* Widgets css */
+.card-img-absolute{
+	position: relative;
+	top: -30px;
+}

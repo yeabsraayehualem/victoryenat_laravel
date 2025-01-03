@@ -1,0 +1,33 @@
+@import "../utilities/colors";
+
+/* Login register forgot pages css */
+.bg-image-container {
+  background-color: #f3e1ea;
+}
+/* Login register forgot pages css */
+
+.login-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  overflow: hidden;
+  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
+  height: 100vh;
+  flex-basis: 100%;
+  .login-inner {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    overflow-y: auto;
+  }
+  .left-column {
+    flex: 1 1 0%;
+    overflow: hidden;
+  }
+  .right-column {
+    flex: 1 1 0%;
+  }
+}

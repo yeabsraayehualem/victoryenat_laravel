@@ -1,0 +1,196 @@
+@import "../lightdarkmode/light-dark-theme";
+@import "../utilities/height";
+
+/* card border  */
+@mixin acborder {
+    border: 1px solid var(--acCardborder);
+}
+/* accordian*/ 
+@mixin accordian {
+    background-color: transparent !important;
+	border: none !important;
+}
+
+/* status tags mixin*/
+
+@mixin statustags($color, $bgColor) {
+    background-color: $bgColor;
+    color: $color;
+    border-radius: 20px;
+    padding: 2px 14px;
+    margin: 0px;
+    text-align: center;
+    width: fit-content;
+}
+/* status tags mixin*/
+
+/* input mixin */
+
+@mixin acInputoutline($height){
+    border: 1px solid var(--inputBorder) !important;
+    padding: 4px 8px !important;
+    height: $height;
+    border-radius: 4px;
+    font-size: 14px ;
+    color: var(--primaryText) !important;
+}
+@mixin acInput($height){
+  background-color: var(--bg-lightgrey) !important;
+  padding: 0 8px;
+  height: $height;
+  border-radius: 4px;
+  font-size: 14px;
+  color: var(--primaryText) !important;
+}
+@mixin acInputcolored ($border-color) {
+    border: 1px solid ($border-color);
+    padding: 6px;
+    @extend .height-36;
+    border-radius: 4px;
+    @extend .fs-14;
+    color: var(--primaryText) !important;
+}
+/* input mixin */
+
+/* button mixin */
+
+@mixin acButtonCommon($font-size, $padding, $background, $color, $border, $hover-bg, $hover-txt, $focus,$hover-border) {
+  font-size: $font-size;
+  padding: $padding;
+  background-color: $background !important;
+  color: $color !important;
+  font-weight: 400;
+  border: $border !important;
+  @extend .rounded-4;
+  @extend .lh-16;
+
+
+  &:hover {
+    background-color: $hover-bg !important;
+    color: $hover-txt !important;
+    border-color: $hover-border !important;
+    i {
+        color: $hover-txt;
+    }
+  }
+
+  &:focus-visible,
+  &:active {
+    background-color: $focus !important;
+    color: $hover-txt !important;
+    box-shadow: 0 0 0 0.25rem rgba($focus,.5);
+  }
+  &[class*=disabled] {
+    cursor: not-allowed !important;
+  }
+}
+
+/* Button sizes */
+$button-sizes: (
+  xl: (16px, 15px 24px),
+  lg: (16px, 11px 16px),
+  md: (14px, 9px 12px),
+  sm: (14px, 7px 12px),
+  xs: (12px, 5px 8px)
+);
+
+/* button mixin */
+
+/* border radius mixin */
+
+$border-radius-map: (
+  0: 0px,
+  4: 4px,
+  8: 8px,
+  10: 10px
+);
+
+@mixin border-radius($radius-class) {
+  $border-radius-value: map-get($border-radius-map, $radius-class);
+  border-radius: $border-radius-value !important;
+}
+/* border radius mixin */
+
+/* tables mixin */
+
+@mixin ac-base-table {
+  border-collapse: collapse;
+  width: 100% !important;
+  
+  th {
+    background-color: var(--tableheadBg) !important;
+    border: 0;
+  }
+  th, td {
+    padding: 12px 24px;
+    color: var(--text-grey);
+  }
+  tbody {
+    background-color: var(--tableBackground) !important;
+  }
+}
+
+/* Striped table style */
+
+@mixin ac-simple-table {
+  @include ac-base-table;
+  td {
+    border: 0 !important;
+    border-bottom: 1px solid var(--tableBorder) !important;
+  }
+}
+
+/* Striped table style */
+
+
+/* Bordered table style */
+
+@mixin ac-bordered-table {
+  @include ac-base-table;
+  td {
+    border-right: 1px solid var(--tableBorder) !important;
+    border-bottom: 1px solid var(--tableBorder) !important;
+  }
+  // tr:nth-child(even) {
+  //   background-color: #ffffff;
+  // }
+}
+
+/* Bordered table style */
+
+/* striped table style */
+
+@mixin ac-striped-table {
+  @include ac-base-table;
+
+  tr:nth-child(odd) {
+    background-color: transparent;
+  }
+
+  tr:nth-child(even) {
+    background-color: var(--tableStripColor) !important;
+  }
+}
+
+/* striped table style */
+
+@mixin ac-condensed-table {
+  @include ac-base-table;
+  td {
+    border: 0 !important;
+    border-bottom: 1px solid var(--tabelBorder) !important;
+  }
+}
+/* tables mixin */
+
+//Mixin for setting border & background color
+
+@mixin set-bg-border-hover-color($color,$bgborder-hover) {
+	background-color: $color !important;
+	border-color: $color !important;
+
+	&:hover {
+		background-color: $bgborder-hover !important;
+		border-color: $bgborder-hover !important;
+	}
+}

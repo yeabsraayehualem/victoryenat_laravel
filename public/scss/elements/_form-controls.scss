@@ -1,0 +1,259 @@
+@import "../mixin/mixin";
+/* input styles */
+
+.ac-input-outline-sm {
+  @include acInputoutline(30px);
+}
+
+.ac-input-outline-md {
+  @include acInputoutline(36px);
+}
+
+.ac-input-outline-lg {
+  @include acInputoutline(42px);
+}
+
+.ac-input-outline-xl {
+  @include acInputoutline(48px);
+}
+.ac-input-bg-sm {
+  @include acInput(30px);
+}
+
+.ac-input-bg-md {
+  @include acInput(36px);
+}
+
+.ac-input-bg-lg {
+  @include acInput(42px);
+}
+
+.ac-input-bg-xl {
+  @include acInput(48px);
+}
+.ac-dropdown-outline {
+  border: 1px solid var(--inputBorder);
+  @extend .height-36;
+  @extend .rounded-4;
+  @extend .fs-12;
+  padding: 2px 8px;
+}
+.ac-dropdown-bg {
+  background-color: var(--bg-lightgrey) !important;
+  border: none;
+  padding: 6px;
+  @extend .rounded-4;
+  @extend .fs-14;
+}
+
+.ac-input-border-bottom {
+  border-bottom: 1px solid var(--inputBorder);
+  padding: 8px;
+  @extend .fs-14;
+  border-radius: 0px;
+  color: var(--primaryText) !important;
+}
+
+.ac-multipleselect {
+  background-color: transparent;
+  padding: 4px 12px;
+  border: 1px solid var(--inputBorder);
+  border-radius: 4px 0px 0px 4px;
+  color: var(--primaryText) !important;
+}
+.ac-textarea {
+  border: 1px solid var(--inputBorder) !important;
+  border: none;
+  padding: 8px;
+  @extend .rounded-4;
+  @extend .fs-14;
+}
+.ac-inputgroup-icon {
+  background-color: var(--bg-lightgrey);
+  padding: 5px 12px;
+  border: 1px solid var(--inputBorder);
+  border-radius: 4px 0px 0px 4px;
+}
+.form-check-input {
+  background-color: transparent;
+  border: 1px solid var(--inputBorder);
+  position: relative;
+}
+.form-check-input[type="checkbox"] {
+  border: 1px solid var(--inputBorder) !important;
+}
+.checkbox-lg {
+  height: $size-16;
+  width: $size-16;
+}
+.form-check-input:checked {
+  background-color: $primary-bg;
+  border: 1px solid var(--inputBorder);
+  position: relative;
+}
+.form-switch {
+  .ac-toggle {
+    background-color: #fff;
+    border: none;
+    &:checked {
+      background-color: $primary-bg !important;
+      border: none;
+    }
+  }
+}
+.ac-input-danger {
+  @include acInputcolored(red);
+  background-color: transparent !important;
+}
+.ac-input-warning {
+  @include acInputcolored(#fdbd19);
+  background-color: transparent !important;
+}
+.ac-input-success {
+  @include acInputcolored(green);
+  background-color: transparent !important;
+}
+.ac-inputgroupicon {
+  background-color: var(--bg-header);
+  padding: 4px 12px;
+  border: 1px solid var(--inputBorder);
+  border-radius: 4px 0px 0px 4px;
+}
+.ac-multipleselect {
+  background-color: transparent;
+  padding: 4px 12px;
+  border: 1px solid var(--inputBorder);
+  border-radius: 4px 0px 0px 4px;
+  color: var(--primaryText) !important;
+}
+/* input styles end */
+
+// advanced form */
+.ac-multiselect {
+  background-color: transparent !important;
+  padding: 4px 12px;
+  border: 1px solid var(--inputBorder);
+  border-radius: 4px 0px 0px 4px;
+  color: var(--primaryText) !important;
+}
+.ac-textdisable {
+  color: $disable !important;
+  padding: 6px;
+}
+.item-container {
+  background-color: var(--bg-lightgrey) !important;
+  .item-label {
+    color: var(--acPrimaryText) !important;
+  }
+}
+.wickedpicker__controls {
+  color: var(--acPrimaryText);
+  background-color: var(--bg-lightgrey);
+  .wickedpicker__controls__control-down:after {
+    color: var(--acPrimaryText) !important;
+  }
+  .wickedpicker__controls__control-up {
+    color: var(--acPrimaryText) !important;
+  }
+}
+.ui-datepicker {
+  background-color: var(--bg-lightgrey) !important;
+  .ui-datepicker-header {
+    background-color: var(--bg-header);
+  }
+  .ui-state-disabled {
+    color: $disable !important;
+  }
+  .ui-datepicker-prev {
+    .ui-icon {
+      background-image: url("https://static.thenounproject.com/png/1876977-200.png") !important;
+      background-repeat: no-repeat !important;
+      background-size: cover;
+    }
+    .ui-icon-circle-triangle-w {
+      background-position: 0;
+    }
+  }
+  .ui-icon {
+    background-image: url("https://static.thenounproject.com/png/2320228-200.png") !important;
+    background-repeat: no-repeat !important;
+    background-size: cover;
+  }
+  .ui-icon-circle-triangle-e {
+    background-position: 0;
+  }
+  .ui-datepicker-calendar {
+    color: var(--acPrimaryText);
+  }
+  .ui-datepicker-title {
+    color: var(--acPrimaryText);
+  }
+  .ui-datepicker-week-end {
+    color: var(--acPrimaryText);
+  }
+  .ui-datepicker-current {
+    background-color: var(--bg-header) !important;
+  }
+  .ui-datepicker-close {
+    background-color: var(--bg-header) !important;
+  }
+  .ui-state-highlight {
+    background-color: var(--bg-header) !important;
+  }
+}
+.ui-state-default {
+  background-color: var(--bg-lightgrey) !important;
+  color: var(--primaryText) !important;
+}
+
+.ac-datepicker {
+  background-color: transparent;
+  color: var(--primaryText) !important;
+  height: $size-36;
+  padding: 0 6px;
+  border: 1px solid var(--inputBorder) !important;
+  border-radius: $size-4;
+  cursor: pointer;
+  @extend .fs-12;
+}
+.clearable-picker {
+  font-size: 24px !important;
+  margin-right: 12px;
+  line-height: 0;
+  .timepicker-12-hr-clearable {
+    margin: 0 !important;
+  }
+}
+.mult-select-tag .input-container::before {
+  content: "Select item";
+  padding: 6px;
+  position: absolute;
+}
+.ac-input-disable {
+  @extend .ac-input-outline-lg;
+  color: $disable !important;
+  background-color: transparent;
+  height: $size-36 !important;
+  @extend .fs-12;
+}
+.ac-timepicker {
+  height: $size-36 !important;
+  @extend .ac-datepicker;
+}
+.ac-colorpicker {
+  @extend .ac-datepicker;
+}
+.mult-select-tag {
+  .body {
+    background-color: transparent !important;
+    border: 1px solid var(--inputBorder) !important;
+    height: $size-36;
+    color: var(--primaryText);
+    border-radius: $size-4 !important;
+    padding: 0px;
+    @extend .fs-12;
+  }
+}
+.note-editable {
+  color: var(--primaryText) !important;
+}

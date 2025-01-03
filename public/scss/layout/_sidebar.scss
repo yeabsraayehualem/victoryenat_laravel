@@ -1,0 +1,40 @@
+@import "../variables/variables";
+@import "../utilities/colors";
+.navbar-top .nav-link{
+	color: var(--acPrimaryText)!important;
+}
+.navbar-top{
+	background-color: var(--sidebarBg);
+	path, circle {
+		stroke: var(--acPrimaryText);
+	  }
+	  .dropdown-toggle::after{
+		display: none!important;
+	  }
+	  .dropdown {
+		&:hover {
+			>.dropdown-menu {
+				display: block;
+			}
+		}
+	}
+}
+
+.navbar-dropdown-caret {
+	background-color: var(--acCardBg);
+	min-width: 200px;
+	border: none;
+	border-radius: 4px;
+	box-shadow: var(--acCardshadow);
+	max-height: 400px;
+	overflow-y: auto;
+	.dropdown-item{ color: var(--primaryText) !important;
+}
+.dropdown-item {
+	&:hover {
+		// background-color: transparent !important;
+		background-color: var(--acNavbg);
+	}
+}
+}
+
