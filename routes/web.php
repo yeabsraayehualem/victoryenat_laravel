@@ -26,6 +26,8 @@ Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard'
 
 
 Route::get('/users',[StaffController::class, 'getUserData'])->middleware('staff')->name('users');
+Route::get('/schoolsCount',[StaffController::class, 'getSchoolData'])->middleware('staff')->name('schoolsCount');
+Route::get('/getUserByRole',[StaffController::class, 'getUserByRole'])->middleware('staff')->name('getUserByRole');
 Route::get('/staff/dashboard', [StaffController::class, 'dashboard'])->middleware('staff')->name('staff.dashboard');
 Route::get('/staff/schools', [StaffController::class, 'schools'])->middleware('staff')->name('staff.schools');
 Route::get('/staff/schools/active', [StaffController::class, 'activeSchools'])->middleware('staff')->name('staff.schools.active');
@@ -52,3 +54,17 @@ Route::post("/staff/lessons/add", [StaffController::class, 'addLesson'])->middle
 Route::post('/lessonImage', [TinyMCEController::class, 'uploadImage'])->name('tinymce.upload');
 Route::get("/staff/lessons/edit/{id}", [StaffController::class, 'lessonDetail'])->middleware('staff')->name('staff.lessons.detail');
 Route::post("/staff/lessons/edit/{id}", [StaffController::class, 'editLesson'])->middleware('staff')->name('staff.lessons.editLesson');
+Route::get("staff/exam/question/all", [StaffController::class, 'allQuestions'])->middleware('staff')->name('staff.questions.all');
+Route::get("staff/exam/question/new", [StaffController::class, 'newQuestion'])->middleware('staff')->name('staff.questions.new');
+Route::post("staff/exam/question/new", [StaffController::class, 'addQuestion'])->middleware('staff')->name('staff.questions.add');
+Route::get("staff/exam/question/edit/{id}", [StaffController::class, 'editQuestion'])->middleware('staff')->name('staff.questions.edit');
+Route::post("staff/exam/question/edit/{id}", [StaffController::class, 'updateQuestion'])->middleware('staff')->name('staff.questions.update');
+Route::get('staff/exam/all', [StaffController::class, 'allExams'])->middleware('staff')->name('staff.exams.all');
+Route::get('staff/exam/new', [StaffController::class, 'newExam'])->middleware('staff')->name('staff.exams.new');
+Route::post('staff/exam/new', [StaffController::class, 'addExam'])->middleware('staff')->name('staff.exams.add');
+Route::get('staff/exam/edit/{id}', [StaffController::class, 'editExam'])->middleware('staff')->name('staff.exams.edit');
+Route::post('staff/exam/edit/{id}', [StaffController::class, 'updateExam'])->middleware('staff')->name('staff.exams.update');
+Route::post('staff/examsheet/add-question', [StaffController::class, 'addQuestionToExam'])->middleware('staff')->name('staff.exams.addQuestion');
+
+Route::delete('/staff/exams/{exam}/removeQuestion/{question}', [StaffController::class, 'removeQuestion'])->name('staff.exams.removeQuestion');
+

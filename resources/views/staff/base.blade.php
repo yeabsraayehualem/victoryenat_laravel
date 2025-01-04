@@ -25,6 +25,7 @@
 </head>
 
 <body class="sb-nav-fixed">
+<<<<<<< HEAD
     @include('staff.nav')
 
     <div id="layoutSidenav_content" class="fade-in">
@@ -77,5 +78,32 @@
         })
     </script>
     @yield('js')
+=======
+    @include('staff.nav');
+
+    @yield('content')
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
+    <script src="/js/adminScript.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="/assets/demo/chart-area-demo.js"></script>
+    <script src="/assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="/js/datatables-simple-demo.js"></script>
+    <script src="/assets/demo/chart-area-demo.js"></script>
+    <script src="/assets/demo/chart-bar-demo.js"></script>
+    <script src="/assets/demo/chart-pie-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="/assets/demo/user-role-data.js"></script>
+    <script src="/assets/demo/schools-chart.js"></script>
+
+    @yield('js')
+
+>>>>>>> c6104d8c54d0ff5afd081c241c4955f8a9e1fae7
 </body>
+
 </html>

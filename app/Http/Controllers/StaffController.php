@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Log;
 use App\Models\School;
 use App\Models\User;
 use App\Models\Lesson;
+use App\Models\Question;
+use App\Models\Exam;
+use App\Models\ExamSheet;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Subject;
@@ -27,12 +30,43 @@ class StaffController extends Controller
         $monthlyData[(int)$month] = $count; // Convert month to integer to match array keys
     }
 
+
+
     // Return the data as a JSON response
     return response()->json(array_values($monthlyData));
     }
-    public function getSchools(){
 
+    public function getSchoolData()
+    {
+        $schoolCounts = School::selectRaw('strftime("%m", created_at) as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->pluck('count', 'month');
+
+    // Create an array with 12 months initialized to 0
+    $monthlyData = array_fill(1, 12, 0);
+
+    // Populate the data for the months with user counts
+    foreach ($schoolCounts as $month => $count) {
+        $monthlyData[(int)$month] = $count; // Convert month to integer to match array keys
     }
+
+    // return $monthlyData;
+    // Return the data as a JSON response
+    return response()->json(array_values($monthlyData));
+    }
+    public function getUserByRole()
+    {
+        // Get user counts by role
+        $userCounts = User::selectRaw('role, COUNT(*) as count')
+            ->groupBy('role')
+            ->pluck('count', 'role')
+            ->toArray(); // Convert the result to an associative array
+
+        // Return the data as a JSON response
+        return response()->json($userCounts);
+    }
+
     public function dashboard(Request $req)
     {
         $teachers = User::where('role', 'teacher')->get();
@@ -411,4 +445,254 @@ class StaffController extends Controller
         $subjects = Subject::all();
         return view('staff.lessons.edit_lesson', ['lesson' => $lesson, 'subjects' => $subjects]);
     }
+
+    public function allQuestions(Request $req)
+    {
+        $questions = Question::all();
+        return view('staff.exam.all-questions', ['questions' => $questions]);
+    }
+
+    public function newQuestion(Request $req)
+    {
+        $subjects = Subject::all();
+        return view('staff.exam.add-question', ['subjects' => $subjects]);
+    }
+
+    public function addQuestion(Request $req){
+        $validator = Validator::make($req->all(), [
+            'question' => 'required|string',
+            'option1' => 'required|string',
+            'option2' => 'required|string',
+            'option3' => 'required|string',
+            'option4' => 'required|string',
+            'answer' => 'required|string',
+            'subject_id' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try {
+            $question = new Question();
+            $question->question = $req->question;
+            $question->option1 = $req->option1;
+            $question->option2 = $req->option2;
+            $question->option3 = $req->option3;
+            $question->option4 = $req->option4;
+            $question->answer = $req->answer;
+            $question->subject_id = $req->subject_id;
+            $question->user_id = auth()->user()->id;
+
+            $question->save();
+
+            return redirect()->route('staff.questions.all')
+                ->with('success', 'Question added successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage())
+                ->with('error', 'Failed to add question: ' . $e->getMessage());
+        }
+    }
+
+    public function editQuestion(Request $req, $id)
+    {
+        $question = Question::find($id);
+        $subjects = Subject::all();
+        return view('staff.exam.edit-question', ['question' => $question, 'subjects' => $subjects]);
+    }
+
+    public function updateQuestion(Request $req, $id){
+        $validator = Validator::make($req->all(), [
+            'question' => 'required|string',
+            'option1' => 'required|string',
+            'option2' => 'required|string',
+            'option3' => 'required|string',
+            'option4' => 'required|string',
+            'answer' => 'required|string',
+            'subject_id' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try {
+            $question = Question::find($id);
+            $question->question = $req->question;
+            $question->option1 = $req->option1;
+            $question->option2 = $req->option2;
+            $question->option3 = $req->option3;
+            $question->option4 = $req->option4;
+            $question->answer = $req->answer;
+            $question->subject_id = $req->subject_id;
+            $question->user_id = auth()->user()->id;
+
+            $question->save();
+
+            return redirect()->route('staff.questions.all')
+                ->with('success', 'Question updated successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage())
+                ->with('error', 'Failed to update question: ' . $e->getMessage());
+        }
+    }
+
+    public function allExams(Request $req)
+    {
+        $exams = Exam::all();
+        return view('staff.exam.all-exams', ['exams' => $exams]);
+    }
+
+    public function newExam(Request $req)
+    {
+        $subjects = Subject::all();
+        return view('staff.exam.add-exam', ['subjects' => $subjects]);
+    }
+
+    public function addExam(Request $req)
+    {
+        $validator = Validator::make($req->all(), [
+            'title' => 'required|string|max:255',
+            'date' => 'required|date',
+            'time'=> 'required|date_format:H:i',
+            'duration' => 'required|integer',
+            'total_marks' => 'required|integer',
+            'passing_marks' => 'required|integer',
+            'subject_id' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try {
+            $exam = new Exam();
+            $exam->name = $req->title;
+            $exam->date = $req->date;
+            $exam->time = $req->time;
+            $exam->duration = $req->duration;
+            $exam->total_marks = $req->total_marks;
+            $exam->passing_marks = $req->passing_marks;
+            $exam->subject_id = $req->subject_id;
+            $exam->save();
+
+            return redirect()->route('staff.exams.all')
+                ->with('success', 'Exam added successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage())
+                ->with('error', 'Failed to add exam: ' . $e->getMessage());
+        }
+    }
+
+    public function editExam(Request $req, $id)
+    {
+        $exam = Exam::find($id);
+        $subjects = Subject::all();
+        $questions = Question::where('subject_id', $exam->subject_id)->get();
+        return view('staff.exam.edit-exam', ['exam' => $exam, 'subjects' => $subjects, 'questions' => $questions]);
+    }
+
+    public function getExamQuestions($examId)
+    {
+        $examSheets = ExamSheet::where('exam_id', $examId)->get();
+        $questions = [];
+
+        foreach ($examSheets as $examSheet) {
+            $question = Question::find($examSheet->question_id);
+            if ($question) {
+                $questions[] = $question;
+            }
+        }
+
+        return response()->json($questions);
+    }
+
+    public function removeQuestion(Request $req, $examId, $questionId)
+    {
+        $examSheet = ExamSheet::where('exam_id', $examId)
+            ->where('question_id', $questionId)
+            ->first();
+
+        if ($examSheet) {
+            $examSheet->delete();
+            return redirect()->back()
+                ->with('success', 'Question removed from exam successfully!');
+        }
+
+        return redirect()->back()
+            ->with('error', 'Failed to remove question from exam!');
+    }
+
+    public function addQuestionToExam(Request $req)
+    {
+        $validator = Validator::make($req->all(), [
+            'exam_id' => 'required|integer',
+            'question_id' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try {
+            $examSheet = new ExamSheet();
+            $examSheet->exam_id = $req->exam_id;
+            $examSheet->question_id = $req->question_id;
+            $examSheet->save();
+
+            return redirect()->back()
+                ->with('success', 'Question added to exam successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage())
+                ->with('error', 'Failed to add question to exam: ' . $e->getMessage());
+        }
+    }
+
+    public function updateExam(Request $req, $id)
+    {
+        $validator = Validator::make($req->all(), [
+            'name' => 'required|string|max:255',
+            'date' => 'required|date',
+            'time'=> 'required|date_format:H:i',
+            'duration' => 'required|integer',
+            'total_marks' => 'required|integer',
+            'passing_marks' => 'required|integer',
+            'subject_id' => 'required|integer',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try {
+            $exam = Exam::find($id);
+            $exam->name = $req->name;
+            $exam->date = $req->date;
+            $exam->time = $req->time;
+            $exam->duration = $req->duration;
+            $exam->total_marks = $req->total_marks;
+            $exam->passing_marks = $req->passing_marks;
+            $exam->subject_id = $req->subject_id;
+
+            $exam->save();
+
+            return redirect()->route('staff.exams.all')
+                ->with('success', 'Exam updated successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage())
+                ->with('error', 'Failed to update exam: ' . $e->getMessage());
+        }
+    }
 }
+

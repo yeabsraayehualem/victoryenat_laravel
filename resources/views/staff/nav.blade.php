@@ -110,8 +110,8 @@
                                 <div class="collapse" id="collapseExams" aria-labelledby="headingOne"
                                     data-bs-parent="#collapsExam">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="all-exams.html">All Exams</a>
-                                        <a class="nav-link" href="add-exam.html">Add Exam</a>
+                                        <a class="nav-link" href="{{ route('staff.exams.all')}}">All Exams</a>
+                                        <a class="nav-link" href="{{route('staff.exams.new')}}">Add Exam</a>
                                     </nav>
                                 </div>
 
@@ -138,8 +138,8 @@
                                 <div class="collapse" id="collapseQuestions" aria-labelledby="headingOne"
                                     data-bs-parent="#collapsExam">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="all-questions.html">All Questions</a>
-                                        <a class="nav-link" href="add-question.html">Add Question</a>
+                                        <a class="nav-link" href="{{route('staff.questions.all')}}">All Questions</a>
+                                        <a class="nav-link" href="{{ route('staff.questions.new')}}">Add Question</a>
                                     </nav>
                                 </div>
                             </nav>
