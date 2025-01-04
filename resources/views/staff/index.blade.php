@@ -92,7 +92,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="card mb-4">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
@@ -124,7 +124,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                                         <td>{{ $user->role }}</td>
-                                        <td>{{ $user->school ? $user->school->name : 'N/A' }}</td>
+                                        <td>{{ $user->school ? $user->school->name : '-' }}</td>
 
                                     </tr>
                                 @endforeach
