@@ -14,6 +14,4 @@ jobs:
         run: |
           curl -X POST "https://api.telegram.org/bot7922464381:AAEAcsaMypwpZUuuPVT3762S9h0TEj-Pim0/sendMessage" \
           -d chat_id=-1002312187017 \
-          -d text="🚀 A new push was made to the main branch in repository ${{ github.repository }} by ${{ github.actor }}. \
-permissions: ${{ github.event.head_commit.message }}."
-
+          -d text="🚀 A new push was made to the main branch in repository ${{ github.repository }} by ${{ github.actor }}. Commit message: ${{ github.event.head_commit.message || 'No commit message provided' }}."
