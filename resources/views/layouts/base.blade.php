@@ -279,9 +279,9 @@
             </div>
         </div>
 
-        
-       
-        
+
+
+
     </footer>
 
     <script src="/js/vendor/jquery-2.2.4.min.js"></script>
@@ -326,7 +326,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.getElementById('studentSignUp').addEventListener('click', function() {
-            const studForm = document.getElementById('studentForm').outerHTML;
             Swal.fire({
                 title: 'Student Sign-Up',
                 html: `<div class="container mt-5">
@@ -426,7 +425,6 @@
         });
 
         document.getElementById('teacherSignUp').addEventListener('click', function() {
-            const studForm = document.getElementById('teacherForm').outerHTML;
             Swal.fire({
                 title: 'Teacher Sign-Up',
                 html: ` <div class="container mt-5">
@@ -522,7 +520,6 @@
             });
         });
         document.getElementById('login').addEventListener('click', function() {
-            const loginForm = document.getElementById('loginForm').outerHTML;
             Swal.fire({
                 title: 'Login',
                 html: `<div class="container mt-5">

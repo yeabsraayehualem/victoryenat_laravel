@@ -12,6 +12,42 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Subject;
 class StaffController extends Controller
 {
+    public function getUserData()
+    {
+        $userCounts = User::selectRaw('strftime("%m", created_at) as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->pluck('count', 'month');
+
+    // Create an array with 12 months initialized to 0
+    $monthlyData = array_fill(1, 12, 0);
+
+    // Populate the data for the months with user counts
+    foreach ($userCounts as $month => $count) {
+        $monthlyData[(int)$month] = $count; // Convert month to integer to match array keys
+    }
+
+    // Return the data as a JSON response
+    return response()->json(array_values($monthlyData));
+    }
+    public function getSchools(){
+
+    }
+    public function dashboard(Request $req)
+    {
+        $teachers = User::where('role', 'teacher')->get();
+        $school = School::all();
+        $students = User::where('role', 'student')->get();
+        $school_manager = User::where('role', 'school_manager')->get();
+        $users = User::all();
+        return view('staff.index',[
+            'teachers' => $teachers,
+            'schools' => $school,
+            'students' => $students,
+            'school_managers' => $school_manager,
+            'users'=>$users
+        ]);
+    }
     public function schools(Request $req)
     {
         $schools = School::all();

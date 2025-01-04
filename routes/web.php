@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TinyMCEController;
 
 Route::get('/', action: function () {
-$schools= School::all();
+    $schools = School::all();
     return view('layouts.index', ['schools' => $schools]);
 });
 
@@ -25,10 +25,8 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 
 
-
-Route::get('/staff/dashboard', function () {
-    return view('staff.index');
-})->middleware('staff')->name('staff.dashboard');
+Route::get('/users',[StaffController::class, 'getUserData'])->middleware('staff')->name('users');
+Route::get('/staff/dashboard', [StaffController::class, 'dashboard'])->middleware('staff')->name('staff.dashboard');
 Route::get('/staff/schools', [StaffController::class, 'schools'])->middleware('staff')->name('staff.schools');
 Route::get('/staff/schools/active', [StaffController::class, 'activeSchools'])->middleware('staff')->name('staff.schools.active');
 Route::post('/staff/schools', [StaffController::class, 'addSchool'])->middleware('staff')->name('staff.addSchool');
@@ -44,13 +42,13 @@ Route::get("/staff/staffs", [StaffController::class, 'staffs'])->middleware('sta
 Route::get("/staff/all", [StaffController::class, 'allusers'])->middleware('staff')->name('staff.allusers');
 Route::get("/staff/edit-user/{id}", action: [StaffController::class, 'editUser'])->middleware('staff')->name('staff.editUser');
 Route::post("/staff/edit-user/{id}", action: [StaffController::class, 'updateUserdata'])->middleware('staff')->name('staff.editUser');
-Route::get("/staff/subjects",[StaffController::class,'allSubjects'])->middleware('staff')->name('staff.subjects.all');
-Route::post("/staff/subjects",[StaffController::class,'addSubject'])->middleware('staff')->name('staff.subjects.add');
-Route::get("/staff/subject/{id}",[StaffController::class,'subjectDetail'])->middleware('staff')->name('staff.subjectdetail');
-Route::post("/staff/subject/{id}",[StaffController::class,'editSubject'])->middleware('staff')->name('staff.subject.edit');
-Route::get("/staff/lessons",[StaffController::class,'allLessons'])->middleware('staff')->name('staff.lessons.all');
-Route::get("/staff/lessons/new",[StaffController::class,'newLesson'])->middleware('staff')->name('staff.lessons.add');
-Route::post("/staff/lessons/add",[StaffController::class,'addLesson'])->middleware('staff')->name('staff.lessons.addLesson');
+Route::get("/staff/subjects", [StaffController::class, 'allSubjects'])->middleware('staff')->name('staff.subjects.all');
+Route::post("/staff/subjects", [StaffController::class, 'addSubject'])->middleware('staff')->name('staff.subjects.add');
+Route::get("/staff/subject/{id}", [StaffController::class, 'subjectDetail'])->middleware('staff')->name('staff.subjectdetail');
+Route::post("/staff/subject/{id}", [StaffController::class, 'editSubject'])->middleware('staff')->name('staff.subject.edit');
+Route::get("/staff/lessons", [StaffController::class, 'allLessons'])->middleware('staff')->name('staff.lessons.all');
+Route::get("/staff/lessons/new", [StaffController::class, 'newLesson'])->middleware('staff')->name('staff.lessons.add');
+Route::post("/staff/lessons/add", [StaffController::class, 'addLesson'])->middleware('staff')->name('staff.lessons.addLesson');
 Route::post('/lessonImage', [TinyMCEController::class, 'uploadImage'])->name('tinymce.upload');
-Route::get("/staff/lessons/edit/{id}",[StaffController::class,'lessonDetail'])->middleware('staff')->name('staff.lessons.detail');
-Route::post("/staff/lessons/edit/{id}",[StaffController::class,'editLesson'])->middleware('staff')->name('staff.lessons.editLesson');
+Route::get("/staff/lessons/edit/{id}", [StaffController::class, 'lessonDetail'])->middleware('staff')->name('staff.lessons.detail');
+Route::post("/staff/lessons/edit/{id}", [StaffController::class, 'editLesson'])->middleware('staff')->name('staff.lessons.editLesson');
