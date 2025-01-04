@@ -20,10 +20,10 @@ jobs:
           
       - name: Deploy to cPanel
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ${{ secrets.USERNAME }}@${{ secrets.HOST }} "
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ${{ secrets.USER_NAME }}@${{ secrets.HOST_IP }} "
             if [ ! -d \"${{ secrets.REMOTE_PATH }}/.git\" ]; then
               echo 'Cloning repository...'
-              git clone https://github.com/${{ github.repository }} ${{ secrets.REMOTE_PATH }}
+              git clone https://github.com/${{ github.repository }} ${{ secrets.PATH }}
             else
               echo 'Repository already cloned, pulling latest changes...'
               cd ${{ secrets.REMOTE_PATH }} && git pull origin main
