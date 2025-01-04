@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,11 +21,11 @@ jobs:
       - name: Deploy to cPanel
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ${{ secrets.USER_NAME }}@${{ secrets.HOST_IP }} "
-            if [ ! -d \"${{ secrets.REMOTE_PATH }}/.git\" ]; then
+            if [ ! -d \"${{ secrets.PATH }}/.git\" ]; then
               echo 'Cloning repository...'
               git clone https://github.com/${{ github.repository }} ${{ secrets.PATH }}
             else
               echo 'Repository already cloned, pulling latest changes...'
-              cd ${{ secrets.REMOTE_PATH }} && git pull origin main
+              cd ${{ secrets.PATH }} && git pull origin main
             fi
           "
