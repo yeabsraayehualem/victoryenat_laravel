@@ -16,3 +16,4 @@ jobs:
           -d chat_id=-1002312187017 \
           -d text="🚀 A new push was made to the main branch in repository ${{ github.repository }} by ${{ github.actor }}. \
 permissions: ${{ github.event.head_commit.message }}."
+
