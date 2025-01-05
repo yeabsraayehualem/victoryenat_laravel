@@ -1,49 +1,84 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var ctx = document.getElementById("usersCanvas");
+    var ctx = document.getElementById("usersCanvas").getContext('2d');
 
     fetch('/users')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             console.log("Fetched data:", data);
 
+            const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+            const studentsData = data.student || Array(12).fill(0);
+            const teachersData = data.teacher || Array(12).fill(0);
+            const staffData = data.staff || Array(12).fill(0);
+            const schoolManagerData = data.school_manager || Array(12).fill(0);
+
             new Chart(ctx, {
-                type: 'bar',
+                type: 'line',
                 data: {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                    datasets: [{
-                        label: "Total Users",
-                        backgroundColor: "rgba(2,117,216,0.75)",
-                        borderColor: "rgba(2,117,216,1)",
-                        borderWidth: 1,
-                        data: data,
-                    }],
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Students',
+                            data: studentsData,
+                            borderColor: '#4f46e5',
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: 'Teachers',
+                            data: teachersData,
+                            borderColor: '#10b981',
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: 'Staff',
+                            data: staffData,
+                            borderColor: '#f59e0b',
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: 'School Managers',
+                            data: schoolManagerData,
+                            borderColor: '#ef4444',
+                            tension: 0.4,
+                            fill: false
+                        }
+                    ]
                 },
                 options: {
-                    scales: {
-                        xAxes: [{
-                            gridLines: {
-                                display: false
-                            },
-                            ticks: {
-                                maxTicksLimit: 12
-                            }
-                        }],
-                        yAxes: [{
-                            ticks: {
-                                min: 0,
-                                stepSize: 1,
-                                maxTicksLimit: 7
-                            },
-                            gridLines: {
-                                color: "rgba(0, 0, 0, .125)",
-                            }
-                        }],
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
                     },
-                    legend: {
-                        display: true
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                borderDash: [2, 4]
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
                     }
                 }
             });
         })
-        .catch(error => console.error('Error fetching data:', error));
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            alert("Failed to fetch data. Please try again.");
+        });
 });

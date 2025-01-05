@@ -1,7 +1,6 @@
 @extends('staff.base')
 @section('content')
-    <div id="layoutSidenav_content">
-        <main>
+
             <div class="container-fluid px-4">
                 <h1 class="mt-4">All Exams</h1>
                 <ol class="breadcrumb
@@ -26,6 +25,5 @@
                     </div>
                 @endforeach
             </div>
-        </main>
-    </div>
+      
 @endsection

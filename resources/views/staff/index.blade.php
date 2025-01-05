@@ -8,9 +8,7 @@
             <p class="mb-0 text-gray-600">Welcome back, {{ auth()->user()->first_name }}!</p>
         </div>
         <div class="d-flex gap-2">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSchoolModal">
-                <i class="fas fa-plus"></i> Add School
-            </button>
+
             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#generateReportModal">
                 <i class="fas fa-download"></i> Generate Report
             </button>
@@ -36,126 +34,10 @@
                             </ul>
                         </div>
                     </div>
-<<<<<<< HEAD
                     <h3 class="mb-1">{{ number_format(count($students)) }}</h3>
                     <p class="text-muted mb-0">Total Students</p>
                     <div class="progress mt-3" style="height: 4px;">
                         <div class="progress-bar" role="progressbar" style="width: 75%"></div>
-=======
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">Teachers
-                                <h2>{{ count($teachers) }}</h2>
-                            </div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-success text-white mb-4">
-                            <div class="card-body">School Manager
-                                <h2>{{ count($school_managers) }}</h2>
-                            </div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-danger text-white mb-4">
-                            <div class="card-body">Schools
-                                <h2>{{ count($schools) }}</h2>
-                            </div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <!-- Area Chart -->
-                    <div class="card mb-4 col-12">
-                        <div class="card-header">
-                            <i class="fas fa-chart-area me-1"></i>
-                            User Growth - Area Chart
-                        </div>
-                        <div class="card-body">
-                            <canvas id="usersCanvas" width="100%" height="30"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <div></div>
-                <div class="container">
-                    <!-- Line Chart -->
-                    <div class="card mb-4 col-12">
-                        <div class="card-header">
-                            <i class="fas fa-chart-line me-1"></i>
-                            Schools Created Per Month - Line Chart
-                        </div>
-                        <div class="card-body">
-                            <canvas id="schoolsLineChart" width="100%" height="30"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- Pie Chart -->
-                    <div class="card mb-4 col-12">
-                        <div class="card-header">
-                            <i class="fas fa-chart-pie me-1"></i>
-                            Users by Role - Pie Chart
-                        </div>
-                        <div class="card-body">
-                            <canvas id="usersPieChart" width="100%" height="30"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        DataTable Example
-                    </div>
-                    <div class="card-body">
-                        <table id="datatablesSimple">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Role</th>
-                                    <th>School</th>
-
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Role</th>
-                                    <th>School</th>
-
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                @foreach ($users as $user)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $user->first_name }} {{ $user->last_name }}</td>
-                                        <td>{{ $user->role }}</td>
-                                        <td>{{ $user->school ? $user->school->name : '-' }}</td>
-
-                                    </tr>
-                                @endforeach
-
-
-
-                            </tbody>
-                        </table>
->>>>>>> c6104d8c54d0ff5afd081c241c4955f8a9e1fae7
                     </div>
                 </div>
             </div>
@@ -333,28 +215,28 @@
                     <div class="mb-4">
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-muted">Active Students</span>
-                            <span class="text-dark">85%</span>
+                            <span class="text-dark">{{ number_format(count($students)) }}</span>
                         </div>
                         <div class="progress" style="height: 4px;">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 85%"></div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ (count($students) / count($users)) * 100 }}%"></div>
                         </div>
                     </div>
                     <div class="mb-4">
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-muted">Teacher Attendance</span>
-                            <span class="text-dark">92%</span>
+                            <span class="text-dark">{{count($teachers)}}</span>
                         </div>
                         <div class="progress" style="height: 4px;">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: 92%"></div>
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: {{ (count($teachers) / count($users)) * 100 }}%"></div>
                         </div>
                     </div>
                     <div>
                         <div class="d-flex justify-content-between mb-2">
                             <span class="text-muted">School Capacity</span>
-                            <span class="text-dark">78%</span>
+                            <span class="text-dark">{{count($active_schools)}}</span>
                         </div>
                         <div class="progress" style="height: 4px;">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 78%"></div>
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{ (count($active_schools) / count($schools)) * 100 }}%"></div>
                         </div>
                     </div>
                 </div>
@@ -449,78 +331,5 @@
 
 @section('js')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // User Growth Chart
-    var ctx = document.getElementById('usersCanvas').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-            datasets: [{
-                label: 'Students',
-                data: [65, 78, 90, 85, 95, 100],
-                borderColor: '#4f46e5',
-                tension: 0.4,
-                fill: false
-            }, {
-                label: 'Teachers',
-                data: [35, 40, 45, 48, 50, 55],
-                borderColor: '#10b981',
-                tension: 0.4,
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'top',
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        borderDash: [2, 4]
-                    }
-                },
-                x: {
-                    grid: {
-                        display: false
-                    }
-                }
-            }
-        }
-    });
-
-    // Users by Role Chart
-    var pieCtx = document.getElementById('usersPieChart').getContext('2d');
-    new Chart(pieCtx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Students', 'Teachers', 'Managers', 'Staff'],
-            datasets: [{
-                data: [65, 20, 10, 5],
-                backgroundColor: [
-                    '#4f46e5',
-                    '#10b981',
-                    '#f59e0b',
-                    '#ef4444'
-                ]
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'bottom'
-                }
-            },
-            cutout: '75%'
-        }
-    });
-});
 </script>
 @endsection

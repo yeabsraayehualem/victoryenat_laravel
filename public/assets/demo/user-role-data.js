@@ -11,30 +11,43 @@ document.addEventListener('DOMContentLoaded', function() {
             const counts = Object.values(data);
 
             new Chart(ctxPie, {
-                type: 'pie',
+                type: 'doughnut',
                 data: {
                     labels: roles,
                     datasets: [{
                         data: counts,
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
+                            '#FF6384',
+                            '#36A2EB',
+                            '#FFCE56',
+                            '#4BC0C0',
+                            '#9966FF',
                         ],
                         borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
+                            '#FF6384',
+                            '#36A2EB',
+                            '#FFCE56',
+                            '#4BC0C0',
+                            '#9966FF',
                         ],
                         borderWidth: 1
                     }]
                 },
                 options: {
-                    responsive: true
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'User Roles Distribution'
+                        },
+                        tooltip: {
+                            enabled: true
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        }
+                    }
                 }
             });
         });

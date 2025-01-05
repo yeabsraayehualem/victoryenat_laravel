@@ -14,28 +14,31 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Subject;
 class StaffController extends Controller
-{
-    public function getUserData()
+{public function getUserData()
     {
-        $userCounts = User::selectRaw('strftime("%m", created_at) as month, COUNT(*) as count')
-        ->groupBy('month')
-        ->orderBy('month')
-        ->pluck('count', 'month');
-
-    // Create an array with 12 months initialized to 0
-    $monthlyData = array_fill(1, 12, 0);
-
-    // Populate the data for the months with user counts
-    foreach ($userCounts as $month => $count) {
-        $monthlyData[(int)$month] = $count; // Convert month to integer to match array keys
+        $roles = ['student', 'teacher', 'staff', 'school_manager'];
+        $monthlyData = [];
+    
+        foreach ($roles as $role) {
+            $userCounts = User::selectRaw('strftime("%m", created_at) as month, COUNT(*) as count')
+                ->where('role', $role)
+                ->groupBy('month')
+                ->orderBy('month')
+                ->pluck('count', 'month');
+    
+            // Create an array with 12 months initialized to 0 for each role
+            $monthlyData[$role] = array_fill(0, 12, 0);
+    
+            // Populate the data for the months with user counts
+            foreach ($userCounts as $month => $count) {
+                $monthlyData[$role][(int)$month - 1] = $count; // Adjust month to 0-based index
+            }
+        }
+    
+        // Return the data as a JSON response
+        return response()->json($monthlyData);
     }
-
-
-
-    // Return the data as a JSON response
-    return response()->json(array_values($monthlyData));
-    }
-
+    
     public function getSchoolData()
     {
         $schoolCounts = School::selectRaw('strftime("%m", created_at) as month, COUNT(*) as count')
@@ -70,6 +73,7 @@ class StaffController extends Controller
     public function dashboard(Request $req)
     {
         $teachers = User::where('role', 'teacher')->get();
+        $active_schools = School::where('status', 'active')->get();
         $school = School::all();
         $students = User::where('role', 'student')->get();
         $school_manager = User::where('role', 'school_manager')->get();
@@ -79,7 +83,8 @@ class StaffController extends Controller
             'schools' => $school,
             'students' => $students,
             'school_managers' => $school_manager,
-            'users'=>$users
+            'users'=>$users,
+            'active_schools' => $active_schools
         ]);
     }
     public function schools(Request $req)

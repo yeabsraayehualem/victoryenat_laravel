@@ -1,7 +1,6 @@
 @extends('staff.base')
 @section('content')
-<div id="layoutSidenav_content">
-    <main class="p-4">
+
         <div class="container-fluid px-4">
             <h1 class="mt-4">Users</h1>
             <ol class="breadcrumb">
@@ -51,6 +50,4 @@
             @endforeach
         </div>
 
-    </main>
-</div>
 @endsection
