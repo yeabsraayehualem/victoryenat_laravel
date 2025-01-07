@@ -46,4 +46,12 @@ class TeacherController extends Controller
         return redirect('/login')
             ->with('success', 'Student registered successfully!');
     }
+
+
+    public function dashboard(Request $req){
+      
+      
+
+        return view('teachers.dashboard');
+    }
 }

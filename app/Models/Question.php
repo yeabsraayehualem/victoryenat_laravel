@@ -15,6 +15,8 @@ class Question extends Model
         'answer',
         'subject_id',
         'user_id',
+        'is_school_approved',
+        'is_victory_approved',
     ];
 
     public function subject()

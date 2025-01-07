@@ -67,6 +67,12 @@
                                         <button type="submit" class="btn btn-primary">Update</button>
                                         <a href="{{ route('staff.questions.all') }}" class="btn btn-secondary">Cancel</a>
                                     </div>
+                                    <div class="d-flex justify-content-between mx-auto mt-3">
+                                        <a href="{{ route('staff.questions.approve', $question->id) }}" class="btn btn-success">Approve</a>
+                                        <a href="{{ route('staff.questions.reject', $question->id) }}" class="btn btn-danger">Reject</a>
+                                    </div>
+                                    
+
                                 </form>
                             </div>
                         </div>

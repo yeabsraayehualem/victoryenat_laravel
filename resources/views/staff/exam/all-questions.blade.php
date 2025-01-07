@@ -21,12 +21,12 @@
                             <thead>
                                 <tr>
                                     <th>Question</th>
-                                    <th>Option A</th>
-                                    <th>Option B</th>
-                                    <th>Option C</th>
-                                    <th>Option D</th>
+                                   <th>Subject</th>
+                                   <th>School Approved</th>
+                                    <th>Staff Approved</th>
+                                    <th>School</th>
                                     <th>Correct Answer</th>
-                                    <th>Subject</th>
+                                   
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -34,15 +34,28 @@
                                 @foreach ($questions as $question)
                                     <tr>
                                         <td>{!! Str::limit($question->question, 50) !!}</td>
-                                        <td>{!! Str::limit($question->option1, 50) !!}</td>
-                                        <td>{!! Str::limit($question->option2, 50) !!}</td>
-                                        <td>{!! Str::limit($question->option3, 50) !!}</td>
-                                        <td>{!! Str::limit($question->option4, 50) !!}</td>
-                                        <td>{{ Str::limit(e($question->answer), 50) }}</td>
+                                       
                                         <td>{{ Str::limit(e($question->subject->name), 50) }}</td>
                                         <td>
+                                            @if ($question->is_school_approved)
+                                            <i class="fa fa-check btn btn-success"></i>
+                                            @else
+                                            <i class="fa fa-times btn btn-danger"></i>
+                                            @endif
+                                        </td>
+                                        <th>
+                                            @if ($question->is_victory_approved)
+                                            <i class="fa fa-check btn btn-success"></i>
+                                            @else
+                                            <i class="fa fa-times btn btn-danger"></i>
+                                            @endif
+                                        </th>
+                                        
+                                        <td>{{ Str::limit(e($question->user->school->name), 50) }}</td>
+                                        <td>{{ Str::limit(e($question->answer), 50) }}</td>
+                                        <td>
                                             <a href="{{ route('staff.questions.edit', $question->id) }}"
-                                                class="btn btn-primary">Edit</a>
+                                                class="btn btn-primary">Detail</a>
                                             <a href=""
                                                 class="btn btn-danger">Delete</a>
                                         </td>

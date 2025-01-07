@@ -27,6 +27,7 @@ class User extends Authenticatable
         'is_active',
         'email',
         'password',
+        'status'
     ];
 
     /**
@@ -58,5 +59,9 @@ class User extends Authenticatable
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function school(){
+        return $this->belongsTo(School::class);
     }
 }

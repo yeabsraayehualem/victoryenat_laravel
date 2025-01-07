@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Subject;
 class StaffController extends Controller
-{public function getUserData()
+{
+    public function getUserData()
     {
         $roles = ['student', 'teacher', 'staff', 'school_manager'];
         $monthlyData = [];
@@ -599,7 +600,7 @@ class StaffController extends Controller
     {
         $exam = Exam::find($id);
         $subjects = Subject::all();
-        $questions = Question::where('subject_id', $exam->subject_id)->get();
+        $questions = Question::where('subject_id', $exam->subject_id)->where('is_school_approved', 1)->where('is_victory_approved', 1)->get();
         return view('staff.exam.edit-exam', ['exam' => $exam, 'subjects' => $subjects, 'questions' => $questions]);
     }
 
@@ -692,6 +693,23 @@ class StaffController extends Controller
             return redirect()->back()->withErrors($e->getMessage())
                 ->with('error', 'Failed to update exam: ' . $e->getMessage());
         }
+    }
+
+    public function approveQuestion(Request $req, $id)
+    {
+        $question = Question::find($id);
+        $question->is_victory_approved = 1;
+        $question->is_school_approved = 1;
+        $question->save();
+        return redirect()->route('staff.questions.all')->with('success', 'Question approved successfully');
+    }
+
+    public function rejectQuestion(Request $req, $id)
+    {
+        $question = Question::find($id);
+        $question->is_victory_approved = 0;
+        $question->save();
+        return redirect()->route('staff.questions.all')->with('success', 'Question rejected successfully');
     }
 }
 
