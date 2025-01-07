@@ -606,33 +606,31 @@ class StaffController extends Controller
     public function getExamQuestions($examId)
     {
         $examSheets = ExamSheet::where('exam_id', $examId)->get();
-        $questions = [];
+        $examquestions = [];
 
         foreach ($examSheets as $examSheet) {
             $question = Question::find($examSheet->question_id);
             if ($question) {
-                $questions[] = $question;
+                $examquestions[] = $question;
             }
         }
 
-        return response()->json($questions);
+        return response()->json($examquestions);
     }
 
-    public function removeQuestion(Request $req, $examId, $questionId)
-    {
-        $examSheet = ExamSheet::where('exam_id', $examId)
-            ->where('question_id', $questionId)
-            ->first();
+    public function removeQuestion(Request $req, $exam, $question)
+{
+    $examSheet = ExamSheet::where('exam_id', $exam)
+        ->where('question_id', $question)
+        ->first();
 
-        if ($examSheet) {
-            $examSheet->delete();
-            return redirect()->back()
-                ->with('success', 'Question removed from exam successfully!');
-        }
-
-        return redirect()->back()
-            ->with('error', 'Failed to remove question from exam!');
+    if ($examSheet) {
+        $examSheet->delete();
+        return response()->json(['success' => true]);
     }
+
+    return response()->json(['success' => false]);
+}
 
     public function addQuestionToExam(Request $req)
     {
@@ -642,9 +640,7 @@ class StaffController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json(['success' => false, 'errors' => $validator->errors()]);
         }
 
         try {
@@ -653,11 +649,9 @@ class StaffController extends Controller
             $examSheet->question_id = $req->question_id;
             $examSheet->save();
 
-            return redirect()->back()
-                ->with('success', 'Question added to exam successfully!');
+            return response()->json(['success' => true, 'message' => 'Question added to exam successfully!']);
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors($e->getMessage())
-                ->with('error', 'Failed to add question to exam: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Failed to add question to exam: ' . $e->getMessage()]);
         }
     }
 

@@ -1,5 +1,15 @@
 @extends('staff.base')
 @section('content')
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
 
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Edit Exam</h1>
@@ -110,6 +120,17 @@
                     </div>
                 </div>
             </div>
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="row mt-4">
                 <div class="col-md-12">
                     <div class="card">
@@ -125,27 +146,69 @@
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach ($questions as $question)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{!! Str::limit($question->question, 50) !!}</td>
-                                            <td>
-                                                <form action="{{ route('staff.exams.removeQuestion', [$exam->id, $question->id]) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                <tbody id="questions-table">
+                                   
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <script>
+           
+            </div>
+      
+@endsection
+@section('js')
+<script>
+                document.addEventListener('DOMContentLoaded', ()=>{
+                    fetchQuestions();
+
+                });
+               
+
+                function fetchQuestions() {
+                    console.log("hererher");
+                    const examId = {{ $exam->id }};
+                    fetch(`/staff/examsheet/questions/${examId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const tbody = document.getElementById('questions-table');
+                            tbody.innerHTML = ''; // Clear previous questions
+                            data.forEach(question => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                                    <td>${question.id}</td>
+                                    <td>${question.question}</td>
+                                    <td>
+                                           <i class="fa fa-trash btn btn-danger" id="delete-question-${question.id}" onclick="deleteQuestion(${question.id})"></i>
+                                           
+                                    </td>
+                                `;
+                                tbody.appendChild(row);
+                            });
+                        });
+                }
+
+                function deleteQuestion(questionId) {
+                    const examId = {{ $exam->id }};
+                    fetch(`/staff/exams/${examId}/removeQuestion/${questionId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            fetchQuestions();
+                            // document.getElementById(`delete-question-${questionId}`).parentElement.parentElement.remove();
+                        } else {
+                            alert('Failed to remove question');
+                        }
+                    });
+                }
+                
+          
                 document.getElementById('add-question-btn').addEventListener('click', function() {
                     var questionId = document.getElementById('question_id').value;
                     var examId = {{ $exam->id }};
@@ -166,11 +229,7 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                var questionText = document.querySelector('#question_id option[value="' + questionId + '"]').textContent;
-                                var questionList = document.getElementById('questions-list');
-                                var newQuestion = document.createElement('div');
-                                newQuestion.textContent = questionText;
-                                questionList.appendChild(newQuestion);
+                            fetchQuestions();
                             } else {
                                 alert('Failed to add question');
                             }
@@ -181,6 +240,4 @@
                     }
                 });
             </script>
-            </div>
-      
 @endsection

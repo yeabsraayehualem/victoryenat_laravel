@@ -115,19 +115,8 @@
                                     </nav>
                                 </div>
 
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseExamSheets" aria-expanded="false"
-                                    aria-controls="collapseExamSheets">
-                                    Exam Sheets
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="collapseExamSheets" aria-labelledby="headingOne"
-                                    data-bs-parent="#collapsExam">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="all-exam-sheets.html">All Exam Sheets</a>
-                                        <a class="nav-link" href="add-exam-sheet.html">Add Exam Sheet</a>
-                                    </nav>
-                                </div>
+                              
+                               
 
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                                     data-bs-target="#collapseQuestions" aria-expanded="false"

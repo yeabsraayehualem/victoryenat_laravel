@@ -65,6 +65,6 @@ Route::post('staff/exam/new', [StaffController::class, 'addExam'])->middleware('
 Route::get('staff/exam/edit/{id}', [StaffController::class, 'editExam'])->middleware('staff')->name('staff.exams.edit');
 Route::post('staff/exam/edit/{id}', [StaffController::class, 'updateExam'])->middleware('staff')->name('staff.exams.update');
 Route::post('staff/examsheet/add-question', [StaffController::class, 'addQuestionToExam'])->middleware('staff')->name('staff.exams.addQuestion');
-
+Route::get('/staff/examsheet/questions/{examId}', [StaffController::class, 'getExamQuestions'])->middleware('staff')->name('staff.examsheet.questions');
 Route::delete('/staff/exams/{exam}/removeQuestion/{question}', [StaffController::class, 'removeQuestion'])->name('staff.exams.removeQuestion');
 

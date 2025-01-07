@@ -9,9 +9,9 @@
         </div>
         <div class="d-flex gap-2">
 
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#generateReportModal">
+            <!-- <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#generateReportModal">
                 <i class="fas fa-download"></i> Generate Report
-            </button>
+            </button> -->
         </div>
     </div>
 

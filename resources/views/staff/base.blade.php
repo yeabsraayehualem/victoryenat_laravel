@@ -28,6 +28,7 @@
     @include('staff.nav');
     <div id="layoutSidenav_content">
         <main>
+            
     @yield('content')
         </main>
     </div>
