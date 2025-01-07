@@ -9,6 +9,8 @@ use App\Models\School;
 use App\Models\User;
 use App\Models\Exam;
 use App\Models\Question;
+use App\Models\Subject; 
+use App\Models\Teacher;
 
 class SchoolManagersContrller extends Controller
 {
@@ -106,7 +108,9 @@ class SchoolManagersContrller extends Controller
     public function userDetail(Request $request,$id)
     {   
         $user = User::find($id);
-        return view('manager.user_detail', ['user' => $user]);
+        $subjects = Subject::all();
+        $techersubjects= Teacher::where('user_id', $user->id)->get();
+        return view('manager.user_detail', ['user' => $user, 'subjects' => $subjects,'techersubjects'=>$techersubjects]);
     }
 
     public function examslist()
@@ -145,5 +149,34 @@ class SchoolManagersContrller extends Controller
         $question->save();
         return redirect()->route('manager.questions');
     }
+
+    public function assignSubject(Request $request, $id,$teacherId)
+    {
+        $teacher = User::find($teacherId);
+        $subject = Subject::find($id);
+        $teacherSubject = new Teacher();
+        $teacherSubject->subject_id = $subject->id;
+        $teacherSubject->user_id = $teacher->id;
+        $teacherSubject->save();
+        return response()->json(['status' => 'success']);
+        
+    }
+
+    public function unassignSubject(Request $request, $id,$teacherId)
+    {
+        $teacher = User::find($teacherId);
+        $subject = Subject::find($id);
+        $teacherSubject = Teacher::where('subject_id', $subject->id)->where('user_id', $teacher->id)->first();
+        $teacherSubject->delete();
+        return response()->json(['status' => 'success']);
+    }
+
+    public function getTeacherSubjects(Request $request, $id)
+    {
+        $teacher = User::find($id);
+        $subjects = Teacher::where('user_id', $teacher->id)->get()->pluck('subject_id');
+        return response()->json(['subjects' => $subjects]);
+    }
+
     
 }

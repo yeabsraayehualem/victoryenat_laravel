@@ -19,6 +19,8 @@ Route::prefix('manager')->middleware('school_manager')->group(function() {
     Route::get('/question-detail/{id}',[SchoolManagersContrller::class,'questionDetail'])->name('manager.questions.detail');
     Route::get('/question/{id}/approve',[SchoolManagersContrller::class,'approveQuestion'])->name('manager.questions.approve');
     Route::get('/question/{id}/reject',[SchoolManagersContrller::class,'rejectQuestion'])->name('manager.questions.reject');
-
+    Route::get('/assignSubject/{id}/{teacherId}',[SchoolManagersContrller::class,'assignSubject'])->name('manager.teachers.assign');
+    Route::get('/unassignSubject/{id}/{teacherId}',[SchoolManagersContrller::class,'unassignSubject'])->name('manager.teachers.unassign');
+    Route::get('/getTeacherSubjects/{id}',[SchoolManagersContrller::class,'getTeacherSubjects'])->name('manager.teachers.subjects');
 
 });
