@@ -65,8 +65,13 @@ public function dashboard(Request $request)
         if ($role === 'staff') {
             return redirect()->route('staff.dashboard');
         } elseif ($role === 'student') {
-            return view('student.index');
-        } else {
+            return  redirect()->route('student.dashboard');
+        }  elseif ($role === 'teacher') {
+            return redirect()->route('teacher.dashboard');
+        } elseif ($role === 'school_manager') {
+            return redirect()->route('manager.dashboard');
+        }
+        else {
             return redirect('/')->with('error', 'Unauthorized role.');
         }
     }
