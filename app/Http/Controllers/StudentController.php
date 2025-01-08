@@ -4,6 +4,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Exam;
+use App\Models\Subject;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -40,7 +43,7 @@ class StudentController extends Controller
         $student->phone = $request->phone;
         $student->school_id = $request->school;
         $student->grade = $request->grade;
-        $student->role= "student";
+        $student->role = "student";
         $student->password = Hash::make($request->password);
 
         $student->save();
@@ -48,4 +51,71 @@ class StudentController extends Controller
         return redirect('/login')
             ->with('success', 'Student registered successfully!');
     }
+
+    public function dashboard(Request $req)
+    {
+
+        return view('students.dashboard');
+    }
+
+    public function examSchedules()
+    {
+        $exams = Exam::query()
+            ->whereDate('date', '>', now()->toDateString())
+            ->whereRelation('subject', 'grade', auth()->user()->grade)
+            ->with('subject')
+            ->get()
+            ->map(function ($exam) {
+                return [
+                    'id' => $exam->id,
+                    'date' => $exam->date,
+                    'time' => $exam->time,
+                    'subject' => $exam->subject->name ?? 'Unknown Subject',
+                    'url' => url('student/exam-detail/' . $exam->id),
+                ];
+            });
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $exams,
+        ]);
+    }
+
+    public function examDetail(Request $req, $id){
+        $exam = Exam::find($id);
+        return view('students.examDetail',['exam' => $exam]);
+
+    }
+
+    public function subjects(Request $req){
+        $subjects = Subject::where('grade', auth()->user()->grade)->get();
+
+        return view('students.subjects', ['subjects' => $subjects]);
+    }
+    public function lessons(Request $req, $id)
+    {
+        $lessons = Lesson::where('subject_id', $id)->get();
+    
+        if ($lessons->isEmpty()) {
+            return redirect()->back()->with('error', 'No lessons found for this subject.');
+        }
+    
+        return view('students.lessons', ['lessons' => $lessons]);
+    }
+
+    public function lessonDetail(Request $req, $id, $subId)
+    {
+        // Fetch a single lesson by ID
+        $lesson = Lesson::where('id', $subId)->first();
+    
+        // Ensure the lesson exists before passing to the view
+        if (!$lesson) {
+            return redirect()->back()->with('error', 'Lesson not found.');
+        }
+    
+        // Pass the lesson to the view
+        return view('students.lessonDetail', ['lesson' => $lesson]);
+    }
+    
+    
 }

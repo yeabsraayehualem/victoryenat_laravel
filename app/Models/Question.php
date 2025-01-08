@@ -33,4 +33,8 @@ class Question extends Model
     {
         return $this->hasMany(ExamSheet::class);
     }
+
+    public function studentAnswer(){
+        return $this->hasMany(StudentAnswers::class);
+    }
 }

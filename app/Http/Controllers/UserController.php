@@ -41,10 +41,10 @@ class UserController extends Controller
                 return redirect()->route('staff.dashboard');
             } elseif ($role === 'student') {
                 return redirect()->route('student.dashboard');
-            } 
+            }
             elseif ($role === 'teacher') {
                 return redirect()->route('teacher.dashboard');
-            } 
+            }
             elseif ($role === 'school_manager') {
                 return redirect()->route('manager.dashboard');
             }

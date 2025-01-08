@@ -1,8 +1,8 @@
-<?php 
+<?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaffController;
 
-Route::prefix('staff')->middleware('staff')->group(function () {
+Route::prefix(prefix: 'staff')->middleware('staff')->group(function () {
    Route::get('/dashboard', [StaffController::class, 'dashboard'])->middleware('staff')->name('staff.dashboard');
     Route::get('/schools', [StaffController::class, 'schools'])->middleware('staff')->name('staff.schools');
     Route::get('/schools/active', [StaffController::class, 'activeSchools'])->middleware('staff')->name('staff.schools.active');

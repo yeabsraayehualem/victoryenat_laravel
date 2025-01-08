@@ -195,7 +195,7 @@ public function newQuestion(){
     }
 
     public function examDetail(Request $req,$id){
-
+// TODO: fetch exam with this id. if the exam is a past exam we need to get all the students (of teachers school) result on the exam
     }
 
 

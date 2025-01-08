@@ -10,6 +10,7 @@ use App\Http\Controllers\TinyMCEController;
 require base_path('routes/staffroutes.php');
 require base_path('routes/teacherroutes.php');
 require base_path('routes/managersRoute.php');
+require base_path('routes/studentRoutes.php');
 Route::get('/', action: function () {
     $schools = School::all();
     return view('layouts.index', ['schools' => $schools]);

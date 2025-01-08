@@ -34,17 +34,17 @@
         <nav class="sb-sidenav accordion sb-sidenav-dark  scrollbar-hidden" id="sidenavAccordion">
             <div class="sb-sidenav-menu ">
                 <div class="nav">
-                    <div class="sb-sidenav-menu-heading">Teacher</div>
-                    <a class="nav-link" href="{{ route('teacher.dashboard') }}">
+                    <div class="sb-sidenav-menu-heading">Student</div>
+                    <a class="nav-link" href="{{ route('student.dashboard') }}">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Dashboard
                     </a>
                     <div class="sb-sidenav-menu-heading">Menu</div>
-                    <a class="nav-link collapsed" href="{{ route('teacher.subjects')}}" ><i class="fas fa-chalkboard-teacher"></i>
+                    <a class="nav-link collapsed" href="{{ route('student.subjects')}}" ><i class="fas fa-chalkboard-teacher"></i>
                         Subjects
                     </a>
 
-                    
+
                     <a class="nav-link collapsed" data-bs-toggle="collapse"
                                     data-bs-target="#collapseExamListMenu" aria-expanded="false" aria-controls="collapsePages">
                                     <div class="sb-nav-link-icon"><i class="fas fa-graduation-cap"></i></div>
@@ -59,14 +59,10 @@
                                         <a class="nav-link" href="{{ route('teacher.pastExams') }}" >Past Exams</a>
                                     </nav>
                                 </div>
-                    
-                       
-                       
 
-                                <a class="nav-link collapsed" href="{{ route('teacher.questions') }}" >
-                                  <i class="fa fa-book"></i>  Questions
-                                </a>
-                            
+
+
+
                         <div class="sb-sidenav-menu-heading">Profile</div>
                         <a class="nav-link " href="layout-sidenav-light.html"><i class="fa fa-user-circle"></i>
                             Profile</a>
