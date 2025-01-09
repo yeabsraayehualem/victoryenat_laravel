@@ -20,11 +20,11 @@ class UserController extends Controller
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
-            $user->phone = "0987654321";
+            $user->phone = $request->phone;
             $user->password = bcrypt($request->password);
             $user->role="staff";
             $user->save();
-            return redirect('/login');
+            return redirect('/');
         }
         public function login(Request $request)
     {

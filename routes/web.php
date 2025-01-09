@@ -20,6 +20,7 @@ Route::get('/', action: function () {
 Route::get('/mezgeba', action: function () {
     return view('layouts.staff.register');
 });
+
 Route::post('/', [UserController::class, 'register']);
 Route::post("/newstud", [StudentController::class, 'store']);
 Route::post("/newteacher", [TeacherController::class, 'store']);
