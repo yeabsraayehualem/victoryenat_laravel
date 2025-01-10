@@ -18,7 +18,8 @@
                                 {{ $exam->name }}
                             </div>
                             <div class="card-body">
-                                <p class="card-text">{{ $exam->date }} at {{$exam->time}}</p>
+                                <p class="card-text">{{ \Carbon\Carbon::parse($exam->date)->format('F j, Y') }} at {{ \Carbon\Carbon::parse($exam->time)->format('g:i A') }}</p>
+                                <p class="card-text">{{$exam->status()}}</p>
                                 <a href="{{ route('staff.exams.edit', $exam->id) }}" class="btn btn-primary">View Exam</a>
                             </div>
                         </div>

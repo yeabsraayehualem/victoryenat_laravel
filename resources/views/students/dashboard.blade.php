@@ -87,6 +87,7 @@
         fetch('/student/exam-schedules')
     .then(response => response.json())
     .then(data => {
+        console.log(data);
         if (data.status === 'success') {
             const events = data.data.map(exam => ({
                 title: `${exam.subject} (${exam.time})`, // Event title

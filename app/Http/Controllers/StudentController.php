@@ -61,7 +61,7 @@ class StudentController extends Controller
     public function examSchedules()
     {
         $exams = Exam::query()
-            ->whereDate('date', '>', now()->toDateString())
+            ->whereDate('date', '>=', now()->toDateString())
             ->whereRelation('subject', 'grade', auth()->user()->grade)
             ->with('subject')
             ->get()
@@ -116,6 +116,28 @@ class StudentController extends Controller
         // Pass the lesson to the view
         return view('students.lessonDetail', ['lesson' => $lesson]);
     }
-    
-    
+
+    public function upcomingExams()
+    {
+        $upcomingExams = Exam::where('date', '>', now())
+            ->orderBy('date', 'asc')
+            ->orderBy('time', 'asc')
+            ->with('subject')
+            ->get();
+
+        return view('students.exam.upcoming', compact('upcomingExams'));
+    }
+
+    public function pastExams()
+    {
+        $pastExams = Exam::where('date', '<', now())
+            ->orderBy('date', 'desc')
+            ->orderBy('time', 'desc')
+            ->with(['subject', 'studentAnswers' => function($query) {
+                $query->where('student_id', auth()->id());
+            }])
+            ->get();
+
+        return view('students.exam.past', compact('pastExams'));
+    }
 }

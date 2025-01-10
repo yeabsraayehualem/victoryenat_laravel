@@ -20,8 +20,20 @@
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
+<style>
+    .current-time-display {
+    font-size: 1.1rem;
+}
+</style>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        #current-time {
+           
+            color: white;
+            font-size: 1rem;
+            z-index: 1050;
+        }
+    </style>
 </head>
 
 <body class="sb-nav-fixed">
@@ -45,9 +57,31 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
 
-
     @yield('js')
+    
+    <script>
+        function updateDateTime() {
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true,
+                timeZone: 'Africa/Addis_Ababa'
+            };
+            
+            const now = new Date();
+            document.getElementById('current-time').textContent = 
+                now.toLocaleString('en-US', options);
+        }
 
+        // Update time immediately and then every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
 </body>
 
 </html>

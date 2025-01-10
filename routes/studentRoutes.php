@@ -9,5 +9,8 @@ Route::prefix('student')->middleware('student')->group(function () {
     Route::get('/subjects',[StudentController::class,'subjects'])->name('student.subjects');
     Route::get('subject/{id}/lessons',[StudentController::class,'lessons'])->name('student.subject.lessons');
     Route::get('subject/{id}/lesson/{subId}', [StudentController::class, 'lessonDetail'])->name('lessons.show');
-
+    
+    // New exam history routes
+    Route::get('/upcoming-exams', [StudentController::class, 'upcomingExams'])->name('student.upcoming.exams');
+    Route::get('/past-exams', [StudentController::class, 'pastExams'])->name('student.past.exams');
 });

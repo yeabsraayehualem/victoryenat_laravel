@@ -4,6 +4,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\ExamController; // Added ExamController
 use App\Models\School;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TinyMCEController;
@@ -32,3 +33,15 @@ Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard'
 Route::get('/users',[StaffController::class, 'getUserData'])->middleware('staff')->name('users');
 Route::get('/schoolsCount',[StaffController::class, 'getSchoolData'])->middleware('staff')->name('schoolsCount');
 Route::get('/getUserByRole',[StaffController::class, 'getUserByRole'])->middleware('staff')->name('getUserByRole');
+
+Route::get('/timezone-test', function () {
+    return [
+        'timezone' => config('app.timezone'),
+        'current_time' => now()->format('Y-m-d H:i:s'),
+        'php_timezone' => date_default_timezone_get(),
+    ];
+});
+
+Route::get('/student/exam/{id}/start', [ExamController::class, 'start'])->name('student.exam.start');
+Route::post('/student/exam/{id}/submit', [ExamController::class, 'submit'])->name('student.exam.submit');
+Route::get('/student/exam/{id}/result', [ExamController::class, 'result'])->name('student.exam.result');
