@@ -45,3 +45,10 @@ Route::get('/timezone-test', function () {
 Route::get('/student/exam/{id}/start', [ExamController::class, 'start'])->name('student.exam.start');
 Route::post('/student/exam/{id}/submit', [ExamController::class, 'submit'])->name('student.exam.submit');
 Route::get('/student/exam/{id}/result', [ExamController::class, 'result'])->name('student.exam.result');
+Route::prefix('manager')->middleware(['auth', 'role:manager'])->group(function () {
+    Route::get('/exams', [ExamController::class, 'index'])->name('manager.exams.index');
+    Route::post('/exams', [ExamController::class, 'store'])->name('manager.exams.store');
+    Route::put('/exams/{exam}', [ExamController::class, 'update'])->name('manager.exams.update');
+    Route::delete('/exams/{exam}', [ExamController::class, 'destroy'])->name('manager.exams.destroy');
+    Route::get('/exams/export', [ExamController::class, 'export'])->name('manager.exams.export');
+});
