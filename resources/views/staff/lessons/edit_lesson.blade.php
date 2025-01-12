@@ -1,147 +1,264 @@
-@extends('staff.base')
-
+@extends('layouts.app')
 @section('content')
-    
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">Edit Lesson</h1>
-                <ol class="breadcrumb">
+<div class="container-fluid">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0 text-gray-800">Edit Lesson</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
                     <li class="breadcrumb-item"><a href="{{ route('staff.dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('staff.lessons.all') }}">All Lessons</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('staff.lessons.index') }}">Lessons</a></li>
                     <li class="breadcrumb-item active">Edit Lesson</li>
                 </ol>
-            </div>
+            </nav>
+        </div>
+        <a href="{{ route('staff.lessons.index') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Lessons
+        </a>
+    </div>
 
-            <div class=" mt-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Edit Lesson</h4>
+    <!-- Main Content Card -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body p-4">
+            <form action="{{ route('staff.lessons.update', $lesson->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="row g-4">
+                    <!-- Lesson Title -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Lesson Title</label>
+                            <input type="text" 
+                                   name="title" 
+                                   class="form-control @error('title') is-invalid @enderror" 
+                                   value="{{ old('title', $lesson->title) }}" 
+                                   placeholder="Enter lesson title">
+                            @error('title')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                        <div class="card-body">
-                            <form id="lessonForm" action="{{ route('staff.lessons.editLesson', $id= $lesson->id) }}" method="post"
-                                enctype="multipart/form-data">
-                                @csrf
-                                @method('POST')
-                                <div class="row">
+                    </div>
 
-                                    <div class="mb-3 col-md-6 col-12">
-                                        <label for="title" class="form-label">Title</label>
-                                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ $lesson->title }}" required>
-                                        @error('title')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
+                    <!-- Subject Selection -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Subject</label>
+                            <select name="subject_id" class="form-select @error('subject_id') is-invalid @enderror">
+                                <option value="">Select Subject</option>
+                                @foreach($subjects as $subject)
+                                    <option value="{{ $subject->id }}" 
+                                            {{ old('subject_id', $lesson->subject_id) == $subject->id ? 'selected' : '' }}>
+                                        {{ $subject->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('subject_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Grade Level -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Grade Level</label>
+                            <select name="grade_level" class="form-select @error('grade_level') is-invalid @enderror">
+                                <option value="">Select Grade Level</option>
+                                @foreach(range(1, 12) as $grade)
+                                    <option value="{{ $grade }}" 
+                                            {{ old('grade_level', $lesson->grade_level) == $grade ? 'selected' : '' }}>
+                                        Grade {{ $grade }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('grade_level')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Duration -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Duration (minutes)</label>
+                            <input type="number" 
+                                   name="duration" 
+                                   class="form-control @error('duration') is-invalid @enderror" 
+                                   value="{{ old('duration', $lesson->duration) }}" 
+                                   placeholder="Enter duration in minutes">
+                            @error('duration')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Lesson Content -->
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Lesson Content</label>
+                            <textarea name="content" 
+                                      id="lessonContent" 
+                                      class="form-control @error('content') is-invalid @enderror" 
+                                      rows="6" 
+                                      placeholder="Enter lesson content">{{ old('content', $lesson->content) }}</textarea>
+                            @error('content')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Current Materials -->
+                    @if($lesson->materials->count() > 0)
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Current Materials</label>
+                            <div class="list-group">
+                                @foreach($lesson->materials as $material)
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fas fa-file me-2"></i>
+                                        {{ $material->filename }}
                                     </div>
-
-                                    <div class="mb-3 col-md-6 col-12">
-                                        <label for="subject_id" class="form-label">Subject</label>
-                                        <select class="form-select @error('subject_id') is-invalid @enderror" id="subject_id" name="subject_id" required>
-                                            <option selected>Select Subject</option>
-                                            @foreach ($subjects as $subject)
-                                                <option value="{{ $subject->id }}" {{ $lesson->subject_id == $subject->id ? 'selected' : '' }}>{{ $subject->name }}- {{ $subject->grade }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('subject_id')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
+                                    <div class="btn-group">
+                                        <a href="{{ route('staff.lessons.material.download', $material->id) }}" 
+                                           class="btn btn-sm btn-info">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                        <button type="button" 
+                                                class="btn btn-sm btn-danger" 
+                                                onclick="deleteMaterial({{ $material->id }})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label for="description" class="form-label">Description</label>
-                                        <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="10" required>{{ $lesson->description }}</textarea>
-                                        @error('description')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-3 col-12 col-md-6">
-                                        <label for="image" class="form-label">Image</label>
-                                        <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image">
-                                        @error('image')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                   
-
                                 </div>
-                                <button type="button" onclick="submitForm()" class="btn btn-primary">Update Lesson</button>
-                            </form>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
+                    <!-- New Materials -->
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Add New Materials</label>
+                            <div class="input-group">
+                                <input type="file" 
+                                       name="materials[]" 
+                                       class="form-control @error('materials') is-invalid @enderror" 
+                                       multiple>
+                                <span class="input-group-text bg-light">
+                                    <i class="fas fa-paperclip"></i>
+                                </span>
+                            </div>
+                            <small class="text-muted">Upload PDF, DOC, PPT files (Max: 10MB each)</small>
+                            @error('materials')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Additional Notes -->
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label fw-bold">Additional Notes</label>
+                            <textarea name="notes" 
+                                      class="form-control @error('notes') is-invalid @enderror" 
+                                      rows="3" 
+                                      placeholder="Any additional notes or instructions">{{ old('notes', $lesson->notes) }}</textarea>
+                            @error('notes')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Submit Buttons -->
+                    <div class="col-12">
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="reset" class="btn btn-light">
+                                <i class="fas fa-redo"></i> Reset Changes
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Lesson
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div> <!-- Add this closing div tag -->
-      
+            </form>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@section('css')
+<style>
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+    }
+    .form-control, .form-select {
+        border-radius: 8px;
+        padding: 0.6rem 1rem;
+    }
+    .form-label {
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+    }
+    .input-group-text {
+        border-radius: 0 8px 8px 0;
+    }
+    .btn {
+        padding: 0.6rem 1.5rem;
+        border-radius: 8px;
+    }
+    .invalid-feedback {
+        font-size: 0.875em;
+    }
+    .list-group-item {
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+    }
+    .breadcrumb {
+        background: transparent;
+        padding: 0;
+        margin: 0;
+    }
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: "›";
+    }
+</style>
 @endsection
 
 @section('js')
-    <script src="https://cdn.tiny.cloud/1/gn50jnhq3ryp9lwxb8xw7n1o07tbqbklb8g94dbtybedjept/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
-    <script>
-function submitForm(){
-    document.getElementById('lessonForm').submit();
-}
+<script src="https://cdn.tiny.cloud/1/YOUR_API_KEY/tinymce/5/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector: '#lessonContent',
+        height: 300,
+        menubar: false,
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | bold italic backcolor | \
+                alignleft aligncenter alignright alignjustify | \
+                bullist numlist outdent indent | removeformat | help'
+    });
 
-        tinymce.init({
-            selector: '#description',
-            menubar: false,
-            plugins: 'lists link image preview',
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | preview | subscript superscript | link image',
-            images_upload_url: `{{ route('tinymce.upload') }}`,
-            automatic_uploads: true,
-            file_picker_types: 'image',
-            images_upload_handler: function (blobInfo, success, failure) {
-                let xhr, formData;
-                xhr = new XMLHttpRequest();
-                xhr.withCredentials = false;
-                xhr.open('POST', '{{ route('tinymce.upload') }}');
-                xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
-                xhr.onload = function() {
-                    let json;
-                    if (xhr.status != 200) {
-                        failure('HTTP Error: ' + xhr.status);
-                        return;
-                    }
-                    json = JSON.parse(xhr.responseText);
-                    if (!json || typeof json.location != 'string') {
-                        failure('Invalid JSON: ' + xhr.responseText);
-                        return;
-                    }
-                    success(json.location);
-                };
-                formData = new FormData();
-                formData.append('file', blobInfo.blob(), blobInfo.filename());
-                xhr.send(formData);
-            },
-            file_picker_callback: function(cb, value, meta) {
-                var input = document.createElement('input');
-                input.setAttribute('type', 'file');
-                input.setAttribute('accept', 'image/*');
-                input.onchange = function() {
-                    var file = this.files[0];
-                    var reader = new FileReader();
-                    reader.onload = function() {
-                        var id = 'blobid' + (new Date()).getTime();
-                        var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                        var base64 = reader.result.split(',')[1];
-                        var blobInfo = blobCache.create(id, file, base64);
-                        blobCache.add(blobInfo);
-                        cb(blobInfo.blobUri(), {
-                            title: file.name
-                        });
-                    };
-                    reader.readAsDataURL(file);
-                };
-                input.click();
-            },
-            apiKey: 'gn50jnhq3ryp9lwxb8xw7n1o07tbqbklb8g94dbtybedjept',
-            setup: function(editor) {
-                editor.on('init', function() {
-                    console.log('TinyMCE initialized successfully');
+    function deleteMaterial(materialId) {
+        if(confirm('Are you sure you want to delete this material?')) {
+            // Add your delete logic here
+            axios.delete(`/staff/lessons/materials/${materialId}`)
+                .then(response => {
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to delete material');
                 });
-                editor.on('error', function(error) {
-                    alert('Error initializing TinyMCE: ' + error.message);
-                });
-            },
-        });
-    </script>
+        }
+    }
+</script>
 @endsection
