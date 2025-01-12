@@ -19,6 +19,11 @@ class Question extends Model
         'is_victory_approved',
     ];
 
+    protected $casts = [
+        'is_school_approved' => 'boolean',
+        'is_victory_approved' => 'boolean',
+    ];
+
     public function subject()
     {
         return $this->belongsTo(Subject::class);
@@ -34,7 +39,21 @@ class Question extends Model
         return $this->hasMany(ExamSheet::class);
     }
 
-    public function studentAnswer(){
+    public function correctAnswer()
+    {
+        $answerMap = [
+            'a' => $this->option1,
+            'b' => $this->option2,
+            'c' => $this->option3,
+            'd' => $this->option4,
+        ];
+
+        $key = strtolower($this->answer);
+        return $answerMap[$key] ?? null;
+    }
+
+    public function studentAnswer()
+    {
         return $this->hasMany(StudentAnswers::class);
     }
 }

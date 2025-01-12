@@ -55,7 +55,7 @@ class ExamController extends Controller
 
         foreach ($answers as $questionId => $answer) {
             $question = Question::find($questionId);
-            $isCorrect = $question && $question->answer == $answer;
+            $isCorrect = $question && $question->correctAnswer() == $answer;
             
             StudentAnswer::create([
                 'student_id' => auth()->id(),
