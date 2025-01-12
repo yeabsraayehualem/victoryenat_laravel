@@ -52,6 +52,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
     public function users(){
         return $this->belongsTo(School::class);
     }
@@ -71,5 +72,16 @@ class User extends Authenticatable
 
     public function studentAnswer(){
         return $this->hasMany(StudentAnswers::class);
+    }
+
+    public function chatGroups()
+    {
+        return $this->belongsToMany(ChatGroup::class, 'chat_group_members')
+            ->withTimestamps();
+    }
+
+    public function chatMessages()
+    {
+        return $this->hasMany(ChatMessage::class);
     }
 }
