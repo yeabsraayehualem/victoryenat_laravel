@@ -1,78 +1,284 @@
-@extends('staff.base')
+@extends('layouts.app')
 @section('content')
-    <div id="layoutSidenav_content">
-        <main>
-            <div class="container-fluid px-4">
-                <h1 class="mt-4">Schools</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">All Schools</li>
-                    <li class="breadcrumb-item active">{{ $school->name }}</li>
-                </ol>
+<div class="container-fluid py-4">
+    <!-- School Header -->
+    <div class="card border-0 bg-primary bg-gradient text-white mb-4 overflow-hidden">
+        <div class="card-body position-relative py-5">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <div class="school-logo-wrapper">
+                        <img src="{{ asset('storage/' . $school->logo) }}" 
+                             class="rounded-circle border border-3 border-white shadow" 
+                             width="120" height="120" 
+                             alt="{{ $school->name }}">
+                    </div>
+                </div>
+                <div class="col">
+                    <h1 class="display-5 mb-0">{{ $school->name }}</h1>
+                    <p class="lead mb-0 opacity-75">
+                        <i class="fas fa-map-marker-alt me-2"></i>{{ $school->location }}
+                    </p>
+                </div>
+                <div class="col-auto">
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-light">
+                            <i class="fas fa-edit me-2"></i>Edit School
+                        </button>
+                        <button class="btn btn-light">
+                            <i class="fas fa-cog me-2"></i>Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="school-header-overlay"></div>
+        </div>
+    </div>
 
-                <div class="row mt-4">
-                    <div class=" col-12 mb-4">
-                        <div class="card h-100" style="height: 250px;">
-                            <div class="card-body text-center">
-                                <img src="{{ asset('storage/' . $school->logo) }}" class="rounded-circle img-fluid mb-3"
-                                    alt="School Logo" style="width: 100px; height: 100px;" />
+    <!-- Quick Stats -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm stat-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-primary bg-opacity-10">
+                            <i class="fas fa-user-graduate fa-2x text-primary"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="text-muted mb-0">Total Students</h6>
+                            <h2 class="mb-0">{{ $totalStudents }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm stat-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-success bg-opacity-10">
+                            <i class="fas fa-chalkboard-teacher fa-2x text-success"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="text-muted mb-0">Total Teachers</h6>
+                            <h2 class="mb-0">{{ $totalTeachers }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm stat-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-info bg-opacity-10">
+                            <i class="fas fa-book fa-2x text-info"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="text-muted mb-0">Total Subjects</h6>
+                            <h2 class="mb-0">{{ $totalSubjects }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm stat-card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="stat-icon bg-warning bg-opacity-10">
+                            <i class="fas fa-chart-line fa-2x text-warning"></i>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="text-muted mb-0">Performance</h6>
+                            <h2 class="mb-0">{{ $performance }}%</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                                <!-- Display Validation Errors -->
-                                @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
+    <!-- Main Content -->
+    <div class="row g-4">
+        <!-- School Information -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-transparent border-0">
+                    <h5 class="card-title mb-0">School Information</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-3">
+                            <span class="text-muted">School Type:</span>
+                            <span class="badge bg-primary">{{ $school->type }}</span>
+                        </li>
+                        <li class="mb-3">
+                            <span class="text-muted">Established:</span>
+                            <strong>{{ $school->established_date }}</strong>
+                        </li>
+                        <li class="mb-3">
+                            <span class="text-muted">Email:</span>
+                            <strong>{{ $school->email }}</strong>
+                        </li>
+                        <li class="mb-3">
+                            <span class="text-muted">Phone:</span>
+                            <strong>{{ $school->phone }}</strong>
+                        </li>
+                        <li class="mb-3">
+                            <span class="text-muted">Website:</span>
+                            <a href="{{ $school->website }}" target="_blank">{{ $school->website }}</a>
+                        </li>
+                        <li>
+                            <span class="text-muted">Address:</span>
+                            <strong>{{ $school->address }}</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-                                <form action="{{ route('staff.updateSchool', $id = $school->id) }}" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="row">
-                                        <div class="mb-3 col-6">
-                                            <label for="name" class="form-label">Name</label>
-                                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $school->name) }}"
-                                                required>
-                                        </div>
-                                        <div class="mb-3 col-6">
-                                            <label for="address" class="form-label">Address</label>
-                                            <input type="text" class="form-control" id="address" name="address" value="{{ old('address', $school->address) }}"
-                                                required>
-                                        </div>
-                                        <div class="mb-3 col-6">
-                                            <label for="email" class="form-label"> Email</label>
-                                            <input type="text" class="form-control" id="email" name="email" value="{{ old('email', $school->email) }}"
-                                                required>
-                                        </div>
-                                        <div class="mb-3 col-6">
-                                            <label for="phone" class="form-label">Phone</label>
-                                            <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone', $school->phone) }}"
-                                                required>
-                                        </div>
-                                        <div class="mb-3 col-6">
-                                            <label for="website" class="form-label">Website</label>
-                                            <input type="text" class="form-control" id="website" name="website" value="{{ old('website', $school->website) }}"
-                                                required>
-                                        </div>
-                                        <div class="mb-3 col-6">
-                                            <label for="logo" class="form-label">Logo</label>
-                                            <input type="file" class="form-control" id="logo" name="logo" value="{{ old('logo', $school->logo) }}"
-                                                >
-                                        </div>
-                                    </div>
-                                    <div class="d-flex mx-3 justify-content-between">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button type="reset" class="btn btn-danger">Clear</button>
-                                    </div>
-                                </form>
+            <!-- School Manager -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0">
+                    <h5 class="card-title mb-0">School Manager</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <img src="{{ asset('storage/' . $manager->avatar) }}" 
+                             class="rounded-circle me-3" 
+                             width="64" height="64" 
+                             alt="{{ $manager->name }}">
+                        <div>
+                            <h6 class="mb-1">{{ $manager->name }}</h6>
+                            <p class="mb-0 text-muted">{{ $manager->email }}</p>
+                            <p class="mb-0 text-muted">{{ $manager->phone }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- Performance Charts -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-transparent border-0">
+                    <h5 class="card-title mb-0">Academic Performance</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="performanceChart" height="300"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Activities -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Recent Activities</h5>
+                    <button class="btn btn-sm btn-outline-primary">View All</button>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        @foreach($activities as $activity)
+                        <div class="list-group-item border-0 py-3">
+                            <div class="d-flex align-items-center">
+                                <div class="activity-icon me-3">
+                                    <i class="fas fa-{{ $activity->icon }} fa-lg"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">{{ $activity->title }}</h6>
+                                    <p class="mb-0 text-muted small">{{ $activity->description }}</p>
+                                </div>
+                                <small class="text-muted">{{ $activity->created_at->diffForHumans() }}</small>
                             </div>
                         </div>
-        </main>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 @endsection
 
+@section('css')
+<style>
+    .school-logo-wrapper {
+        position: relative;
+        z-index: 1;
+    }
+    .school-header-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(0,0,0,0.2), transparent);
+        z-index: 0;
+    }
+    .stat-card {
+        transition: transform 0.2s;
+        border-radius: 15px;
+    }
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+    }
+    .activity-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8f9fa;
+        border-radius: 10px;
+        color: #6c757d;
+    }
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+</style>
+@endsection
 
 @section('js')
+<script>
+    // Initialize performance chart
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {!! json_encode($performanceData->labels) !!},
+            datasets: [{
+                label: 'Academic Performance',
+                data: {!! json_encode($performanceData->values) !!},
+                borderColor: '#4e73df',
+                tension: 0.3,
+                fill: true,
+                backgroundColor: 'rgba(78, 115, 223, 0.05)'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: value => value + '%'
+                    }
+                }
+            }
+        }
+    });
+</script>
 @endsection
