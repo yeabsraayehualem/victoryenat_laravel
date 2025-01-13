@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('staff.base')
 @section('content')
 <div class="container-fluid">
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0 text-gray-800">Add New Lesson</h1>
-        <a href="{{ route('staff.lessons.index') }}" class="btn btn-secondary">
+        <a href="{{ route('staff.lessons.all') }}" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Back to Lessons
         </a>
     </div>
@@ -12,17 +12,17 @@
     <!-- Main Content Card -->
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body p-4">
-            <form action="{{ route('staff.lessons.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('staff.lessons.add') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row g-4">
                     <!-- Lesson Title -->
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-label fw-bold">Lesson Title</label>
-                            <input type="text" 
-                                   name="title" 
-                                   class="form-control @error('title') is-invalid @enderror" 
-                                   value="{{ old('title') }}" 
+                            <input type="text"
+                                   name="title"
+                                   class="form-control @error('title') is-invalid @enderror"
+                                   value="{{ old('title') }}"
                                    placeholder="Enter lesson title">
                             @error('title')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -70,10 +70,10 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="form-label fw-bold">Duration (minutes)</label>
-                            <input type="number" 
-                                   name="duration" 
-                                   class="form-control @error('duration') is-invalid @enderror" 
-                                   value="{{ old('duration') }}" 
+                            <input type="number"
+                                   name="duration"
+                                   class="form-control @error('duration') is-invalid @enderror"
+                                   value="{{ old('duration') }}"
                                    placeholder="Enter duration in minutes">
                             @error('duration')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -85,10 +85,10 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label class="form-label fw-bold">Lesson Content</label>
-                            <textarea name="content" 
-                                      id="lessonContent" 
-                                      class="form-control @error('content') is-invalid @enderror" 
-                                      rows="6" 
+                            <textarea name="content"
+                                      id="lessonContent"
+                                      class="form-control @error('content') is-invalid @enderror"
+                                      rows="6"
                                       placeholder="Enter lesson content">{{ old('content') }}</textarea>
                             @error('content')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -101,9 +101,9 @@
                         <div class="form-group">
                             <label class="form-label fw-bold">Learning Materials</label>
                             <div class="input-group">
-                                <input type="file" 
-                                       name="materials[]" 
-                                       class="form-control @error('materials') is-invalid @enderror" 
+                                <input type="file"
+                                       name="materials[]"
+                                       class="form-control @error('materials') is-invalid @enderror"
                                        multiple>
                                 <span class="input-group-text bg-light">
                                     <i class="fas fa-paperclip"></i>
@@ -120,9 +120,9 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label class="form-label fw-bold">Additional Notes</label>
-                            <textarea name="notes" 
-                                      class="form-control @error('notes') is-invalid @enderror" 
-                                      rows="3" 
+                            <textarea name="notes"
+                                      class="form-control @error('notes') is-invalid @enderror"
+                                      rows="3"
                                       placeholder="Any additional notes or instructions">{{ old('notes') }}</textarea>
                             @error('notes')
                                 <div class="invalid-feedback">{{ $message }}</div>

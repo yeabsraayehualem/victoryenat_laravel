@@ -19,27 +19,27 @@ class StaffController extends Controller
     {
         $roles = ['student', 'teacher', 'staff', 'school_manager'];
         $monthlyData = [];
-    
+
         foreach ($roles as $role) {
             $userCounts = User::selectRaw('strftime("%m", created_at) as month, COUNT(*) as count')
                 ->where('role', $role)
                 ->groupBy('month')
                 ->orderBy('month')
                 ->pluck('count', 'month');
-    
+
             // Create an array with 12 months initialized to 0 for each role
             $monthlyData[$role] = array_fill(0, 12, 0);
-    
+
             // Populate the data for the months with user counts
             foreach ($userCounts as $month => $count) {
                 $monthlyData[$role][(int)$month - 1] = $count; // Adjust month to 0-based index
             }
         }
-    
+
         // Return the data as a JSON response
         return response()->json($monthlyData);
     }
-    
+
     public function getSchoolData()
     {
         $schoolCounts = School::selectRaw('strftime("%m", created_at) as month, COUNT(*) as count')
@@ -90,12 +90,12 @@ class StaffController extends Controller
     }
     public function schools(Request $req)
     {
-        $schools = School::all();
+        $schools = School::paginate(10);
         return view('staff.school.all-schools', ['schools' => $schools]);
     }
     public function activeSchools(Request $req)
     {
-        $schools = School::where('status', 'active')->get();
+        $schools = School::where('status', 'active')->paginate(10);
         return view('staff.school.all-schools', ['schools' => $schools]);
     }
     public function addSchool(Request $req)
@@ -255,99 +255,86 @@ class StaffController extends Controller
 
     public function allSubjects(Request $req)
     {
-        $subjects = Subject::all();
-        return view('staff.lessons.subjects', ['subjects' => $subjects]);
+        $subjects = Subject::paginate(10);
+        $students = User::where('role', 'student')->where('status', 'active')->get();
+        $teachers = User::where('role', 'teacher')->where('status', 'active')->get();
+        return view('staff.lessons.subjects', compact('subjects', 'students', 'teachers'));
+    }
+
+
+    public function editSubject(Request $request, $id){
+        $subject = Subject::find($id);
+
+        return view('staff.lessons.add_subject', compact('subject'));
     }
     public function addSubject(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'short_code' => 'required|string|max:255',
-            'grade' => 'required|integer|min:1|max:12',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'shore_code' => 'required|string|max:50|unique:subjects,shore_code',
+            'description' => 'required|string',
+            'grade' => 'nullable|integer|min:1|max:12',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
+        $subject = Subject::create($validatedData);
 
-        try {
-            $subject = new Subject();
-            $subject->name = $request->name;
-            $subject->description = $request->description;
-            $subject->shore_code = $request->short_code;
-            $subject->grade = $request->grade;
+        return redirect()->route('staff.subjects.all')->with('success', 'Subject created successfully');
+    }
 
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/subjects', $fileName, 'public');
-                $subject->image = $filePath;
-            }
+    public function updateSubject(Request $request, $id)
+    {
+        $subject = Subject::findOrFail($id);
 
-            $subject->save();
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'shore_code' => 'required|string|max:50|unique:subjects,shore_code,' . $subject->id,
+            'description' => 'required|string',
+            'grade' => 'nullable|integer|min:1|max:12',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
 
-            return redirect()->route('staff.subjects.all')
-                ->with('success', 'Subject added successfully!');
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with('error', 'Failed to add subject: ' . $e->getMessage());
-        }
+        $subject->update($validatedData);
+
+        return redirect()->route('staff.subjects.all')->with('success', 'Subject updated successfully');
     }
 
     public function subjectDetail(Request $req, $id)
     {
-        $subject = Subject::find($id);
-        $lessons = Lesson::where('subject_id', $id)->get();
-        return view('staff.lessons.subject-detail', ['subject' => $subject, 'lessons' => $lessons]);
+      
+        $subject = Subject::findOrFail($id);
+        $students = User::where('role', 'student')->where('status', 'active')->where('grade', $subject->grade)->get();
+        $teachers = User::where('role', 'teacher')->where('status', 'active')->get();
+     
+        $lessons = Lesson::where('subject_id', $subject->id)->get();
+        return view('staff.lessons.subject-detail', compact('subject', 'students', 'teachers', 'lessons'));
     }
-    public function editSubject(Request $req, $id)
+
+    public function createSubjectView()
     {
-        $vadidator = Validator::make($req->all(), [
+        return view('staff.lessons.add_subject');
+    }
+
+    public function createSubject(Request $request)
+    {
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'short_code' => 'required|string|max:255',
-            'grade' => 'required|integer|min:1|max:12',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'shore_code' => 'required|string|max:50|unique:subjects,shore_code',
+            'description' => 'required|string',
+            'exam_duration' => 'required|integer|min:1',
+            'total_questions' => 'required|integer|min:1'
         ]);
 
-        if ($vadidator->fails()) {
-            return redirect()->back()
-                ->withErrors($vadidator)
-                ->withInput();
-        }
+        $subject = Subject::create($validatedData);
 
-        try {
-            $subject = Subject::find($id);
-            $subject->name = $req->name;
-            $subject->description = $req->description;
-            $subject->shore_code = $req->short_code;
-            $subject->grade = $req->grade;
-
-            if ($req->hasFile('image')) {
-                $file = $req->file('image');
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $filePath = $file->storeAs('uploads/subjects', $fileName, 'public');
-                $subject->image = $filePath;
-            }
-
-            $subject->save();
-
-            return redirect()->route('staff.subjects.all')
-                ->with('success', 'Subject updated successfully!');
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with('error', 'Failed to update subject: ' . $e->getMessage());
-        }
+        return redirect()->route('staff.subjects.all')->with('success', 'Subject created successfully');
     }
 
     public function allLessons(Request $request)
     {
-        $lessons = Lesson::all();
-        return view('staff.lessons.lessons', ['lessons' => $lessons]);
+        $lessons = Lesson::paginate(10);
+        $subjects = Subject::all();
+        return view('staff.lessons.lessons', ['lessons' => $lessons,'subjects'=>$subjects]);
     }
     public function newLesson(Request $request)
     {
@@ -712,4 +699,3 @@ class StaffController extends Controller
         return redirect()->route('staff.questions.all')->with('success', 'Question rejected successfully');
     }
 }
-

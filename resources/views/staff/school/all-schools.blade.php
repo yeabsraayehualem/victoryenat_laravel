@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('staff.base')
 @section('content')
 <div class="container-fluid py-4">
     <!-- Header Section -->
@@ -117,7 +117,7 @@
         <div class="col-md-4 col-lg-3">
             <div class="card h-100 border-0 shadow-sm school-card">
                 <div class="position-relative">
-                    <img src="{{ asset('storage/' . $school->logo) }}" 
+                    <img src="{{ asset('storage/' . $school->logo) }}"
                          class="card-img-top school-image"
                          alt="{{ $school->name }}">
                     <div class="school-overlay">
@@ -131,20 +131,20 @@
                     <p class="text-muted small mb-2">{{ $school->location }}</p>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <span class="badge bg-light text-dark">
-                            <i class="fas fa-user-graduate me-1"></i> {{ $school->students_count ?? 0 }} Students
+                            <i class="fas fa-user-graduate me-1"></i> {{ count($school->students()) ?? 0 }} Students
                         </span>
                         <span class="badge bg-light text-dark">
-                            <i class="fas fa-chalkboard-teacher me-1"></i> {{ $school->teachers_count ?? 0 }} Teachers
+                            <i class="fas fa-chalkboard-teacher me-1"></i> {{ count($school->teachers()) ?? 0 }} Teachers
                         </span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
-                        <button class="btn btn-sm btn-outline-primary view-details" 
+                        <button class="btn btn-sm btn-outline-primary view-details"
                                 data-id="{{ $school->id }}">
                             <i class="fas fa-eye me-1"></i> View Details
                         </button>
                         <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" 
-                                    type="button" 
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                                    type="button"
                                     data-bs-toggle="dropdown">
                                 <i class="fas fa-ellipsis-v"></i>
                             </button>

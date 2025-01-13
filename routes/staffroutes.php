@@ -6,7 +6,7 @@ Route::prefix(prefix: 'staff')->middleware('staff')->group(function () {
    Route::get('/dashboard', [StaffController::class, 'dashboard'])->middleware('staff')->name('staff.dashboard');
     Route::get('/schools', [StaffController::class, 'schools'])->middleware('staff')->name('staff.schools');
     Route::get('/schools/active', [StaffController::class, 'activeSchools'])->middleware('staff')->name('staff.schools.active');
-    Route::post('/schools', [StaffController::class, 'addSchool'])->middleware('staff')->name('staff.addSchool');
+    Route::post('/schools', [StaffController::class, 'addSchool'])->middleware('staff')->name('staff.school.add');
     Route::get('/schools/delete/{id}', [StaffController::class, 'deleteSchool'])->middleware('staff')->name('staff.deleteSchool');
     Route::get('/schools/edit/{id}', [StaffController::class, 'editSchool'])->middleware('staff')->name('staff.schooldetail');
     Route::post('/schools/update/{id}', [StaffController::class, 'updateSchool'])->middleware('staff')->name('staff.updateSchool');
@@ -21,8 +21,11 @@ Route::prefix(prefix: 'staff')->middleware('staff')->group(function () {
     Route::post("/edit-user/{id}", action: [StaffController::class, 'updateUserdata'])->middleware('staff')->name('staff.editUser');
     Route::get("/subjects", [StaffController::class, 'allSubjects'])->middleware('staff')->name('staff.subjects.all');
     Route::post("/subjects", [StaffController::class, 'addSubject'])->middleware('staff')->name('staff.subjects.add');
-    Route::get("/subject/{id}", [StaffController::class, 'subjectDetail'])->middleware('staff')->name('staff.subjectdetail');
-    Route::post("/subject/{id}", [StaffController::class, 'editSubject'])->middleware('staff')->name('staff.subject.edit');
+    Route::get("/subject/{id}", [StaffController::class, 'subjectDetail'])->middleware('staff')->name('staff.subject.detail');
+    Route::post("/subject/{id}", [StaffController::class, 'updateSubject'])->middleware('staff')->name('staff.subjects.update');
+    Route::get("/subjects/create", [StaffController::class, 'createSubjectView'])->middleware('staff')->name('staff.subjects.create.view');
+    Route::get("/subjects/edit/{id}", [StaffController::class, 'editSubject'])->middleware('staff')->name('staff.subjects.edit');
+    Route::post("/subjects/create", [StaffController::class, 'addSubject'])->middleware('staff')->name('staff.subjects.create');
     Route::get("/lessons", [StaffController::class, 'allLessons'])->middleware('staff')->name('staff.lessons.all');
     Route::get("/lessons/new", [StaffController::class, 'newLesson'])->middleware('staff')->name('staff.lessons.add');
     Route::post("/lessons/add", [StaffController::class, 'addLesson'])->middleware('staff')->name('staff.lessons.addLesson');

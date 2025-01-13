@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('staff.base')
 @section('content')
 <div class="container-fluid py-4">
     <!-- Header Section -->
@@ -7,7 +7,7 @@
             <h1 class="h3 mb-0 text-gray-800">Subject Management</h1>
             <p class="text-muted small mb-0">Organize and manage your educational subjects</p>
         </div>
-        <a href="{{ route('staff.subjects.create') }}" class="btn btn-primary">
+        <a  href="{{ route('staff.subjects.create.view') }}" class="btn btn-primary">
             <i class="fas fa-plus-circle me-2"></i>Add New Subject
         </a>
     </div>
@@ -23,7 +23,7 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="text-muted mb-0">Total Subjects</h6>
-                            <h2 class="mb-0">{{ $totalSubjects }}</h2>
+                            <h2 class="mb-0">{{ count($subjects) }}</h2>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="text-muted mb-0">Active Students</h6>
-                            <h2 class="mb-0">{{ $totalStudents }}</h2>
+                            <h2 class="mb-0">{{ count($students) }}</h2>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="text-muted mb-0">Total Teachers</h6>
-                            <h2 class="mb-0">{{ $totalTeachers }}</h2>
+                            <h2 class="mb-0">{{ count($teachers) }}</h2>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="text-muted mb-0">Total Hours</h6>
-                            <h2 class="mb-0">{{ $totalHours }}</h2>
+                            {{-- <h2 class="mb-0">{{ $totalHours }}</h2> --}}
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
     <!-- Filters Section -->
     <div class="card border-0 shadow-sm mb-4">
         <div class="card-body">
-            <form action="{{ route('staff.subjects.index') }}" method="GET" class="row g-3">
+            <form action="{{ route('staff.subjects.all') }}" method="GET" class="row g-3">
                 <div class="col-md-3">
                     <select name="grade" class="form-select">
                         <option value="">All Grades</option>
@@ -90,21 +90,12 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-3">
-                    <select name="department" class="form-select">
-                        <option value="">All Departments</option>
-                        @foreach($departments as $dept)
-                            <option value="{{ $dept }}" {{ request('department') == $dept ? 'selected' : '' }}>
-                                {{ $dept }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+
                 <div class="col-md-4">
                     <div class="input-group">
-                        <input type="text" 
-                               name="search" 
-                               class="form-control" 
+                        <input type="text"
+                               name="search"
+                               class="form-control"
                                placeholder="Search subjects..."
                                value="{{ request('search') }}">
                         <button class="btn btn-outline-secondary" type="submit">
@@ -128,7 +119,7 @@
             <div class="card h-100 border-0 shadow-sm subject-card">
                 <div class="position-relative">
                     @if($subject->image)
-                        <img src="{{ asset('storage/' . $subject->image) }}" 
+                        <img src="{{ asset('storage/' . $subject->image) }}"
                              class="card-img-top subject-image"
                              alt="{{ $subject->name }}">
                     @else
@@ -144,20 +135,17 @@
                     <h5 class="card-title mb-1">{{ $subject->name }}</h5>
                     <p class="text-muted small mb-2">{{ $subject->shore_code }}</p>
                     <p class="card-text text-truncate">{{ $subject->description }}</p>
-                    
+
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="small text-muted">
-                            <i class="fas fa-users me-1"></i> {{ $subject->students_count ?? 0 }} Students
+                            <i class="fas fa-users me-1"></i> {{ $subject->students_count() ?? 0 }} Students
                         </div>
                         <div class="btn-group">
-                            <a href="{{ route('staff.subject.detail', $subject->id) }}" 
+                            <a href="{{ route('staff.subject.detail', $subject->id) }}"
                                class="btn btn-sm btn-outline-primary">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a href="{{ route('staff.subject.edit', $subject->id) }}" 
-                               class="btn btn-sm btn-outline-info">
-                                <i class="fas fa-edit"></i>
-                            </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -169,7 +157,7 @@
                 <i class="fas fa-books fa-3x text-muted mb-3"></i>
                 <h5>No Subjects Found</h5>
                 <p class="text-muted">Start by adding your first subject</p>
-                <a href="{{ route('staff.subjects.create') }}" class="btn btn-primary">
+                <a href="{{ route('staff.subjects.create.view') }}" class="btn btn-primary">
                     <i class="fas fa-plus-circle me-2"></i>Add New Subject
                 </a>
             </div>

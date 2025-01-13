@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('staff.base')
 @section('content')
 <div class="container-fluid py-4">
     <!-- Header Section -->
@@ -82,7 +82,7 @@
             <form action="{{ route('staff.managers.index') }}" method="GET" class="row g-3">
                 <div class="col-md-4">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="search" 
+                        <input type="text" class="form-control" name="search"
                                placeholder="Search managers..." value="{{ request('search') }}">
                         <button class="btn btn-outline-secondary" type="submit">
                             <i class="fas fa-search"></i>
@@ -137,7 +137,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="avatar-wrapper me-3">
                                         @if($manager->avatar)
-                                            <img src="{{ asset('storage/'.$manager->avatar) }}" 
+                                            <img src="{{ asset('storage/'.$manager->avatar) }}"
                                                  class="rounded-circle" width="40" height="40"
                                                  alt="{{ $manager->name }}">
                                         @else
@@ -167,7 +167,7 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="progress flex-grow-1 me-2" style="height: 5px;">
-                                        <div class="progress-bar bg-success" 
+                                        <div class="progress-bar bg-success"
                                              style="width: {{ $manager->performance }}%"></div>
                                     </div>
                                     <span class="text-muted small">{{ $manager->performance }}%</span>
@@ -175,15 +175,15 @@
                             </td>
                             <td class="text-end pe-4">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-primary view-details" 
+                                    <button type="button" class="btn btn-sm btn-outline-primary view-details"
                                             data-id="{{ $manager->id }}">
                                         <i class="fas fa-eye"></i>
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-outline-info edit-manager" 
+                                    <button type="button" class="btn btn-sm btn-outline-info edit-manager"
                                             data-id="{{ $manager->id }}">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger delete-manager" 
+                                    <button type="button" class="btn btn-sm btn-outline-danger delete-manager"
                                             data-id="{{ $manager->id }}">
                                         <i class="fas fa-trash"></i>
                                     </button>

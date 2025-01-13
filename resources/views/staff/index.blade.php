@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('staff.base')
 @section('content')
 <div class="container-fluid py-4">
     <!-- Welcome Header -->
@@ -36,7 +36,7 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="text-muted mb-0">Total Schools</h6>
-                            <h2 class="mb-0 counter">{{ $totalSchools }}</h2>
+                            <h2 class="mb-0 counter">{{ count($schools) }}</h2>
                             <small class="text-success">
                                 <i class="fas fa-arrow-up me-1"></i>12% increase
                             </small>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="text-muted mb-0">Total Students</h6>
-                            <h2 class="mb-0 counter">{{ $totalStudents }}</h2>
+                            <h2 class="mb-0 counter">{{ count($students) }}</h2>
                             <small class="text-success">
                                 <i class="fas fa-arrow-up me-1"></i>8% increase
                             </small>
@@ -72,7 +72,7 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="text-muted mb-0">Total Teachers</h6>
-                            <h2 class="mb-0 counter">{{ $totalTeachers }}</h2>
+                            <h2 class="mb-0 counter">{{ count($teachers) }}</h2>
                             <small class="text-success">
                                 <i class="fas fa-arrow-up me-1"></i>5% increase
                             </small>
@@ -90,7 +90,7 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="text-muted mb-0">Overall Performance</h6>
-                            <h2 class="mb-0">{{ $performance }}%</h2>
+                            <h2 class="mb-0">{{ count($active_schools) }}%</h2>
                             <small class="text-success">
                                 <i class="fas fa-arrow-up me-1"></i>3% increase
                             </small>
@@ -133,7 +133,7 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="timeline">
-                        @foreach($recentActivities as $activity)
+                        {{-- @foreach($recentActivities as $activity)
                         <div class="timeline-item">
                             <div class="timeline-icon bg-{{ $activity->type }}-subtle">
                                 <i class="fas fa-{{ $activity->icon }}"></i>
@@ -144,7 +144,7 @@
                                 <small class="text-muted">{{ $activity->created_at->diffForHumans() }}</small>
                             </div>
                         </div>
-                        @endforeach
+                        @endforeach --}}
                     </div>
                 </div>
             </div>
@@ -209,75 +209,4 @@
         box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15)!important;
     }
 </style>
-@endsection
-
-@section('js')
-<script>
-    // Initialize performance chart
-    const ctx = document.getElementById('performanceChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: {!! json_encode($chartData->labels) !!},
-            datasets: [{
-                label: 'Performance',
-                data: {!! json_encode($chartData->values) !!},
-                borderColor: '#4e73df',
-                tension: 0.3,
-                fill: true,
-                backgroundColor: 'rgba(78, 115, 223, 0.05)'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        borderDash: [2, 2]
-                    }
-                },
-                x: {
-                    grid: {
-                        display: false
-                    }
-                }
-            }
-        }
-    });
-
-    // Update current time
-    function updateTime() {
-        const now = new Date();
-        document.getElementById('currentTime').textContent = now.toLocaleTimeString();
-        document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    }
-    
-    updateTime();
-    setInterval(updateTime, 1000);
-
-    // Initialize counters
-    $('.counter').each(function() {
-        $(this).prop('Counter', 0).animate({
-            Counter: $(this).text()
-        }, {
-            duration: 2000,
-            easing: 'swing',
-            step: function(now) {
-                $(this).text(Math.ceil(now));
-            }
-        });
-    });
-</script>
 @endsection

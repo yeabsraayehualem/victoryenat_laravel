@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('staff.base')
 @section('content')
 <div class="container-fluid py-4">
     <!-- Header Section with Parallax Effect -->
@@ -10,9 +10,9 @@
                     <h1 class="display-4 text-white mb-0">{{ $subject->name }}</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent mb-0">
-                            <li class="breadcrumb-item"><a href="{{ route('staff.dashboard') }}" class="text-white-50">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('staff.subjects.index') }}" class="text-white-50">Subjects</a></li>
-                            <li class="breadcrumb-item active text-white" aria-current="page">{{ $subject->name }}</li>
+                            <li class="breadcrumb-item"><a href="{{ route('staff.dashboard') }}" class="">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('staff.subjects.all') }}" class="">Subjects</a></li>
+                            <li class="breadcrumb-item active " aria-current="page">{{ $subject->name }}</li>
                         </ol>
                     </nav>
                 </div>
@@ -20,7 +20,7 @@
                     <a href="{{ route('staff.subjects.edit', $subject->id) }}" class="btn btn-light">
                         <i class="fas fa-edit me-2"></i>Edit Subject
                     </a>
-                    <a href="{{ route('staff.subjects.index') }}" class="btn btn-outline-light">
+                    <a href="{{ route('staff.subjects.all') }}" class="btn btn-outline-light">
                         <i class="fas fa-arrow-left me-2"></i>Back
                     </a>
                 </div>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="text-muted mb-0">Total Students</h6>
-                            <h2 class="mb-0">{{ $totalStudents }}</h2>
+                            <h2 class="mb-0">{{ count($students) }}</h2>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="text-muted mb-0">Average Score</h6>
-                            <h2 class="mb-0">{{ $averageScore }}%</h2>
+                            {{-- <h2 class="mb-0">{{ $averageScore }}%</h2> --}}
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="text-muted mb-0">Total Hours</h6>
-                            <h2 class="mb-0">{{ $totalHours }}</h2>
+                            {{-- <h2 class="mb-0">{{ $totalHours }}</h2> --}}
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@
                         </div>
                         <div class="ms-3">
                             <h6 class="text-muted mb-0">Total Lessons</h6>
-                            <h2 class="mb-0">{{ $totalLessons }}</h2>
+                            <h2 class="mb-0">{{ count($lessons) }}</h2>
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                         <div class="col-md-4">
                             <div class="text-center mb-4">
                                 @if($subject->image)
-                                    <img src="{{ asset('storage/' . $subject->image) }}" 
+                                    <img src="{{ asset('storage/' . $subject->image) }}"
                                          class="img-fluid rounded-circle subject-image mb-3"
                                          alt="{{ $subject->name }}">
                                 @else
@@ -149,11 +149,11 @@
                         <div class="col-md-8">
                             <h4 class="mb-4">Subject Description</h4>
                             <p class="lead">{{ $subject->description }}</p>
-                            
+
                             <div class="mt-4">
-                                <h5 class="mb-3">Learning Objectives</h5>
+                                {{-- <h5 class="mb-3">Learning Objectives</h5>
                                 <div class="row g-3">
-                                    @foreach($objectives as $objective)
+                                    @foreach($subject->objectives as $objective)
                                     <div class="col-md-6">
                                         <div class="objective-card p-3 bg-light rounded">
                                             <i class="fas fa-check-circle text-success me-2"></i>
@@ -161,7 +161,7 @@
                                         </div>
                                     </div>
                                     @endforeach
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -171,12 +171,12 @@
                 <div class="tab-pane fade" id="lessons">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h4 class="mb-0">Subject Lessons</h4>
-                        <a href="{{ route('staff.lessons.create', ['subject_id' => $subject->id]) }}" 
+                        <a href="{{ route('staff.lessons.add', ['subject_id' => $subject->id]) }}"
                            class="btn btn-primary">
                             <i class="fas fa-plus me-2"></i>Add New Lesson
                         </a>
                     </div>
-                    
+
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
                             <thead class="bg-light">
@@ -212,21 +212,21 @@
                                     </td>
                                     <td>
                                         <div class="progress" style="height: 8px;">
-                                            <div class="progress-bar" role="progressbar" 
+                                            <div class="progress-bar" role="progressbar"
                                                  style="width: {{ $lesson->progress }}%"
-                                                 aria-valuenow="{{ $lesson->progress }}" 
-                                                 aria-valuemin="0" 
+                                                 aria-valuenow="{{ $lesson->progress }}"
+                                                 aria-valuemin="0"
                                                  aria-valuemax="100">
                                             </div>
                                         </div>
                                     </td>
                                     <td class="text-end">
                                         <div class="btn-group">
-                                            <a href="{{ route('staff.lessons.show', $lesson->id) }}" 
+                                            <a href="{{ route('staff.lessons.detail', $lesson->id) }}"
                                                class="btn btn-sm btn-outline-primary">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('staff.lessons.edit', $lesson->id) }}" 
+                                            <a href="{{ route('staff.lessons.detail', $lesson->id) }}"
                                                class="btn btn-sm btn-outline-info">
                                                 <i class="fas fa-edit"></i>
                                             </a>
@@ -239,7 +239,7 @@
                                         <div class="text-muted">
                                             <i class="fas fa-inbox fa-3x mb-3"></i>
                                             <p>No lessons available for this subject yet.</p>
-                                            <a href="{{ route('staff.lessons.create', ['subject_id' => $subject->id]) }}" 
+                                            <a href="{{ route('staff.lessons.add', ['subject_id' => $subject->id]) }}"
                                                class="btn btn-primary btn-sm">
                                                 <i class="fas fa-plus me-2"></i>Add First Lesson
                                             </a>
@@ -254,8 +254,42 @@
 
                 <!-- Students Tab -->
                 <div class="tab-pane fade" id="students">
-                    <!-- Add your students list here -->
-                </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="border-0">Name</th>
+                                    <th class="border-0">Email</th>
+                                    <th class="border-0">Grade</th>
+                                    <th class="border-0">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($students as $student)
+                                <tr>
+                                    <td>{{ $student->first_name }} {{ $student->last_name }} </td>
+                                    <td>{{ $student->email }}</td>
+                                    <td>{{ $student->grade }}</td>
+                                    <td class="text-end">
+                                        <a href="{{ route('staff.editUser', $student->id) }}"
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="text-center py-5">
+                                        <div class="text-muted">
+                                            <i class="fas fa-inbox fa-3x mb-3"></i>
+                                            <p>No students have enrolled for this subject yet.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
             </div>
         </div>
     </div>

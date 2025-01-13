@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('staff.base')
 @section('content')
 <div class="container-fluid py-4">
     <!-- School Header -->
@@ -7,9 +7,9 @@
             <div class="row align-items-center">
                 <div class="col-auto">
                     <div class="school-logo-wrapper">
-                        <img src="{{ asset('storage/' . $school->logo) }}" 
-                             class="rounded-circle border border-3 border-white shadow" 
-                             width="120" height="120" 
+                        <img src="{{ asset('storage/' . $school->logo) }}"
+                             class="rounded-circle border border-3 border-white shadow"
+                             width="120" height="120"
                              alt="{{ $school->name }}">
                     </div>
                 </div>
@@ -143,9 +143,9 @@
                 </div>
                 <div class="card-body">
                     <div class="d-flex align-items-center">
-                        <img src="{{ asset('storage/' . $manager->avatar) }}" 
-                             class="rounded-circle me-3" 
-                             width="64" height="64" 
+                        <img src="{{ asset('storage/' . $manager->avatar) }}"
+                             class="rounded-circle me-3"
+                             width="64" height="64"
                              alt="{{ $manager->name }}">
                         <div>
                             <h6 class="mb-1">{{ $manager->name }}</h6>

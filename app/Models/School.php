@@ -17,4 +17,11 @@ class School extends Model
     public function school(){
         return $this->hasMany(User::class);
     }
+
+    public function students(){
+        return User::where('role', 'student')->where('school_id', $this->id)->get();
+    }
+    public function teachers(){
+        return User::where('role', 'teacher')->where('school_id', $this->id)->get();
+    }
 }

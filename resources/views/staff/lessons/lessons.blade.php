@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('staff.base')
 @section('content')
 <div class="container-fluid">
     <!-- Header Section -->
@@ -7,7 +7,7 @@
             <h1 class="h3 mb-0 text-gray-800">Lessons Management</h1>
             <p class="text-muted small mb-0">Manage and organize your educational content</p>
         </div>
-        <a href="{{ route('staff.lessons.create') }}" class="btn btn-primary">
+        <a href="{{ route('staff.lessons.add') }}" class="btn btn-primary">
             <i class="fas fa-plus-circle me-2"></i>Add New Lesson
         </a>
     </div>
@@ -20,7 +20,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-primary mb-1">Total Lessons</h6>
-                            <h3 class="mb-0">{{ $totalLessons }}</h3>
+                            <h3 class="mb-0">{{ count($lessons) }}</h3>
                         </div>
                         <div class="bg-primary bg-opacity-25 rounded-circle p-3">
                             <i class="fas fa-book fa-2x text-primary"></i>
@@ -35,7 +35,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-success mb-1">Active Lessons</h6>
-                            <h3 class="mb-0">{{ $activeLessons }}</h3>
+                            <h3 class="mb-0">{{ count($lessons) }}</h3>
                         </div>
                         <div class="bg-success bg-opacity-25 rounded-circle p-3">
                             <i class="fas fa-check-circle fa-2x text-success"></i>
@@ -50,7 +50,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-info mb-1">Total Subjects</h6>
-                            <h3 class="mb-0">{{ $totalSubjects }}</h3>
+                            <h3 class="mb-0">{{ count($subjects) }}</h3>
                         </div>
                         <div class="bg-info bg-opacity-25 rounded-circle p-3">
                             <i class="fas fa-bookmark fa-2x text-info"></i>
@@ -65,7 +65,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-warning mb-1">Total Materials</h6>
-                            <h3 class="mb-0">{{ $totalMaterials }}</h3>
+                            {{-- <h3 class="mb-0">{{ $totalMaterials }}</h3> --}}
                         </div>
                         <div class="bg-warning bg-opacity-25 rounded-circle p-3">
                             <i class="fas fa-file-alt fa-2x text-warning"></i>
@@ -79,7 +79,7 @@
     <!-- Filters and Search -->
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
-            <form action="{{ route('staff.lessons.index') }}" method="GET" class="row g-3">
+            <form action="{{ route('staff.lessons.all') }}" method="GET" class="row g-3">
                 <div class="col-md-3">
                     <select name="subject" class="form-select">
                         <option value="">All Subjects</option>
@@ -102,9 +102,9 @@
                 </div>
                 <div class="col-md-4">
                     <div class="input-group">
-                        <input type="text" 
-                               name="search" 
-                               class="form-control" 
+                        <input type="text"
+                               name="search"
+                               class="form-control"
                                placeholder="Search lessons..."
                                value="{{ request('search') }}">
                         <button class="btn btn-outline-secondary" type="submit">
@@ -166,16 +166,16 @@
                             </td>
                             <td class="text-end px-4">
                                 <div class="btn-group">
-                                    <a href="{{ route('staff.lessons.show', $lesson->id) }}" 
+                                    <a href="{{ route('staff.lessons.detail', $lesson->id) }}"
                                        class="btn btn-sm btn-outline-primary">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('staff.lessons.edit', $lesson->id) }}" 
+                                    <a href="{{ route('staff.lessons.editLesson', $lesson->id) }}"
                                        class="btn btn-sm btn-outline-info">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <button type="button" 
-                                            class="btn btn-sm btn-outline-danger" 
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-danger"
                                             onclick="deleteLesson({{ $lesson->id }})">
                                         <i class="fas fa-trash"></i>
                                     </button>

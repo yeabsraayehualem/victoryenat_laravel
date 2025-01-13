@@ -8,7 +8,7 @@ use App\Models\Lesson;
 
 class Subject extends Model
 {
-    protected $fillable = ['name', 'description', 'image', 'shore_code', 'grade'];
+    protected $fillable = ['name', 'description', 'shore_code',  'image', 'grade'];
 
 
     public function subject()
@@ -29,4 +29,11 @@ class Subject extends Model
     {
         return $this->hasMany(Teacher::class);
     }
+
+    public function students_count(){
+        $grade = $this->grade;
+        $studs = User::where('grade', $grade)->where('status', 'active')->get();
+        return $studs->count();
+    }
+    
 }
