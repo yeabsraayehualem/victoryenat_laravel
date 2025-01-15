@@ -1,6 +1,30 @@
 @extends('staff.base')
 @section('content')
 <div class="container-fluid py-4">
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <!-- Header Section -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -245,27 +269,37 @@
             title: 'Add New School',
             html: `<form id="add_school_form" action="{{ route('staff.school.add') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="mb-3">
+                <div class="row">
+                <div class="col-md-6 col-12 mb-3">
                     <label class="form-label">School Name</label>
                     <input type="text" class="form-control" name="name" required>
                 </div>
-                <div class="mb-3">
+                <div class="col-md-6 col-12 mb-3">
                     <label class="form-label">Location</label>
-                    <input type="text" class="form-control" name="location" required>
+                    <input type="text" class="form-control" name="address" required>
                 </div>
-                <div class="mb-3">
+                <div class="col-12 mb-3">
                     <label class="form-label">School Logo</label>
                     <input type="file" class="form-control" name="logo" required>
                 </div>
-                <div class="mb-3">
+                <div class="col-md-6 col-12 mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" required>
+                </div>
+                <div class="col-md-6 col-12 mb-3">
+                    <label class="form-label">Phone No</label>
+                    <input type="number" class="form-control" name="phone" required>
+                </div>
+                <div class="col-12 mb-3">
                     <label class="form-label">Description</label>
                     <textarea class="form-control" name="description" rows="3"></textarea>
                 </div>
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary">Save School</button>
                 </div>
+            </div>
             </form>`,
-            showCancelButton: true,
+            showCancelButton: false,
             showConfirmButton: false,
             width: '500px'
         });

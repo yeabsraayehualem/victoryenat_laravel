@@ -13,6 +13,7 @@ use App\Models\ExamSheet;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Subject;
+
 class StaffController extends Controller
 {
     public function getUserData()
@@ -59,6 +60,7 @@ class StaffController extends Controller
     // Return the data as a JSON response
     return response()->json(array_values($monthlyData));
     }
+
     public function getUserByRole()
     {
         // Get user counts by role
@@ -88,42 +90,76 @@ class StaffController extends Controller
             'active_schools' => $active_schools
         ]);
     }
+
     public function schools(Request $req)
     {
         $schools = School::paginate(10);
         return view('staff.school.all-schools', ['schools' => $schools]);
     }
+
     public function activeSchools(Request $req)
     {
         $schools = School::where('status', 'active')->paginate(10);
         return view('staff.school.all-schools', ['schools' => $schools]);
     }
+
     public function addSchool(Request $req)
     {
-        $req->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
-            'address' => 'required',
-            'website' => 'string|nullable',
-            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        try {
+            $validated = $req->validate([
+                'name' => 'required',
+                'phone' => 'required',
+                'email' => 'required|email',
+                'address' => 'required',
+                'website' => 'string|nullable|url',
+                'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ], [
+                'name.required' => 'School name is required',
+                'phone.required' => 'Phone number is required',
+                'email.required' => 'Email address is required',
+                'email.email' => 'Please enter a valid email address',
+                'address.required' => 'School address is required',
+                'website.url' => 'Please enter a valid website URL',
+                'logo.required' => 'School logo is required',
+                'logo.image' => 'The file must be an image',
+                'logo.mimes' => 'The logo must be a file of type: jpeg, png, jpg, gif, svg',
+                'logo.max' => 'The logo must not be larger than 2MB'
+            ]);
 
-        $school = new School();
-        $school->name = $req->name;
-        $school->website = $req->website;
-        $school->email = $req->email;
-        $school->address = $req->address;
-        $school->phone = $req->phone;
-        if ($req->hasFile('logo')) {
-            $file = $req->file('logo');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs('uploads/schools', $fileName, 'public');
-            $school->logo = $filePath;
+            $school = new School();
+            $school->name = $req->name;
+            $school->website = $req->website;
+            $school->email = $req->email;
+            $school->address = $req->address;
+            $school->phone = $req->phone;
+            
+            if ($req->hasFile('logo')) {
+                try {
+                    $file = $req->file('logo');
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+                    $filePath = $file->storeAs('uploads/schools', $fileName, 'public');
+                    $school->logo = $filePath;
+                } catch (\Exception $e) {
+                    return redirect()->back()
+                        ->withInput()
+                        ->with('error', 'Failed to upload logo: ' . $e->getMessage());
+                }
+            }
+
+            $school->save();
+            return redirect()->route('staff.schools')->with('success', 'School added successfully!');
+            
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()
+                ->withErrors($e->validator)
+                ->withInput()
+                ->with('error', 'Please correct the errors below');
+        } catch (\Exception $e) {
+            \Log::error('School creation error: ' . $e->getMessage());
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Failed to add school: ' . $e->getMessage());
         }
-
-        $school->save();
-        return redirect()->route('staff.schools');
     }
 
     public function deleteSchool(Request $req, $id)
@@ -178,7 +214,6 @@ class StaffController extends Controller
         $schools = School::all();
         return view('staff.users.users', ['users' => $schoolManagers, 'schools' => $schools]);
     }
-
 
     public function teachers(Request $req)
     {
@@ -261,12 +296,12 @@ class StaffController extends Controller
         return view('staff.lessons.subjects', compact('subjects', 'students', 'teachers'));
     }
 
-
     public function editSubject(Request $request, $id){
         $subject = Subject::find($id);
 
         return view('staff.lessons.add_subject', compact('subject'));
     }
+
     public function addSubject(Request $request)
     {
         $validatedData = $request->validate([
@@ -336,11 +371,13 @@ class StaffController extends Controller
         $subjects = Subject::all();
         return view('staff.lessons.lessons', ['lessons' => $lessons,'subjects'=>$subjects]);
     }
+
     public function newLesson(Request $request)
     {
         $subjects = Subject::all();
         return view('staff.lessons.add_lesson', ['subjects' => $subjects]);
     }
+
     public function addLesson(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -386,6 +423,7 @@ class StaffController extends Controller
                 ->with('error', 'Failed to add lesson: ' . $e->getMessage());
         }
     }
+
     public function editLesson(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
