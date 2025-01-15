@@ -143,6 +143,7 @@
                 <div class="position-relative">
                     <img src="{{ asset('storage/' . $school->logo) }}"
                          class="card-img-top school-image"
+                         width="200" height="200"
                          alt="{{ $school->name }}">
                     <div class="school-overlay">
                         <span class="badge bg-{{ $school->status == 'active' ? 'success' : 'warning' }}">
@@ -162,10 +163,10 @@
                         </span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
-                        <button class="btn btn-sm btn-outline-primary view-details"
+                        <a href="{{ route('staff.schooldetail', $school->id) }}" class="btn btn-sm btn-outline-primary view-details"
                                 data-id="{{ $school->id }}">
                             <i class="fas fa-eye me-1"></i> View Details
-                        </button>
+</a>
                         <div class="dropdown">
                             <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
                                     type="button"
@@ -173,19 +174,21 @@
                                 <i class="fas fa-ellipsis-v"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
+                               
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-edit me-2"></i>Edit
+                                    @if($school->status == 'active')
+                                    <a class="dropdown-item" href="{{ route('staff.deactivateSchool' , ['id' => $school->id])}}">
+                                        <i class="fas fa-pause-circle me-2"></i>Deactivate
                                     </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fas fa-chart-bar me-2"></i>Analytics
+                                    @else
+                                    <a class="dropdown-item" href="{{ route('staff.activateSchool' , ['id' => $school->id])}}">
+                                        <i class="fas fa-play-circle me-2"></i>Activate
                                     </a>
+                                    @endif
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <a class="dropdown-item text-danger" href="#">
+                                    <a class="dropdown-item text-danger" href="{{ route('staff.deleteSchool' , ['id' => $school->id])}}">
                                         <i class="fas fa-trash-alt me-2"></i>Delete
                                     </a>
                                 </li>

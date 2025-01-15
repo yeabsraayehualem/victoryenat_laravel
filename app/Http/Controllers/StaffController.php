@@ -162,6 +162,20 @@ class StaffController extends Controller
         }
     }
 
+    public function deactivateSchool(Request $req, $id)
+    {
+        $school = School::find($id);
+        $school->status = 'inactive';
+        $school->save();
+        return redirect()->route('staff.schools');
+    }
+    public function activateSchool(Request $req, $id)
+    {
+        $school = School::find($id);
+        $school->status = 'active';
+        $school->save();
+        return redirect()->route('staff.schools');
+    }
     public function deleteSchool(Request $req, $id)
     {
         $school = School::find($id);
@@ -172,8 +186,10 @@ class StaffController extends Controller
     public function editSchool(Request $req, $id)
     {
         $school = School::find($id);
-
-        return view('staff.school.school-detail', ['school' => $school]);
+        $totalTeachers = User::where('role', 'teacher')->where('school_id', $school->id)->count();
+        $totalStudents = User::where('school_id', $school->id)->where('role', 'student')->count();
+        return view('staff.school.school-detail', ['school' => $school, 'totalTeachers' => $totalTeachers, 'totalStudents' => $totalStudents,'totalSubjects'=> Subject::all()->count(),'performance'=>0,
+        'managers'=>User::where('role','school_manager')->where('school_id', $school->id)]);
     }
 
     public function updateSchool(Request $req, $id)

@@ -141,19 +141,21 @@
                 <div class="card-header bg-transparent border-0">
                     <h5 class="card-title mb-0">School Manager</h5>
                 </div>
+                @foreach($managers as $manager)
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <img src="{{ asset('storage/' . $manager->avatar) }}"
                              class="rounded-circle me-3"
-                             width="64" height="64"
+                             width="50"
+                             height="50"
                              alt="{{ $manager->name }}">
                         <div>
-                            <h6 class="mb-1">{{ $manager->name }}</h6>
-                            <p class="mb-0 text-muted">{{ $manager->email }}</p>
-                            <p class="mb-0 text-muted">{{ $manager->phone }}</p>
+                            <h6 class="mb-0">{{ $manager->name }}</h6>
+                            <small class="text-muted">{{ $manager->email }}</small>
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
         </div>
 
@@ -174,24 +176,7 @@
                     <h5 class="card-title mb-0">Recent Activities</h5>
                     <button class="btn btn-sm btn-outline-primary">View All</button>
                 </div>
-                <div class="card-body p-0">
-                    <div class="list-group list-group-flush">
-                        @foreach($activities as $activity)
-                        <div class="list-group-item border-0 py-3">
-                            <div class="d-flex align-items-center">
-                                <div class="activity-icon me-3">
-                                    <i class="fas fa-{{ $activity->icon }} fa-lg"></i>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-1">{{ $activity->title }}</h6>
-                                    <p class="mb-0 text-muted small">{{ $activity->description }}</p>
-                                </div>
-                                <small class="text-muted">{{ $activity->created_at->diffForHumans() }}</small>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
+               
             </div>
         </div>
     </div>
@@ -244,41 +229,3 @@
 </style>
 @endsection
 
-@section('js')
-<script>
-    // Initialize performance chart
-    const ctx = document.getElementById('performanceChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: {!! json_encode($performanceData->labels) !!},
-            datasets: [{
-                label: 'Academic Performance',
-                data: {!! json_encode($performanceData->values) !!},
-                borderColor: '#4e73df',
-                tension: 0.3,
-                fill: true,
-                backgroundColor: 'rgba(78, 115, 223, 0.05)'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                    ticks: {
-                        callback: value => value + '%'
-                    }
-                }
-            }
-        }
-    });
-</script>
-@endsection

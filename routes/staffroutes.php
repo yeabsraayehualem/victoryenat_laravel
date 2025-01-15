@@ -8,6 +8,9 @@ Route::prefix(prefix: '/staff')->middleware('staff')->group(function () {
     Route::get('/schools/active', [StaffController::class, 'activeSchools'])->middleware('staff')->name('staff.schools.active');
     Route::post('/schools', [StaffController::class, 'addSchool'])->middleware('staff')->name('staff.school.add');
     Route::get('/schools/delete/{id}', [StaffController::class, 'deleteSchool'])->middleware('staff')->name('staff.deleteSchool');
+    Route::get('/schools/deactivate/{id}', [StaffController::class, 'deactivateSchool'])->middleware('staff')->name('staff.deactivateSchool');
+    Route::get('/schools/activate/{id}', [StaffController::class, 'activateSchool'])->middleware('staff')->name('staff.activateSchool');
+
     Route::get('/schools/edit/{id}', [StaffController::class, 'editSchool'])->middleware('staff')->name('staff.schooldetail');
     Route::post('/schools/update/{id}', [StaffController::class, 'updateSchool'])->middleware('staff')->name('staff.updateSchool');
     Route::get('/school-managers', [StaffController::class, 'schoolManagers'])->middleware('staff')->name('staff.schoolManagers');
