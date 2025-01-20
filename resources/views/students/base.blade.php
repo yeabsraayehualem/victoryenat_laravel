@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="School Management System Staff Dashboard" />
     <meta name="author" content="" />
-    <title>Teachers Dashboard</title>
+    <title>Students Dashboard</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
