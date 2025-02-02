@@ -134,7 +134,7 @@
                             </nav>
                         </div>
                         <div class="sb-sidenav-menu-heading">Profile</div>
-                        <a class="nav-link " href="layout-sidenav-light.html"><i class="fa fa-user-circle"></i>
+                        <a class="nav-link " href="{{ route('staff.profile')}}"><i class="fa fa-user-circle"></i>
                             Profile</a>
 
 

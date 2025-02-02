@@ -50,4 +50,6 @@ Route::prefix(prefix: '/staff')->middleware('staff')->group(function () {
     Route::delete('/exams/{exam}/removeQuestion/{question}', [StaffController::class, 'removeQuestion'])->name('staff.exams.removeQuestion');
     Route::get("question/{id}/approve", [StaffController::class, 'approveQuestion'])->middleware('staff')->name('staff.questions.approve');
     Route::get("question/{id}/reject", [StaffController::class, 'rejectQuestion'])->middleware('staff')->name('staff.questions.reject');
+    Route::get('/profile', [StaffController::class, 'profile'])->name('staff.profile');
+    Route::put('/profile/update', [StaffController::class, 'updateProfile'])->name('staff.profile.update');
 });
