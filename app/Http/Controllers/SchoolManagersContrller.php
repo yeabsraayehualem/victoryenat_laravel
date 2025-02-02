@@ -9,13 +9,13 @@ use App\Models\School;
 use App\Models\User;
 use App\Models\Exam;
 use App\Models\Question;
-use App\Models\Subject; 
+use App\Models\Subject;
 use App\Models\Teacher;
 
 class SchoolManagersContrller extends Controller
 {
     public function index(Request $request)
-    { 
+    {
         // schoolId = Auth::user()->school_id;
         // $school = School::where('id', $schoolId)->first();
         $userCounts = User::where('school_id', auth()->user()->school_id)->count();
@@ -31,21 +31,21 @@ class SchoolManagersContrller extends Controller
     {
         $roles = ['student', 'teacher', 'school_manager'];
         $monthlyData = [];
-    
+
         foreach ($roles as $role) {
             $userCounts = User::selectRaw('strftime("%m", created_at) as month, COUNT(*) as count')
                 ->where('role', $role)->where('school_id', auth()->user()->school_id)
                 ->groupBy('month')
                 ->orderBy('month')
                 ->pluck('count', 'month');
-    
+
             $monthlyData[$role] = array_fill(0, 12, 0);
-    
+
             foreach ($userCounts as $month => $count) {
-                $monthlyData[$role][(int)$month - 1] = $count; 
+                $monthlyData[$role][(int)$month - 1] = $count;
             }
         }
-    
+
         return response()->json($monthlyData);
     }
 
@@ -65,12 +65,12 @@ class SchoolManagersContrller extends Controller
 
     public function activateTeacher(Request $request,$id)
     {
-        
+
         $user = User::where('id',$id)->first();
         if ($user->status == 'active') {
             $user->status = 'inactive';
             $user->save();
-            return view('manager.dashboard', ['message' => 'Teacher deactivated successfully']);
+            return redirect()->route('manager.dashboard', ['message' => 'Teacher deactivated successfully']);
         }
         $user->status = 'active';
         $user->save();
@@ -106,7 +106,7 @@ class SchoolManagersContrller extends Controller
     }
 
     public function userDetail(Request $request,$id)
-    {   
+    {
         $user = User::find($id);
         $subjects = Subject::all();
         $techersubjects= Teacher::where('user_id', $user->id)->get();
@@ -119,7 +119,7 @@ class SchoolManagersContrller extends Controller
         $exams = Exam::whereBetween('date', [now(), now()->addWeeks(6)])->orderBy('date')->get();
         return view('manager.exams', ['exams' => $exams]);
     }
-    
+
     public function getExamQuestions(Request $request)
     {
         $schoolId = auth()->user()->school_id;
@@ -159,7 +159,7 @@ class SchoolManagersContrller extends Controller
         $teacherSubject->user_id = $teacher->id;
         $teacherSubject->save();
         return response()->json(['status' => 'success']);
-        
+
     }
 
     public function unassignSubject(Request $request, $id,$teacherId)
@@ -178,5 +178,5 @@ class SchoolManagersContrller extends Controller
         return response()->json(['subjects' => $subjects]);
     }
 
-    
+
 }

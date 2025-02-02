@@ -10,11 +10,7 @@
                     Teacher Detail
                 @endif
             </h1>
-            <!-- @if ($user->status != 'active')
-                <a href="{{ route('manager.activateUser', $user->id) }}" class="btn btn-success">
-                    Activate User
-                </a>
-            @endif -->
+          
         </div>
 
         <div class="row">
