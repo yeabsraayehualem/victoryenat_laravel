@@ -13,6 +13,7 @@ use App\Models\ExamSheet;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Subject;
+use Illuminate\Support\Facades\Storage;
 
 class StaffController extends Controller
 {
@@ -751,5 +752,57 @@ class StaffController extends Controller
         $question->is_victory_approved = 0;
         $question->save();
         return redirect()->route('staff.questions.all')->with('success', 'Question rejected successfully');
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+
+        // Validate the request data
+        $validatedData = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone' => 'nullable|string|max:15',
+            'school' => 'nullable|string|max:255',
+            'status' => 'in:active,inactive',
+            'password' => 'nullable|string|min:6|confirmed',
+            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        // Update user fields
+        $user->first_name = $validatedData['first_name'];
+        $user->last_name = $validatedData['last_name'];
+        $user->email = $validatedData['email'];
+        $user->phone = $validatedData['phone'] ?? $user->phone;
+        $user->school = $validatedData['school'] ?? $user->school;
+        $user->status = $validatedData['status'] ?? $user->status;
+
+        // Update password if provided
+        if (!empty($validatedData['password'])) {
+            $user->password = bcrypt($validatedData['password']);
+        }
+
+        // Handle profile image upload
+        if ($request->hasFile('profile')) {
+            // Delete old profile image if exists
+            if ($user->profile) {
+                Storage::delete('public/' . $user->profile);
+            }
+
+            // Store new profile image
+            $profilePath = $request->file('profile')->store('profiles', 'public');
+            $user->profile = $profilePath;
+        }
+
+        $user->save();
+
+        // Redirect back with success message
+        return redirect()->route('staff.profile')->with('success', 'Profile updated successfully');
+    }
+
+    public function profile()
+    {
+        return view('staff.profile');
     }
 }
