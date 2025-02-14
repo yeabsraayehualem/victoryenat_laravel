@@ -49,15 +49,16 @@
                                         <textarea name="option4" id="option4" class="form-control">{{ old('option4') }}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="answer">Answer</label>
-                                        <input type="text" name="answer" id="answer" class="form-control" value="{{ old('answer') }}"></input>
+                                        <label for="answer">Correct Answer (1-4)</label>
+                                        <textarea  name="answer" id="answer" class="form-control"  required value="{{ old('answer') }}"></textarea>
+                                        <small class="form-text text-muted">Enter the number of the correct option (1-4)</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="subject_id">Subject</label>
                                         <select name="subject_id" id="subject_id" class="form-control">
                                             <option value="">Select Subject</option>
                                             @foreach ($subjects as $subject)
-                                                <option value="{{ $subject->id }}" {{ old('subject_id') == $subject->id ? 'selected' : '' }}>{{ $subject->name }}-{{$subject->grade}}</option>
+                                                <option value="{{ $subject->id }}" >{{ $subject->name }}-{{$subject->grade}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -79,7 +80,7 @@
     <script src="https://cdn.tiny.cloud/1/gn50jnhq3ryp9lwxb8xw7n1o07tbqbklb8g94dbtybedjept/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: '#question, #option1, #option2, #option3, #option4',
+            selector: '#question, #option1, #option2, #option3, #option4,#answer',
             menubar: false,
             plugins: 'lists link image preview',
             toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | preview | subscript superscript | link image',

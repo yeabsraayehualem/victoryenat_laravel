@@ -76,14 +76,14 @@
                                 <p class="mb-2">
                                     <strong>Your Answer:</strong>
                                     @if($studentAnswer)
-                                        {!! $sheet->question->{'option' . $studentAnswer->answer} !!}
+                                        {{ $sheet->question->{'option' . $studentAnswer->answer} }}
                                     @else
                                         Not answered
                                     @endif
                                 </p>
                                 <p class="mb-0">
                                     <strong>Correct Answer:</strong>
-                                    {!! $sheet->question->{'option' . $sheet->question->answer} !!}
+                                 {{ $sheet->question->answer}}
                                 </p>
                             </div>
                         </div>

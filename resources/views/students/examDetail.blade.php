@@ -51,6 +51,7 @@
                             <span class="ms-2">{{ $exam->duration }} minutes</span>
                         </div>
 
+                        {{-- SEB requirement temporarily disabled
                         <div class="info-item mb-3">
                             <i class="fas fa-shield-alt text-primary me-2"></i>
                             <strong>Requirements:</strong>
@@ -62,6 +63,7 @@
                                 </a>
                             </div>
                         </div>
+                        --}}
 
                         @if($studentAnswer)
                             <div class="mt-4">

@@ -29,6 +29,31 @@ class Question extends Model
         return $this->belongsTo(Subject::class);
     }
 
+    public function correctAnswer()
+    {
+        switch ($this->answer) {
+            case 'a':
+                return $this->option1;
+            case 'b':
+                return $this->option2;
+            case 'c':
+                return $this->option3;
+            case 'd':
+                return $this->option4;
+            
+                
+            
+            
+        }
+
+        return $options[$this->answer - 1];
+    }
+
+    public function checkAnswer($studentAnswer)
+    {
+       return $this->correctAnswer() == $studentAnswer;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -37,19 +62,6 @@ class Question extends Model
     public function examSheets()
     {
         return $this->hasMany(ExamSheet::class);
-    }
-
-    public function correctAnswer()
-    {
-        $answerMap = [
-            'a' => $this->option1,
-            'b' => $this->option2,
-            'c' => $this->option3,
-            'd' => $this->option4,
-        ];
-
-        $key = strtolower($this->answer);
-        return $answerMap[$key] ?? null;
     }
 
     public function studentAnswer()

@@ -6,6 +6,7 @@ use App\Models\Exam;
 use App\Models\ExamSheet;
 use App\Models\Question;
 use App\Models\StudentAnswer;
+use App\Models\StudentResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -41,7 +42,7 @@ class ExamController extends Controller
 
     public function submit(Request $request, $examId)
     {
-        $exam = Exam::findOrFail($examId);
+        $exam = Exam::with('examSheets.question')->findOrFail($examId);
         
         // Verify exam is still available
         if (!$exam->isAvailableForStudent()) {
@@ -51,11 +52,17 @@ class ExamController extends Controller
         // Process answers and calculate score
         $answers = $request->input('answers', []);
         $correctAnswers = 0;
-        $totalQuestions = count($answers);
+        $totalQuestions = $exam->examSheets()->count();
+        $marksPerQuestion = $exam->total_marks / $totalQuestions;
 
         foreach ($answers as $questionId => $answer) {
-            $question = Question::find($questionId);
-            $isCorrect = $question && $question->correctAnswer() == $answer;
+            $examSheet = $exam->examSheets->firstWhere('question_id', $questionId);
+            if (!$examSheet) {
+                continue;
+            }
+
+            $question = $examSheet->question;
+            $isCorrect = $question->checkAnswer($answer);
             
             StudentAnswer::create([
                 'student_id' => auth()->id(),
@@ -70,7 +77,18 @@ class ExamController extends Controller
             }
         }
 
-        $score = $totalQuestions > 0 ? ($correctAnswers / $totalQuestions) * 100 : 0;
+        // Calculate total score
+        $score = ($correctAnswers * $marksPerQuestion);
+        $percentage = ($score / $exam->total_marks) * 100;
+        
+        // Record the result
+        $studentResult = new StudentResult([
+            'student_id' => auth()->id(),
+            'exam_id' => $examId,
+            'result' => $score,
+            'pass_fail' => $score >= $exam->passing_marks
+        ]);
+        $studentResult->save();
 
         return redirect()->route('student.exam.result', $examId)
             ->with('success', 'Exam submitted successfully!');
@@ -104,15 +122,24 @@ class ExamController extends Controller
     private function calculateScore($exam, $studentId)
     {
         $totalQuestions = $exam->examSheets()->count();
+        $marksPerQuestion = $exam->total_marks / $totalQuestions;
+        
         $correctAnswers = StudentAnswer::where('student_id', $studentId)
             ->where('exam_id', $exam->id)
             ->where('correct', true)
             ->count();
 
+        $score = $correctAnswers * $marksPerQuestion;
+        $percentage = ($score / $exam->total_marks) * 100;
+
         return [
             'total_questions' => $totalQuestions,
             'correct_answers' => $correctAnswers,
-            'percentage' => $totalQuestions > 0 ? ($correctAnswers / $totalQuestions) * 100 : 0
+            'score' => $score,
+            'total_marks' => $exam->total_marks,
+            'passing_marks' => $exam->passing_marks,
+            'percentage' => $percentage,
+            'passed' => $score >= $exam->passing_marks
         ];
     }
 }
