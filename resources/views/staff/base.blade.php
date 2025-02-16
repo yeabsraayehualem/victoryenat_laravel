@@ -50,6 +50,7 @@
         crossorigin="anonymous"></script>
     <script src="/assets/demo/user-role-data.js"></script>
     <script src="/assets/demo/schools-chart.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.5.0"></script>
 
     @yield('js')
 

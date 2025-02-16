@@ -99,88 +99,223 @@
     </div>
 
     <!-- Main Content -->
-    <div class="row g-4">
-        <!-- School Information -->
-        <div class="col-lg-4">
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-header bg-transparent border-0">
-                    <h5 class="card-title mb-0">School Information</h5>
-                </div>
-                <div class="card-body">
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-3">
-                            <span class="text-muted">School Type:</span>
-                            <span class="badge bg-primary">{{ $school->type }}</span>
-                        </li>
-                        <li class="mb-3">
-                            <span class="text-muted">Established:</span>
-                            <strong>{{ $school->established_date }}</strong>
-                        </li>
-                        <li class="mb-3">
-                            <span class="text-muted">Email:</span>
-                            <strong>{{ $school->email }}</strong>
-                        </li>
-                        <li class="mb-3">
-                            <span class="text-muted">Phone:</span>
-                            <strong>{{ $school->phone }}</strong>
-                        </li>
-                        <li class="mb-3">
-                            <span class="text-muted">Website:</span>
-                            <a href="{{ $school->website }}" target="_blank">{{ $school->website }}</a>
-                        </li>
-                        <li>
-                            <span class="text-muted">Address:</span>
-                            <strong>{{ $school->address }}</strong>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- School Manager -->
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-transparent border-0">
-                    <h5 class="card-title mb-0">School Manager</h5>
-                </div>
-                @foreach($managers as $manager)
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <img src="{{ asset('storage/' . $manager->avatar) }}"
-                             class="rounded-circle me-3"
-                             width="50"
-                             height="50"
-                             alt="{{ $manager->name }}">
-                        <div>
-                            <h6 class="mb-0">{{ $manager->name }}</h6>
-                            <small class="text-muted">{{ $manager->email }}</small>
-                        </div>
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="managers-tab" data-bs-toggle="tab" data-bs-target="#managers" type="button" role="tab">
+                        <i class="fas fa-user-tie me-2"></i>School Managers
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab">
+                        <i class="fas fa-user-graduate me-2"></i>Students
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="teachers-tab" data-bs-toggle="tab" data-bs-target="#teachers" type="button" role="tab">
+                        <i class="fas fa-chalkboard-teacher me-2"></i>Teachers
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content">
+                <!-- School Managers Tab -->
+                <div class="tab-pane fade show active" id="managers" role="tabpanel">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="mb-0">School Managers</h4>
+                        <button class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus-circle me-2"></i>Add Manager
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($schoolManagers as $manager)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ $manager->profile_photo ?? asset('images/default-avatar.png') }}" 
+                                                 class="rounded-circle me-2" width="40" height="40">
+                                            <div>
+                                                <div class="fw-bold">{{ $manager->name }}</div>
+                                                <div class="small text-muted">Joined {{ $manager->created_at->format('M Y') }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ $manager->email }}</td>
+                                    <td>{{ $manager->phone }}</td>
+                                    <td>
+                                        <span class="badge bg-{{ $manager->is_active ? 'success' : 'danger' }}">
+                                            {{ $manager->is_active ? 'Active' : 'Inactive' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="5" class="text-center py-4">
+                                        <div class="text-muted">No school managers found</div>
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                @endforeach
-            </div>
-        </div>
 
-        <!-- Performance Charts -->
-        <div class="col-lg-8">
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-header bg-transparent border-0">
-                    <h5 class="card-title mb-0">Academic Performance</h5>
-                </div>
-                <div class="card-body">
-                    <canvas id="performanceChart" height="300"></canvas>
-                </div>
-            </div>
+                <!-- Students Tab -->
+                <div class="tab-pane fade" id="students" role="tabpanel">
+                    <!-- Filters and Sorting -->
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body">
+                            <form class="row g-3">
+                                <!-- Grade Filter -->
+                                <div class="col-md-3">
+                                    <label class="form-label">Grade</label>
+                                    <select class="form-select" name="grade" id="gradeFilter"
+                                            hx-get="{{ route('staff.school.students', ['schoolId' => $school->id]) }}"
+                                            hx-trigger="change"
+                                            hx-target="#studentsTableContent"
+                                            hx-indicator="#loading-indicator">
+                                        <option value="">All Grades</option>
+                                        @for($i = 1; $i <= 12; $i++)
+                                            <option value="{{ $i }}" {{ request('grade') == $i ? 'selected' : '' }}>
+                                                Grade {{ $i }}
+                                            </option>
+                                        @endfor
+                                    </select>
+                                </div>
 
-            <!-- Recent Activities -->
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Recent Activities</h5>
-                    <button class="btn btn-sm btn-outline-primary">View All</button>
+                                <!-- Sort By -->
+                                <div class="col-md-3">
+                                    <label class="form-label">Sort By</label>
+                                    <select class="form-select" name="sort" id="sortFilter"
+                                            hx-get="{{ route('staff.school.students', ['schoolId' => $school->id]) }}"
+                                            hx-trigger="change"
+                                            hx-target="#studentsTableContent"
+                                            hx-indicator="#loading-indicator">
+                                        <option value="name_asc">Name (A-Z)</option>
+                                        <option value="name_desc">Name (Z-A)</option>
+                                        <option value="grade_asc">Grade (Low-High)</option>
+                                        <option value="grade_desc">Grade (High-Low)</option>
+                                    </select>
+                                </div>
+
+                                <!-- Search -->
+                                <div class="col-md-6">
+                                    <label class="form-label">Search</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                        <input type="text" class="form-control" name="search" id="searchInput"
+                                               placeholder="Search by name or ID..."
+                                               hx-get="{{ route('staff.school.students', ['schoolId' => $school->id]) }}"
+                                               hx-trigger="keyup changed delay:500ms"
+                                               hx-target="#studentsTableContent"
+                                               hx-indicator="#loading-indicator">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Loading Indicator -->
+                    <div id="loading-indicator" class="htmx-indicator position-fixed top-50 start-50 translate-middle">
+                        <div class="bg-white p-3 rounded shadow-sm">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Table Content -->
+                    <div id="studentsTableContent">
+                        @include('staff.school.partials.students-table')
+                    </div>
                 </div>
-               
+                <!-- Teachers Tab -->
+                <div class="tab-pane fade" id="teachers" role="tabpanel">
+                   
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Subject</th>
+                                    <th>Contact</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($teachers as $teacher)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ $teacher->profile_photo ?? asset('images/default-avatar.png') }}" 
+                                                 class="rounded-circle me-2" width="40" height="40">
+                                            <div>
+                                                <div class="fw-bold">{{ $teacher->get_full_name() }}</div>
+                                                <div class="small text-muted">Joined {{ $teacher->created_at->format('M Y') }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ $teacher->subject }}</td>
+                                    <td>{{ $teacher->phone }}</td>
+                                    <td>
+                                        <span class="badge bg-{{ $teacher->is_active ? 'success' : 'danger' }}">
+                                            {{ $teacher->is_active ? 'Active' : 'Inactive' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="5" class="text-center py-4">
+                                        <div class="text-muted">No teachers found</div>
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('head')
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 @endsection
 
 @section('css')
@@ -229,3 +364,29 @@
 </style>
 @endsection
 
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Show active tab based on URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const activeTab = urlParams.get('tab');
+        if (activeTab) {
+            const tab = document.querySelector(`#${activeTab}-tab`);
+            if (tab) {
+                tab.click();
+            }
+        }
+
+        // Handle filter form submission
+        const filterForm = document.getElementById('studentFiltersForm');
+        if (filterForm) {
+            filterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(filterForm);
+                const searchParams = new URLSearchParams(formData);
+                window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+            });
+        }
+    });
+</script>
+@endsection

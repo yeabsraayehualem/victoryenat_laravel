@@ -46,6 +46,10 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
+     public function get_full_name(){
+        return $this->first_name . ' ' . $this->last_name;
+     }
     protected function casts(): array
     {
         return [

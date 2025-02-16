@@ -62,3 +62,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/chat/{group}/send', [ChatController::class, 'sendMessage'])->name('chat.send');
     Route::get('/chat/{group}/messages', [ChatController::class, 'getMessages'])->name('chat.messages');
 });
+
+// Staff School Routes
+Route::get('/staff/school/{schoolId}/students', [StaffController::class, 'getStudents'])->name('staff.school.students');

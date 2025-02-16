@@ -189,11 +189,85 @@ class StaffController extends Controller
 
     public function editSchool(Request $req, $id)
     {
-        $school = School::find($id);
-        $totalTeachers = User::where('role', 'teacher')->where('school_id', $school->id)->count();
-        $totalStudents = User::where('school_id', $school->id)->where('role', 'student')->count();
-        return view('staff.school.school-detail', ['school' => $school, 'totalTeachers' => $totalTeachers, 'totalStudents' => $totalStudents,'totalSubjects'=> Subject::all()->count(),'performance'=>0,
-        'managers'=>User::where('role','school_manager')->where('school_id', $school->id)]);
+        try {
+            $school = School::findOrFail($id);
+            
+            // Get school managers
+            $schoolManagers = User::where('role', 'school_manager')
+                                ->where('school_id', $school->id)
+                                ->get();
+
+            // Get teachers
+            $teachers = User::where('role', 'teacher')
+                          ->where('school_id', $school->id)
+                          ->get();
+
+            // Initialize students query
+            $studentsQuery = User::where('role', 'student')
+                               ->where('school_id', $school->id);
+
+            // Apply search filter
+            if ($req->filled('search')) {
+                $search = $req->search;
+                $studentsQuery->where(function($query) use ($search) {
+                    $query->where('first_name', 'LIKE', "%{$search}%")
+                          ->orWhere('last_name', 'LIKE', "%{$search}%")
+                          ->orWhere('student_id', 'LIKE', "%{$search}%");
+                });
+            }
+
+            // Apply grade filter
+            if ($req->filled('grade')) {
+                $studentsQuery->where('grade', $req->grade);
+            }
+
+            // Apply sorting
+            if ($req->filled('sort')) {
+                switch ($req->sort) {
+                    case 'name_asc':
+                        $studentsQuery->orderBy('first_name')->orderBy('last_name');
+                        break;
+                    case 'name_desc':
+                        $studentsQuery->orderByDesc('first_name')->orderByDesc('last_name');
+                        break;
+                    case 'grade_asc':
+                        $studentsQuery->orderBy('grade');
+                        break;
+                    case 'grade_desc':
+                        $studentsQuery->orderByDesc('grade');
+                        break;
+                    default:
+                        $studentsQuery->orderBy('first_name');
+                }
+            } else {
+                $studentsQuery->orderBy('first_name');
+            }
+
+            $students = $studentsQuery->get();
+
+            // Get counts for stats
+            $totalTeachers = $teachers->count();
+            $totalStudents = User::where('role', 'student')
+                               ->where('school_id', $school->id)
+                               ->count();
+            $totalSubjects = Subject::count();
+            
+            // Calculate school performance (you can modify this based on your requirements)
+            $performance = 0; // Add your performance calculation logic here
+
+            return view('staff.school.school-detail', [
+                'school' => $school,
+                'schoolManagers' => $schoolManagers,
+                'teachers' => $teachers,
+                'students' => $students,
+                'totalTeachers' => $totalTeachers,
+                'totalStudents' => $totalStudents,
+                'totalSubjects' => $totalSubjects,
+                'performance' => $performance
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error loading school details: ' . $e->getMessage());
+        }
     }
 
     public function updateSchool(Request $req, $id)
@@ -807,5 +881,55 @@ class StaffController extends Controller
     public function profile()
     {
         return view('staff.profile');
+    }
+
+    public function getStudents(Request $req, $schoolId)
+    {
+        try {
+            // Initialize students query
+            $studentsQuery = User::where('role', 'student')
+                               ->where('school_id', $schoolId);
+
+            // Apply search filter
+            if ($req->filled('search')) {
+                $search = trim($req->search);
+                $studentsQuery->where(function($query) use ($search) {
+                    $query->whereRaw("CONCAT(first_name, ' ', last_name) LIKE ?", ["%{$search}%"])
+                          ->orWhere('student_id', 'LIKE', "%{$search}%");
+                });
+            }
+
+            // Apply grade filter
+            if ($req->filled('grade') && is_numeric($req->grade)) {
+                $studentsQuery->where('grade', intval($req->grade));
+            }
+
+            // Apply sorting
+            switch ($req->input('sort', 'name_asc')) {
+                case 'name_desc':
+                    $studentsQuery->orderByRaw("CONCAT(first_name, ' ', last_name) DESC");
+                    break;
+                case 'grade_asc':
+                    $studentsQuery->orderBy('grade')->orderByRaw("CONCAT(first_name, ' ', last_name)");
+                    break;
+                case 'grade_desc':
+                    $studentsQuery->orderByDesc('grade')->orderByRaw("CONCAT(first_name, ' ', last_name)");
+                    break;
+                default: // name_asc
+                    $studentsQuery->orderByRaw("CONCAT(first_name, ' ', last_name) ASC");
+            }
+
+            $students = $studentsQuery->get();
+
+            return view('staff.school.partials.students-table', compact('students'));
+        } catch (\Exception $e) {
+            \Log::error('Error in getStudents: ' . $e->getMessage());
+            
+            // Return an error response that HTMX can handle
+            return response()->view('staff.school.partials.students-table', [
+                'students' => collect(),
+                'error' => 'An error occurred while loading students.'
+            ], 500);
+        }
     }
 }
