@@ -7,6 +7,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Models\School;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TinyMCEController;
@@ -65,3 +66,11 @@ Route::middleware('auth')->group(function () {
 
 // Staff School Routes
 Route::get('/staff/school/{schoolId}/students', [StaffController::class, 'getStudents'])->name('staff.school.students');
+
+// Reports Routes
+Route::prefix('staff/reports')->name('staff.reports.')->group(function() {
+    Route::get('/', [ReportController::class, 'index'])->name('index');
+    Route::get('/school/{schoolId}', [ReportController::class, 'schoolDetail'])->name('school');
+    Route::get('/school/{schoolId}/students', [ReportController::class, 'getStudents'])->name('school.students');
+    Route::get('/exam/{examId}/school/{schoolId}', [ReportController::class, 'examDetail'])->name('exam');
+});

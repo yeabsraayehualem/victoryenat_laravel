@@ -132,7 +132,8 @@
                                     </nav>
                                 </div>
                             </nav>
-                        </div>
+                        </div>      
+                        <a class="nav-link collapsed" href="{{ route('staff.reports.index')}}">Reports</a>
                         <div class="sb-sidenav-menu-heading">Profile</div>
                         <a class="nav-link " href="{{ route('staff.profile')}}"><i class="fa fa-user-circle"></i>
                             Profile</a>
