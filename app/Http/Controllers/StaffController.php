@@ -113,6 +113,7 @@ class StaffController extends Controller
                 'email' => 'required|email',
                 'address' => 'required',
                 'website' => 'string|nullable|url',
+                'school_type' => 'required',
                 'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ], [
                 'name.required' => 'School name is required',
@@ -120,6 +121,7 @@ class StaffController extends Controller
                 'email.required' => 'Email address is required',
                 'email.email' => 'Please enter a valid email address',
                 'address.required' => 'School address is required',
+                'school_type.required' => 'School type is required',
                 'website.url' => 'Please enter a valid website URL',
                 'logo.required' => 'School logo is required',
                 'logo.image' => 'The file must be an image',
@@ -133,6 +135,7 @@ class StaffController extends Controller
             $school->email = $req->email;
             $school->address = $req->address;
             $school->phone = $req->phone;
+            $school->school_type = $req->school_type;
             
             if ($req->hasFile('logo')) {
                 try {

@@ -281,7 +281,16 @@
                     <label class="form-label">Location</label>
                     <input type="text" class="form-control" name="address" required>
                 </div>
-                <div class="col-12 mb-3">
+                <div class="col-12 col-md-6 mb-3">
+                    <label class="form-label">School Type</label>
+<select name="school_type" id="school_type" required class="form-control">
+<option value="">Select School Type</option>
+<option value="public">Public</option>
+<option value="private">Private</option>
+
+</select>
+                    </div>
+                <div class="col-12 col-md-6 mb-3">
                     <label class="form-label">School Logo</label>
                     <input type="file" class="form-control" name="logo" required>
                 </div>

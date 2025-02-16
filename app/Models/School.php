@@ -12,6 +12,7 @@ class School extends Model
       'email',
       'website',
        'logo',
+       'school_type',
     'status'];
 
     public function school(){
