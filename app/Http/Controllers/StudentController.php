@@ -48,7 +48,7 @@ class StudentController extends Controller
 
         $student->save();
 
-        return redirect('/login')
+        return redirect('/')
             ->with('success', 'Student registered successfully!');
     }
 

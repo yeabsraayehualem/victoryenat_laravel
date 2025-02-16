@@ -14,6 +14,7 @@ class Question extends Model
         'option4',
         'answer',
         'subject_id',
+        'chapter',
         'user_id',
         'is_school_approved',
         'is_victory_approved',

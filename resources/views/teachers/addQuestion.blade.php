@@ -15,7 +15,8 @@
         <div class="card-body">
             <form action="{{ route('teacher.addQuestion') }}" method="POST">
                 @csrf
-                <div class="form-group">
+               <div class="row">
+               <div class="col-md-6 col-12 form-group">
                     <label for="subject_id">Subject</label>
                     <select name="subject_id" id="subject_id" class="form-control">
                         <option value="">Select Subject</option>
@@ -24,6 +25,12 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="col-md-6 col-12 form-group">
+                    <label for="subject_id">Chapter</label>
+                   <input type="text" class="form-control" name="chapter" id="chapter" required   >
+                </div>
+
+               </div>
                 <div class="form-group">
                     <label for="question">Question</label>
                     <textarea name="question" id="question" class="form-control" rows="5"></textarea>

@@ -47,7 +47,7 @@ class TeacherController extends Controller
 
         $student->save();
 
-        return redirect('/login')
+        return redirect('/')
             ->with('success', 'Student registered successfully!');
     }
 
@@ -117,6 +117,7 @@ class TeacherController extends Controller
             'option4' => 'required',
             'answer' => 'required',
             'subject_id' => 'required',
+            'chapter' => 'required'
         ]);
 
         if($validator->fails()){
@@ -130,6 +131,7 @@ class TeacherController extends Controller
         $question->option3 = $req->option3;
         $question->option4 = $req->option4;
         $question->answer = $req->answer;
+        $question->chapter = $req->chapter;
         $question->subject_id = $req->subject_id;
         $question->user_id = auth()->user()->id;
         $question->save();
