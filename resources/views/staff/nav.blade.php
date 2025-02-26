@@ -91,13 +91,7 @@
                             </nav>
 
                         </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#collapsExam" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="sb-nav-link-icon"><i class="fas fa-graduation-cap"></i></div>
-
-                            Exam
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
+                       
                         <div class="collapse" id="collapsExam" aria-labelledby="headingOne"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
@@ -133,6 +127,29 @@
                                 </div>
                             </nav>
                         </div>      
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseExamManagement" aria-expanded="false" aria-controls="collapseExamManagement">
+                            <div class="sb-nav-link-icon"><i class="fas fa-clipboard-list"></i></div>
+                            Exam Management
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseExamManagement" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{{ route('staff.exams') }}">
+                                    <i class="fas fa-calendar-alt me-2"></i>Exams
+                                </a>
+                                <a class="nav-link" href="{{ route('staff.exam.create') }}">
+                                    <i class="fas fa-plus me-2"></i>Create Exam
+                                </a>
+                                <a class="nav-link" href="{{ route('staff.exam.questions') }}">
+                                    <i class="fas fa-list me-2"></i>All Questions
+                                </a>
+                                <a class="nav-link" href="{{ route('staff.exam.create-question') }}">
+                                    <i class="fas fa-plus me-2"></i>Create Question
+                                </a>
+                            </nav>
+                        </div>
                         <a class="nav-link collapsed" href="{{ route('staff.reports.index')}}">Reports</a>
                         <div class="sb-sidenav-menu-heading">Profile</div>
                         <a class="nav-link " href="{{ route('staff.profile')}}"><i class="fa fa-user-circle"></i>

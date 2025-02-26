@@ -1,22 +1,22 @@
 @extends('staff.base')
 @section('content')
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Edit Exam</h1>
+    <h1 class="mt-4">Create Exam</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="{{ route('staff.dashboard') }}">Dashboard</a></li>
         <li class="breadcrumb-item"><a href="{{ route('staff.exams') }}">Exams</a></li>
-        <li class="breadcrumb-item active">Edit</li>
+        <li class="breadcrumb-item active">Create</li>
     </ol>
 
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="fas fa-edit me-1"></i>
-                    Edit Exam
+                    <i class="fas fa-plus me-1"></i>
+                    Create New Exam
                 </div>
                 <div class="card-body">
-                    <form hx-put="{{ route('staff.exam.update', $exam->id) }}"
+                    <form hx-post="{{ route('staff.exam.store') }}"
                           hx-indicator="#submit-indicator">
                         @csrf
                         <div class="mb-3">
@@ -25,7 +25,7 @@
                                    class="form-control @error('name') is-invalid @enderror" 
                                    id="name" 
                                    name="name" 
-                                   value="{{ old('name', $exam->name) }}" 
+                                   value="{{ old('name') }}" 
                                    required>
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -40,8 +40,7 @@
                                     required>
                                 <option value="">Select Subject</option>
                                 @foreach($subjects as $subject)
-                                    <option value="{{ $subject->id }}" 
-                                            {{ old('subject_id', $exam->subject_id) == $subject->id ? 'selected' : '' }}>
+                                    <option value="{{ $subject->id }}" {{ old('subject_id') == $subject->id ? 'selected' : '' }}>
                                         {{ $subject->name }}
                                     </option>
                                 @endforeach
@@ -58,7 +57,7 @@
                                        class="form-control @error('date') is-invalid @enderror" 
                                        id="date" 
                                        name="date" 
-                                       value="{{ old('date', $exam->date->format('Y-m-d')) }}" 
+                                       value="{{ old('date') }}" 
                                        required>
                                 @error('date')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -70,7 +69,7 @@
                                        class="form-control @error('time') is-invalid @enderror" 
                                        id="time" 
                                        name="time" 
-                                       value="{{ old('time', $exam->time) }}" 
+                                       value="{{ old('time') }}" 
                                        required>
                                 @error('time')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -84,7 +83,7 @@
                                    class="form-control @error('duration') is-invalid @enderror" 
                                    id="duration" 
                                    name="duration" 
-                                   value="{{ old('duration', $exam->duration) }}" 
+                                   value="{{ old('duration') }}" 
                                    min="1" 
                                    required>
                             @error('duration')
@@ -99,7 +98,7 @@
                                        class="form-control @error('total_marks') is-invalid @enderror" 
                                        id="total_marks" 
                                        name="total_marks" 
-                                       value="{{ old('total_marks', $exam->total_marks) }}" 
+                                       value="{{ old('total_marks') }}" 
                                        min="1" 
                                        required>
                                 @error('total_marks')
@@ -112,7 +111,7 @@
                                        class="form-control @error('passing_marks') is-invalid @enderror" 
                                        id="passing_marks" 
                                        name="passing_marks" 
-                                       value="{{ old('passing_marks', $exam->passing_marks) }}" 
+                                       value="{{ old('passing_marks') }}" 
                                        min="1" 
                                        required>
                                 @error('passing_marks')
@@ -128,10 +127,10 @@
                             <button type="submit" class="btn btn-primary">
                                 <span id="submit-indicator" class="htmx-indicator">
                                     <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                                    Updating...
+                                    Creating...
                                 </span>
                                 <span class="htmx-indicator-none">
-                                    <i class="fas fa-save me-1"></i> Update Exam
+                                    <i class="fas fa-save me-1"></i> Create Exam
                                 </span>
                             </button>
                         </div>

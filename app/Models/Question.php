@@ -18,6 +18,8 @@ class Question extends Model
         'user_id',
         'is_school_approved',
         'is_victory_approved',
+        'approved_at',
+        'approved_by'
     ];
 
     protected $casts = [
@@ -58,6 +60,11 @@ class Question extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function approver()
+    {
+        return $this->belongsTo(User::class, 'approved_by');
     }
 
     public function examSheets()
